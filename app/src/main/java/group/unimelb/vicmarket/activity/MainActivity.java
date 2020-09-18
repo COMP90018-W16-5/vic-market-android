@@ -26,5 +26,9 @@ public class MainActivity extends AppCompatActivity {
         buttonSearch.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, SearchActivity.class));
         });
+
+        imageHead.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        });
     }
 }

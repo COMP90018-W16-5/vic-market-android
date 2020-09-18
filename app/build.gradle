@@ -50,4 +50,5 @@ dependencies {
     implementation 'com.ycjiang:ImagePreview:2.2.2'
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-32'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-32'
+    implementation 'com.getbase:floatingactionbutton:1.10.1'
 }
