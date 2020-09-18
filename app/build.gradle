@@ -30,6 +30,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -43,4 +44,10 @@ dependencies {
     implementation 'com.blankj:utilcodex:1.29.0'
     implementation 'me.jessyan:autosize:1.1.1'
     implementation 'com.josephvuoto:CustomDialog:1.0.3'
+
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+    implementation 'top.zibin:Luban:1.1.8'
+    implementation 'com.ycjiang:ImagePreview:2.2.2'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-32'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-32'
 }

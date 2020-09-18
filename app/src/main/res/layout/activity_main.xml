@@ -1,31 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20dp"
     tools:context=".activity.MainActivity">
 
-    <EditText
-        android:id="@+id/edit_email"
-        android:hint="Email"
+    <LinearLayout
+        android:id="@+id/main_status_bar"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <EditText
-        android:id="@+id/edit_password"
-        android:inputType="textPassword"
-        android:layout_marginTop="30dp"
-        android:hint="Password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="70dp">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/main_head"
+            android:src="@drawable/ic_account"
+            android:layout_marginStart="15dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+        <RelativeLayout
+            android:id="@+id/main_search"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="match_parent"
+            android:background="@drawable/bg_ripple_search"
+            android:layout_height="40dp">
+            <ImageView
+                android:id="@+id/main_bar_search_image"
+                android:src="@drawable/ic_search"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_width="18dp"
+                android:layout_height="18dp" />
+        </RelativeLayout>
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/button_login"
-        android:text="Login"
-        android:layout_marginTop="30dp"
+    <View
+        android:id="@+id/main_divider"
+        android:visibility="gone"
+        android:background="@color/colorLine"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="0.8dp" >
+
+    </View>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/main_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/main_list_recycler"
+            android:layout_width="match_parent"
+            android:overScrollMode="never"
+            android:layout_height="match_parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

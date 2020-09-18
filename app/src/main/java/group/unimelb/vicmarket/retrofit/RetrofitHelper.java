@@ -2,9 +2,7 @@ package group.unimelb.vicmarket.retrofit;
 
 import com.blankj.utilcode.util.SPUtils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -21,13 +19,9 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 public class RetrofitHelper {
     private static final int DEFAULT_TIMEOUT = 10;
     private static String BASE_URL = "http://ss.xieyangzhe.com:9090";
-    private Retrofit retrofit;
     private Api api;
-    private OkHttpClient okHttpClient;
 
     private String token;
-
-    private List<String> AUTH_POOL = new ArrayList<>();
 
     private RetrofitHelper() {
         initAuth();
@@ -39,9 +33,9 @@ public class RetrofitHelper {
                     return chain.proceed(request);
                 })
                 .readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-        okHttpClient = okHttpClientBuilder.build();
+        OkHttpClient okHttpClient = okHttpClientBuilder.build();
 
-        retrofit = new Retrofit.Builder().client(okHttpClient)
+        Retrofit retrofit = new Retrofit.Builder().client(okHttpClient)
                 .addConverterFactory(CustomGsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(BASE_URL)
@@ -59,10 +53,10 @@ public class RetrofitHelper {
         Map<String, Object> params = new HashMap<>();
         params.put("email", username);
         params.put("password", password);
-        excute(api.signIn(URL, params), observer);
+        execute(api.signIn(URL, params), observer);
     }
 
-    private void excute(Observable observable, Observer observer) {
+    private void execute(Observable observable, Observer observer) {
         observable.subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

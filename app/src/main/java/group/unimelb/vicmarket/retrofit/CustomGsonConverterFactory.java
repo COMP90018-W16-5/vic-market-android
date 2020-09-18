@@ -56,18 +56,16 @@ public final class CustomGsonConverterFactory extends Converter.Factory {
         return new GsonRequestBodyConverter<>(gson, adapter);
     }
 
-    class CustomGsonResponseConverter<T> implements Converter<ResponseBody, T> {
+    static class CustomGsonResponseConverter<T> implements Converter<ResponseBody, T> {
 
-        private final Gson gson;
         private final TypeAdapter<T> adapter;
 
         CustomGsonResponseConverter(Gson gson, TypeAdapter<T> adapter) {
-            this.gson = gson;
             this.adapter = adapter;
         }
 
         @Override
-        public T convert(ResponseBody value) {
+        public T convert(@NotNull ResponseBody value) {
             try {
                 String body = value.string();
                 if (AppConstant.PRINT_JSON_DATA) {
@@ -83,7 +81,7 @@ public final class CustomGsonConverterFactory extends Converter.Factory {
         }
     }
 
-    class GsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
+    static class GsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
         private final MediaType MEDIA_TYPE = MediaType.parse("application/json; charset=UTF-8");
         private final Charset UTF_8 = StandardCharsets.UTF_8;
 

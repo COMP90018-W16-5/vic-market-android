@@ -1,4 +1,4 @@
-package group.unimelb.vicmarket.activity;
+package group.unimelb.vicmarket.common;
 
 import android.app.Application;
 import android.content.Context;
