@@ -6,33 +6,35 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".activity.MainActivity">
+    tools:context=".activity.RegisterActivity">
 
     <EditText
         android:id="@+id/edit_email"
-        android:hint="Email"
+        android:hint="Username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
     <EditText
         android:id="@+id/edit_password"
+        android:hint="Password"
         android:inputType="textPassword"
         android:layout_marginTop="30dp"
-        android:hint="Password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/edit_age"
+        android:hint="Age"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:inputType="number" />
 
     <Button
         android:id="@+id/button_register"
-        android:text="Login"
+        android:text="REGISTER"
         android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/tv_register"
-        android:layout_width="match_parent"
-        android:layout_height="34dp"
-        android:gravity="center"
-        android:text="Register here" />
 
 </LinearLayout>
