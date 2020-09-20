@@ -30,16 +30,22 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        /* Find views */
         findViews();
+        
+        /* Initialize loading dialog */
         loadingDialog = new LoadingDialog.Builder(LoginActivity.this)
                 .setLoadingText("Loading...")
                 .setCanceledOnTouchOutside(false)
                 .build();
 
+        /* Click event of login button */
         buttonLogin.setOnClickListener(v -> {
+            /* Get email and password user typed in */
             String email = textEmail.getText().toString();
             String password = textPassword.getText().toString();
 
+            /* Initialize an observer */
             Observer<SignInBean> observer = new Observer<SignInBean>() {
                 @Override
                 public void onSubscribe(Disposable d) {
@@ -48,29 +54,36 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public void onNext(SignInBean signInBean) {
+                    /* Received HTTP response and the JSON has been converted to Java object */
                     if (signInBean.getCode() == 200) {
+                        /* Login succeed, save the token for future requests */
                         RetrofitHelper.getInstance().setToken(signInBean.getData().getToken());
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         intent.putExtra("email", signInBean.getData().getEmail());
                         intent.putExtra("displayName", signInBean.getData().getDisplayName());
                         startActivity(intent);
                     } else {
+                        /* Login failed. Shows message from the server */
                         ToastUtils.showShort(signInBean.getMsg());
                     }
                 }
 
                 @Override
                 public void onError(Throwable e) {
+                    /* Error(HTTP error or JSON format error) */
                     e.printStackTrace();
+                    /* Hide the loading dialog */
                     loadingDialog.dismiss();
                     ToastUtils.showShort("Unknown error");
                 }
 
                 @Override
                 public void onComplete() {
+                    /* Hide the loading dialog */
                     loadingDialog.dismiss();
                 }
             };
+            /* Perform the HTTP request */
             RetrofitHelper.getInstance().doLogin(observer, email, password);
         });
     }

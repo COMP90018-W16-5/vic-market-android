@@ -35,7 +35,9 @@ public class MainActivity extends AppCompatActivity {
     private SmartRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
 
+    /* Adapter for RecyclerView */
     private MainItemListAdapter adapter;
+    /* Deserialized data from the server */
     private List<MainItemListBean.DataBean> dataBeans = new ArrayList<>();
 
     private int page = 1;
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         findViews();
 
         buttonSearch.setOnClickListener(v -> {
+            // TODO: Implement the activity
             startActivity(new Intent(MainActivity.this, SearchActivity.class));
         });
 
@@ -55,10 +58,10 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
         });
 
+        /* Initialize the adapter and add to RecyclerView */
         adapter = new MainItemListAdapter(this);
-//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this,
-//                LinearLayoutManager.VERTICAL, false);
         recyclerView.setAdapter(adapter);
+        /* Use GridLayout to display two columns */
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
@@ -68,15 +71,19 @@ public class MainActivity extends AppCompatActivity {
         });
         recyclerView.setLayoutManager(gridLayoutManager);
 
+        /* Init data, see if there is cache */
         initData();
 
+        /* Start refreshing when starting the page */
         refreshLayout.autoRefresh();
 
         refreshLayout.setOnRefreshListener(refreshlayout -> {
+            /* Refresh */
             page = 1;
             loadData();
         });
         refreshLayout.setOnLoadMoreListener(refreshlayout -> {
+            /* Load more */
             page++;
             loadData();
         });
@@ -90,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        Log.d(TAG, "loadData: asdasdasdas");
+        /* Send HTTP request to get data */
         RetrofitHelper.getInstance().getItemList(new Observer<MainItemListBean>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -100,9 +107,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onNext(MainItemListBean mainItemListBean) {
                 if (refreshLayout.getState() == RefreshState.Refreshing) {
+                    /* Refreshing, clear the data list */
                     dataBeans.clear();
+                    /* Save cache */
                     SPUtils.getInstance().put("home_page_cache", new Gson().toJson(mainItemListBean.getData()));
                 }
+                /* Add data */
                 dataBeans.addAll(mainItemListBean.getData());
                 adapter.setData(dataBeans);
             }
@@ -122,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initData() {
         dataBeans.clear();
+        /* Load data from SharedPreference */
         String cachedJson = SPUtils.getInstance().getString("home_page_cache");
         if (cachedJson != null && !cachedJson.isEmpty()) {
             Type listType = new TypeToken<ArrayList<MainItemListBean.DataBean>>() {

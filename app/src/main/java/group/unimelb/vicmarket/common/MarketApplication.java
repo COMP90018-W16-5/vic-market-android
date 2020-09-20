@@ -14,8 +14,9 @@ public class MarketApplication extends Application {
     private static Context AppContext;
 
     static {
+        /* Initialize SmartRefreshLayout (header and footer) */
         SmartRefreshLayout.setDefaultRefreshHeaderCreator((context, layout) -> {
-            layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);//全局设置主题颜色
+            layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
             return new MaterialHeader(context);
         });
         SmartRefreshLayout.setDefaultRefreshFooterCreator((context, layout) -> new CustomFooter(context));
