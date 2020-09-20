@@ -24,12 +24,12 @@ public class MainItemListAdapter extends RecyclerView.Adapter<MainItemListAdapte
     private Context context;
     private OnListItemClickListener onListItemClickListener;
 
-    public void setOnListItemClickListener(OnListItemClickListener onListItemClickListener) {
-        this.onListItemClickListener = onListItemClickListener;
-    }
-
     public MainItemListAdapter(Context context) {
         this.context = context;
+    }
+
+    public void setOnListItemClickListener(OnListItemClickListener onListItemClickListener) {
+        this.onListItemClickListener = onListItemClickListener;
     }
 
     public void setData(List<MainItemListBean.DataBean> data) {
@@ -66,6 +66,10 @@ public class MainItemListAdapter extends RecyclerView.Adapter<MainItemListAdapte
         return data.size();
     }
 
+    public interface OnListItemClickListener {
+        void onListItemClick(int index);
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView imagePicture;
         private TextView textTitle;
@@ -80,9 +84,5 @@ public class MainItemListAdapter extends RecyclerView.Adapter<MainItemListAdapte
             textPrice = itemView.findViewById(R.id.main_item_price);
             holderLayout = itemView.findViewById(R.id.main_item_holder);
         }
-    }
-
-    public interface OnListItemClickListener {
-        void onListItemClick(int index);
     }
 }
