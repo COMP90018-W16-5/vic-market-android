@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">VicMarket</string>
+
+    <string name="category_cars_and_vehicles">Cars &amp;\n Vehicles</string>
+    <string name="category_home_and_garden">Home &amp;\n Garden</string>
+    <string name="category_electronics">Electronics &amp;\n Phones</string>
+    <string name="category_sport_and_fitness">Sport &amp;\n Fitness</string>
+    <string name="category_more">More\n Categories</string>
 </resources>

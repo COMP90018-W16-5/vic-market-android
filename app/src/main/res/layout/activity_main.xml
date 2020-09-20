@@ -50,91 +50,127 @@
     <LinearLayout
         android:id="@+id/main_categories"
         android:layout_below="@id/main_divider"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_height="80dp">
+        android:layout_height="75dp">
         <LinearLayout
+            android:background="@drawable/bg_ripple_white"
+            android:clickable="true"
             android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:orientation="vertical"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:focusable="true">
             <ImageView
-                android:src="@drawable/ic_account"
-                android:layout_width="40dp"
-                android:layout_height="40dp" />
+                android:src="@drawable/ic_cars"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                fab:tint="@color/colorAccent" />
             <TextView
                 android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="@color/colorTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cars and Vehicles" />
+                android:text="@string/category_cars_and_vehicles" />
         </LinearLayout>
         <LinearLayout
+            android:background="@drawable/bg_ripple_white"
+            android:clickable="true"
             android:gravity="center"
             android:orientation="vertical"
             android:layout_weight="1"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:focusable="true">
             <ImageView
-                android:src="@drawable/ic_account"
-                android:layout_width="40dp"
-                android:layout_height="40dp" />
+                android:src="@drawable/ic_home"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                fab:tint="@color/colorAccent" />
             <TextView
                 android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="@color/colorTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cars and Vehicles" />
+                android:text="@string/category_home_and_garden" />
         </LinearLayout>
         <LinearLayout
+            android:background="@drawable/bg_ripple_white"
+            android:clickable="true"
             android:gravity="center"
             android:orientation="vertical"
             android:layout_weight="1"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:focusable="true">
             <ImageView
                 android:gravity="center"
-                android:src="@drawable/ic_account"
-                android:layout_width="40dp"
-                android:layout_height="40dp" />
+                android:src="@drawable/ic_phone"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                fab:tint="@color/colorAccent" />
             <TextView
                 android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="@color/colorTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cars and Vehicles" />
+                android:text="@string/category_electronics" />
         </LinearLayout>
         <LinearLayout
+            android:background="@drawable/bg_ripple_white"
+            android:clickable="true"
             android:gravity="center"
             android:orientation="vertical"
             android:layout_weight="1"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:focusable="true">
             <ImageView
-                android:src="@drawable/ic_account"
-                android:layout_width="40dp"
-                android:layout_height="40dp" />
+                android:src="@drawable/ic_sport"
+                fab:tint="@color/colorAccent"
+                android:layout_width="35dp"
+                android:layout_height="35dp" />
             <TextView
                 android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="@color/colorTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cars and Vehicles" />
+                android:text="@string/category_sport_and_fitness" />
         </LinearLayout>
         <LinearLayout
+            android:background="@drawable/bg_ripple_white"
+            android:clickable="true"
             android:gravity="center"
             android:orientation="vertical"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:focusable="true">
             <ImageView
-                android:src="@drawable/ic_account"
-                android:layout_width="40dp"
-                android:layout_height="40dp" />
+                android:src="@drawable/ic_menu"
+                fab:tint="@color/colorAccent"
+                android:layout_width="35dp"
+                android:layout_height="35dp" />
             <TextView
                 android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="@color/colorTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cars and Vehicles" />
+                android:text="@string/category_more" />
         </LinearLayout>
     </LinearLayout>
 
@@ -149,6 +185,7 @@
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/main_refresh"
+        android:background="#F1F1F1"
         android:layout_below="@id/main_divider_1"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -156,6 +193,9 @@
             android:id="@+id/main_list_recycler"
             android:layout_width="match_parent"
             android:overScrollMode="never"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:paddingTop="5dp"
             android:layout_height="match_parent">
 
         </androidx.recyclerview.widget.RecyclerView>
