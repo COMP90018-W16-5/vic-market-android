@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,6 +24,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText textEmail;
     private EditText textPassword;
     private Button buttonLogin;
+    private TextView buttonRegister;
+    private ImageView buttonBack;
 
     private LoadingDialog loadingDialog;
 
@@ -86,11 +90,17 @@ public class LoginActivity extends AppCompatActivity {
             /* Perform the HTTP request */
             RetrofitHelper.getInstance().doLogin(observer, email, password);
         });
+
+        buttonRegister.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this,
+                RegisterActivity.class)));
+        buttonBack.setOnClickListener(v -> finish());
     }
 
     private void findViews() {
         textEmail = findViewById(R.id.edit_email);
         textPassword = findViewById(R.id.edit_password);
         buttonLogin = findViewById(R.id.button_login);
+        buttonRegister = findViewById(R.id.button_register);
+        buttonBack = findViewById(R.id.button_back);
     }
 }
