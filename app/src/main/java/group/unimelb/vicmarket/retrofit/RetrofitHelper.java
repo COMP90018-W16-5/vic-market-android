@@ -86,7 +86,7 @@ public class RetrofitHelper {
     }
 
     private void initAuth() {
-        token = SPUtils.getInstance().getString("auth", "");
+        token = SPUtils.getInstance().getString("token", "");
     }
 
     private static class SingletonHolder {

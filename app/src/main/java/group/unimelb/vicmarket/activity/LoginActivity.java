@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.josephvuoto.customdialog.loading.LoadingDialog;
 
@@ -63,8 +64,13 @@ public class LoginActivity extends AppCompatActivity {
                         /* Login succeed, save the token for future requests */
                         RetrofitHelper.getInstance().setToken(signInBean.getData().getToken());
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        intent.putExtra("email", signInBean.getData().getEmail());
-                        intent.putExtra("displayName", signInBean.getData().getDisplayName());
+                        SPUtils.getInstance().put("login", true);
+                        SPUtils.getInstance().put("name", signInBean.getData().getDisplayName());
+                        SPUtils.getInstance().put("email", signInBean.getData().getEmail());
+                        SPUtils.getInstance().put("phone", signInBean.getData().getPhone());
+                        SPUtils.getInstance().put("photo", signInBean.getData().getPhoto());
+                        SPUtils.getInstance().put("token", signInBean.getData().getToken());
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     } else {
                         /* Login failed. Shows message from the server */

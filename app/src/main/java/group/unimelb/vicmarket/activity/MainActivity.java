@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.SPUtils;
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private List<MainItemListBean.DataBean> dataBeans = new ArrayList<>();
 
     private int page = 1;
+    private boolean login = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         imageHead.setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            if (!login) {
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            } else {
+                // TODO: start another activity
+            }
         });
 
         /* Initialize the adapter and add to RecyclerView */
@@ -87,6 +93,16 @@ public class MainActivity extends AppCompatActivity {
             page++;
             loadData();
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (SPUtils.getInstance().getBoolean("login")) {
+            login = true;
+            String photo = SPUtils.getInstance().getString("photo");
+            Glide.with(this).load(photo).into(imageHead);
+        }
     }
 
     private void findViews() {
