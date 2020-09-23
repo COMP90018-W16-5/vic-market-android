@@ -74,6 +74,15 @@ public class RetrofitHelper {
         execute(api.getItemList(URL, params), observer);
     }
 
+    public void searchItemList(Observer<MainItemListBean> observer, String keyword, String page) {
+        String URL = BASE_URL + "/item/search";
+        Map<String, Object> params = new HashMap<>();
+        params.put("keyword", keyword);
+        params.put("page", page);
+        params.put("pageSize", 10);
+        execute(api.searchItemList(URL, params), observer);
+    }
+
     private void execute(Observable observable, Observer observer) {
         observable.subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())

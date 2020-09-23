@@ -16,4 +16,7 @@ public interface Api {
 
     @GET
     Observable<MainItemListBean> getItemList(@Url String url, @QueryMap Map<String, Object> map);
+
+    @GET
+    Observable<MainItemListBean> searchItemList(@Url String url, @QueryMap Map<String, Object> map);
 }

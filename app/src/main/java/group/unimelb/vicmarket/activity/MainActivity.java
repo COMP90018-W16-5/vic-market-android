@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
         findViews();
 
         buttonSearch.setOnClickListener(v -> {
-            // TODO: Implement the activity
             startActivity(new Intent(MainActivity.this, SearchActivity.class));
         });
 

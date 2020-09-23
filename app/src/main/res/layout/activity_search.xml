@@ -1,15 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activity.SearchActivity">
 
-    <TextView
-        android:id="@+id/text_demo"
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="60dp">
+        <ImageView
+            android:id="@+id/search_back"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:clickable="true"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:tint="@color/colorTextGrey" />
 
-</RelativeLayout>
+        <RelativeLayout
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="5dp"
+            android:layout_width="match_parent"
+            android:focusable="false"
+            android:background="@drawable/bg_ripple_search"
+            android:layout_height="40dp">
+
+            <EditText
+                android:id="@+id/search_text"
+                android:background="@null"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorTitle"
+                android:focusableInTouchMode="true"
+                android:textSize="15sp"
+                android:inputType="text"
+                android:lines="1"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:focusable="true"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:id="@+id/search_action"
+                android:layout_alignParentEnd="true"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:src="@drawable/ic_search"
+                android:layout_marginEnd="10dp"
+                android:layout_width="25dp"
+                android:padding="4dp"
+                android:layout_centerVertical="true"
+                android:layout_height="25dp"
+                android:focusable="true" />
+        </RelativeLayout>
+    </LinearLayout>
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/search_refresh"
+        android:visibility="gone"
+        android:background="#F1F1F1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_list_recycler"
+            android:layout_width="match_parent"
+            android:overScrollMode="never"
+            android:padding="6dp"
+            android:layout_height="match_parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</LinearLayout>
