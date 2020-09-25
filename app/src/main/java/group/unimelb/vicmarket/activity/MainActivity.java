@@ -3,7 +3,9 @@ package group.unimelb.vicmarket.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,13 +30,19 @@ import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private final static String TAG = MainActivity.class.getSimpleName();
 
     private ImageView imageHead;
     private RelativeLayout buttonSearch;
     private SmartRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
+
+    private LinearLayout buttonCategoryCars;
+    private LinearLayout buttonCategoryHome;
+    private LinearLayout buttonCategoryPhone;
+    private LinearLayout buttonCategorySport;
+    private LinearLayout buttonCategoryMore;
 
     /* Adapter for RecyclerView */
     private MainItemListAdapter adapter;
@@ -92,6 +100,12 @@ public class MainActivity extends AppCompatActivity {
             page++;
             loadData();
         });
+
+        buttonCategoryCars.setOnClickListener(this);
+        buttonCategoryHome.setOnClickListener(this);
+        buttonCategorySport.setOnClickListener(this);
+        buttonCategoryPhone.setOnClickListener(this);
+        buttonCategoryMore.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, CategoryListActivity.class)));
     }
 
     @Override
@@ -109,6 +123,11 @@ public class MainActivity extends AppCompatActivity {
         buttonSearch = findViewById(R.id.main_search);
         refreshLayout = findViewById(R.id.main_refresh);
         recyclerView = findViewById(R.id.main_list_recycler);
+        buttonCategoryCars = findViewById(R.id.cate_cars);
+        buttonCategoryHome = findViewById(R.id.cate_home);
+        buttonCategoryPhone = findViewById(R.id.cate_phone);
+        buttonCategorySport = findViewById(R.id.cate_sport);
+        buttonCategoryMore = findViewById(R.id.cate_more);
     }
 
     private void loadData() {
@@ -163,5 +182,29 @@ public class MainActivity extends AppCompatActivity {
         } else if (refreshLayout.getState() == RefreshState.Loading) {
             refreshLayout.finishLoadMore();
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(MainActivity.this, CategoryDetailActivity.class);
+        switch (v.getId()) {
+            case R.id.cate_cars:
+                intent.putExtra("category_id", 1);
+                intent.putExtra("category_name", getString(R.string.category_cars_and_vehicles));
+                break;
+            case R.id.cate_home:
+                intent.putExtra("category_id", 2);
+                intent.putExtra("category_name", getString(R.string.category_home_and_garden));
+                break;
+            case R.id.cate_phone:
+                intent.putExtra("category_id", 3);
+                intent.putExtra("category_name", getString(R.string.category_electronics));
+                break;
+            case R.id.cate_sport:
+                intent.putExtra("category_id", 4);
+                intent.putExtra("category_name", getString(R.string.category_sport_and_fitness));
+                break;
+        }
+        startActivity(intent);
     }
 }
