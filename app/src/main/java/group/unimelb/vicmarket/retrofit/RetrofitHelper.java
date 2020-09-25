@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import group.unimelb.vicmarket.retrofit.bean.CategoriesBean;
 import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
 import group.unimelb.vicmarket.retrofit.bean.SignInBean;
 import io.reactivex.Observable;
@@ -81,6 +82,11 @@ public class RetrofitHelper {
         params.put("page", page);
         params.put("pageSize", 10);
         execute(api.searchItemList(URL, params), observer);
+    }
+
+    public void getCategories(Observer<CategoriesBean> observer) {
+        String URL = BASE_URL + "/item/categories";
+        execute(api.getCategories(URL), observer);
     }
 
     private void execute(Observable observable, Observer observer) {

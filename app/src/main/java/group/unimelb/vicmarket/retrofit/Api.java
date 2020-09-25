@@ -2,6 +2,7 @@ package group.unimelb.vicmarket.retrofit;
 
 import java.util.Map;
 
+import group.unimelb.vicmarket.retrofit.bean.CategoriesBean;
 import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
 import group.unimelb.vicmarket.retrofit.bean.SignInBean;
 import io.reactivex.Observable;
@@ -19,4 +20,7 @@ public interface Api {
 
     @GET
     Observable<MainItemListBean> searchItemList(@Url String url, @QueryMap Map<String, Object> map);
+
+    @GET
+    Observable<CategoriesBean> getCategories(@Url String url);
 }
