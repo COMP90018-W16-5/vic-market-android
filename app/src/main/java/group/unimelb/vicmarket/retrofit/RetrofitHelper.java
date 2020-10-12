@@ -2,6 +2,7 @@ package group.unimelb.vicmarket.retrofit;
 
 import com.blankj.utilcode.util.SPUtils;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -81,6 +82,23 @@ public class RetrofitHelper {
         params.put("keyword", keyword);
         params.put("page", page);
         params.put("pageSize", 10);
+        execute(api.searchItemList(URL, params), observer);
+    }
+
+    public void getNearbyItems(Observer<MainItemListBean> observer,
+                               BigDecimal longitude,
+                               BigDecimal latitude,
+                               int maxDistance,
+                               int page,
+                               int category) {
+        String URL = BASE_URL + "/item/nearby";
+        Map<String, Object> params = new HashMap<>();
+        params.put("longitude", longitude);
+        params.put("latitude", latitude);
+        params.put("maxDistance", maxDistance);
+        params.put("category", category);
+        params.put("page", page);
+        params.put("pageSize", 15);
         execute(api.searchItemList(URL, params), observer);
     }
 

@@ -23,4 +23,7 @@ public interface Api {
 
     @GET
     Observable<CategoriesBean> getCategories(@Url String url);
+
+    @GET
+    Observable<MainItemListBean> getNearbyItems(@Url String url, @QueryMap Map<String, Object> map);
 }
