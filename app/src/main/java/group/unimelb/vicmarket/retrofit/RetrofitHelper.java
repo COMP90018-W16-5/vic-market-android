@@ -99,7 +99,7 @@ public class RetrofitHelper {
         params.put("category", category);
         params.put("page", page);
         params.put("pageSize", 15);
-        execute(api.searchItemList(URL, params), observer);
+        execute(api.getNearbyItems(URL, params), observer);
     }
 
     public void getCategories(Observer<CategoriesBean> observer) {

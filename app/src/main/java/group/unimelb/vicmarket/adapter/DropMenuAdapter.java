@@ -20,6 +20,11 @@ import com.baiiu.filter.view.FixedTabIndicator;
 import java.util.ArrayList;
 import java.util.List;
 
+import group.unimelb.vicmarket.retrofit.RetrofitHelper;
+import group.unimelb.vicmarket.retrofit.bean.CategoriesBean;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+
 public class DropMenuAdapter implements MenuAdapter {
     private final Context mContext;
     private OnItemSelectedListener onItemSelectedListener;
@@ -86,8 +91,30 @@ public class DropMenuAdapter implements MenuAdapter {
             list.add(new DropdownMenuBean(50, "50 KM"));
             list.add(new DropdownMenuBean(100, "100 KM"));
         } else if (position == 1) {
-            list.add(new DropdownMenuBean(1, "Home"));
-            list.add(new DropdownMenuBean(2, "Cars"));
+            RetrofitHelper.getInstance().getCategories(new Observer<CategoriesBean>() {
+                @Override
+                public void onSubscribe(Disposable d) {
+
+                }
+
+                @Override
+                public void onNext(CategoriesBean categoriesBean) {
+                    for (CategoriesBean.DataBean dataBean : categoriesBean.getData()) {
+                        list.add(new DropdownMenuBean(dataBean.getCid(), dataBean.getName()));
+                    }
+                }
+
+                @Override
+                public void onError(Throwable e) {
+
+                }
+
+                @Override
+                public void onComplete() {
+
+                }
+            });
+
         }
         singleListView.setList(list, -1);
 
