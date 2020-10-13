@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (!login) {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
             } else {
-                // TODO: start another activity
+                startActivity(new Intent(MainActivity.this, AccountActivity.class));
             }
         });
 
