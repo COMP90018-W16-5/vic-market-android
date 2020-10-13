@@ -220,6 +220,8 @@
             android:id="@+id/action_a"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="Add New Post"
+            android:src="@android:drawable/ic_menu_camera"
             fab:fab_colorNormal="@color/colorAccentPress"
             fab:fab_title="Demo1" />
 

@@ -6,4 +6,26 @@
     <string name="category_electronics">Electronics &amp;\n Phones</string>
     <string name="category_sport_and_fitness">Sport &amp;\n Fitness</string>
     <string name="category_more">More\n Categories</string>
+
+
+    <!--categories need to be modified -->
+    <string-array name="array_category">
+        <item>cars and vehicles</item>
+        <item>Home and Garden</item>
+        <item>Electronics</item>
+        <item>Sport and Fitness</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uranus</item>
+        <item>Neptune</item>
+    </string-array>
+
+    <string-array name="array_price">
+        <item>Fixed Price</item>
+        <item>Negotiable</item>
+        <item>Swap/Trade</item>
+        <item>Free</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

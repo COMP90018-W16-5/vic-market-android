@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.bumptech.glide.Glide;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout buttonCategoryPhone;
     private LinearLayout buttonCategorySport;
     private LinearLayout buttonCategoryMore;
+    private FloatingActionButton buttonPostNew;
 
     /* Adapter for RecyclerView */
     private MainItemListAdapter adapter;
@@ -107,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        buttonCategoryPhone.setOnClickListener(this);
         buttonCategoryPhone.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, NearbyItemsActivity.class)));
         buttonCategoryMore.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, CategoryListActivity.class)));
+        buttonPostNew.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, PostActivity.class)));
     }
 
     @Override
@@ -129,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonCategoryPhone = findViewById(R.id.cate_phone);
         buttonCategorySport = findViewById(R.id.cate_sport);
         buttonCategoryMore = findViewById(R.id.cate_more);
+        buttonPostNew = findViewById(R.id.action_a);
     }
 
     private void loadData() {
