@@ -1,2 +1,3 @@
+include ':filter-lib'
 include ':app'
 rootProject.name = "VicMarket"

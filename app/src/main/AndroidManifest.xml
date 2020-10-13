@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.CategoryListActivity"></activity>
+        <activity android:name=".activity.NearbyItemsActivity" />
         <activity android:name=".activity.CategoryDetailActivity" />
         <activity android:name=".activity.SearchActivity" />
         <activity android:name=".activity.LoginActivity" />

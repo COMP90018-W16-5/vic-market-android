@@ -28,6 +28,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation project(':filter-lib')
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
@@ -53,5 +54,4 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-32'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-32'
     implementation 'com.getbase:floatingactionbutton:1.10.1'
-
 }

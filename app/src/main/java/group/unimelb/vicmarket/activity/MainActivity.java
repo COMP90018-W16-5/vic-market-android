@@ -104,7 +104,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonCategoryCars.setOnClickListener(this);
         buttonCategoryHome.setOnClickListener(this);
         buttonCategorySport.setOnClickListener(this);
-        buttonCategoryPhone.setOnClickListener(this);
+//        buttonCategoryPhone.setOnClickListener(this);
+        buttonCategoryPhone.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, NearbyItemsActivity.class)));
         buttonCategoryMore.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, CategoryListActivity.class)));
     }
 
