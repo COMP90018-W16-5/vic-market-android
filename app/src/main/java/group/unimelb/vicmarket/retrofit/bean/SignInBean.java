@@ -3,10 +3,11 @@ package group.unimelb.vicmarket.retrofit.bean;
 import java.io.Serializable;
 
 public class SignInBean implements Serializable {
+
     /**
      * code : 200
      * msg : success
-     * data : {"uid":1,"displayName":"Joseph","email":"demo@demo.com","token":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkZW1vQGRlbW8uY29tIiwiaXNzIjoibmZhdyIsImV4cCI6MTU5ODg5NzE0OCwiaWF0IjoxNTk4ODc1NTQ4LCJyb2wiOiJVc2VyIn0.Jg1SApNm5JfXFJ0CNKX8SgtKPwHP73ELKnimcV6NDQnAucIeWkkQkif8oSry-Ea1-P8Dj_p5lSLUWeCRCsqlWg"}
+     * data : {"uid":1,"phone":"123","displayName":"Joseph","photo":"https://img.xieyangzhe.com/img/2020-09-20/a80f883c54ed350d143c7fda3eb59596.jpg","email":"demo@demo.com","token":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkZW1vQGRlbW8uY29tIiwiaXNzIjoibmZhdyIsImV4cCI6MTYwMDYxMzEzNywiaWF0IjoxNjAwNTkxNTM3LCJyb2wiOiJVc2VyIn0.0LJp9izy_JaBmvp8np205fObqC4gGP826bQA9WGoH8c-iPqiOVlnE-qdqe4CqZapAnKsMR3dLbjE3qi_Gwge2A"}
      */
 
     private int code;
@@ -40,13 +41,17 @@ public class SignInBean implements Serializable {
     public static class DataBean {
         /**
          * uid : 1
+         * phone : 123
          * displayName : Joseph
+         * photo : https://img.xieyangzhe.com/img/2020-09-20/a80f883c54ed350d143c7fda3eb59596.jpg
          * email : demo@demo.com
-         * token : eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkZW1vQGRlbW8uY29tIiwiaXNzIjoibmZhdyIsImV4cCI6MTU5ODg5NzE0OCwiaWF0IjoxNTk4ODc1NTQ4LCJyb2wiOiJVc2VyIn0.Jg1SApNm5JfXFJ0CNKX8SgtKPwHP73ELKnimcV6NDQnAucIeWkkQkif8oSry-Ea1-P8Dj_p5lSLUWeCRCsqlWg
+         * token : eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkZW1vQGRlbW8uY29tIiwiaXNzIjoibmZhdyIsImV4cCI6MTYwMDYxMzEzNywiaWF0IjoxNjAwNTkxNTM3LCJyb2wiOiJVc2VyIn0.0LJp9izy_JaBmvp8np205fObqC4gGP826bQA9WGoH8c-iPqiOVlnE-qdqe4CqZapAnKsMR3dLbjE3qi_Gwge2A
          */
 
         private int uid;
+        private String phone;
         private String displayName;
+        private String photo;
         private String email;
         private String token;
 
@@ -58,12 +63,28 @@ public class SignInBean implements Serializable {
             this.uid = uid;
         }
 
+        public String getPhone() {
+            return phone;
+        }
+
+        public void setPhone(String phone) {
+            this.phone = phone;
+        }
+
         public String getDisplayName() {
             return displayName;
         }
 
         public void setDisplayName(String displayName) {
             this.displayName = displayName;
+        }
+
+        public String getPhoto() {
+            return photo;
+        }
+
+        public void setPhoto(String photo) {
+            this.photo = photo;
         }
 
         public String getEmail() {

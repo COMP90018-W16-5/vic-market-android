@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
 import group.unimelb.vicmarket.retrofit.bean.SignInBean;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -51,9 +52,26 @@ public class RetrofitHelper {
     public void doLogin(Observer<SignInBean> observer, String username, String password) {
         String URL = BASE_URL + "/auth/signin";
         Map<String, Object> params = new HashMap<>();
-        params.put("email", username);
-        params.put("password", password);
+        params.put("email", username);      //transmit username to email
+        params.put("password", password);   //transmit password to password
         execute(api.signIn(URL, params), observer);
+    }
+
+    public void getItemList(Observer<MainItemListBean> observer, String page) {
+        String URL = BASE_URL + "/item/list";
+        Map<String, Object> params = new HashMap<>();
+        params.put("page", page);
+        params.put("pageSize", 10);
+        execute(api.getItemList(URL, params), observer);
+    }
+
+    public void getItemListByCategory(Observer<MainItemListBean> observer, String page, int category) {
+        String URL = BASE_URL + "/item/list";
+        Map<String, Object> params = new HashMap<>();
+        params.put("page", page);
+        params.put("pageSize", 15);
+        params.put("category", category);
+        execute(api.getItemList(URL, params), observer);
     }
 
     private void execute(Observable observable, Observer observer) {
@@ -68,7 +86,7 @@ public class RetrofitHelper {
     }
 
     private void initAuth() {
-        token = SPUtils.getInstance().getString("auth", "");
+        token = SPUtils.getInstance().getString("token", "");
     }
 
     private static class SingletonHolder {
