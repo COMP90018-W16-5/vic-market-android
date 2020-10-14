@@ -16,4 +16,5 @@
     <color name="colorBlack">#000000</color>
 
     <color name="colorDef">#FAFAFA</color>
+    <color name="colorError">#FF4040</color>
 </resources>

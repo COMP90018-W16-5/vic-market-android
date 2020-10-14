@@ -32,7 +32,9 @@ public class RetrofitHelper {
         okHttpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .addInterceptor(chain -> {
                     Request request = chain.request();
-                    request = request.newBuilder().addHeader("Authorization", "Bearer " + token).build();
+                    if (token != null && !"".equals(token)) {
+                        request = request.newBuilder().addHeader("Authorization", "Bearer " + token).build();
+                    }
                     return chain.proceed(request);
                 })
                 .readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);

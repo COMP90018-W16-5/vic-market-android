@@ -1,21 +1,29 @@
 package group.unimelb.vicmarket.activity;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
+import com.josephvuoto.customdialog.alert.CustomDialog;
+import com.josephvuoto.customdialog.common.OnCancelClickListener;
+import com.josephvuoto.customdialog.common.OnOkClickListener;
 
 import org.w3c.dom.Text;
 
 import group.unimelb.vicmarket.R;
+import group.unimelb.vicmarket.retrofit.RetrofitHelper;
 
 public class AccountActivity extends AppCompatActivity {
 
@@ -26,7 +34,7 @@ public class AccountActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private RelativeLayout layoutWishList;
     private RelativeLayout layoutMyPosts;
-
+    private RelativeLayout layoutLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -54,6 +62,26 @@ public class AccountActivity extends AppCompatActivity {
         layoutMyPosts.setOnClickListener(v -> {
             // TODO: open my post page
         });
+
+        layoutLogout.setOnClickListener(v -> {
+            new CustomDialog.Builder(AccountActivity.this)
+                    .setTitle("Logout")
+                    .setMessage("Ready to logout?")
+                    .setCancelButton("Cancel", Dialog::dismiss)
+                    .setOkButton("Confirm", dialog -> {
+                        SPUtils.getInstance().put("login", false);
+                        SPUtils.getInstance().put("name", "");
+                        SPUtils.getInstance().put("email", "");
+                        SPUtils.getInstance().put("phone", "");
+                        SPUtils.getInstance().put("photo", "");
+                        SPUtils.getInstance().put("token", "");
+                        RetrofitHelper.getInstance().setToken("");
+                        ToastUtils.showShort("Logged out");
+                        Intent intent = new Intent(AccountActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }).build().show();
+        });
     }
 
     private void findViews() {
@@ -64,5 +92,6 @@ public class AccountActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.account_toolbar);
         layoutMyPosts = findViewById(R.id.myposts_layout);
         layoutWishList = findViewById(R.id.wishlist_layout);
+        layoutLogout = findViewById(R.id.logout_layout);
     }
 }
