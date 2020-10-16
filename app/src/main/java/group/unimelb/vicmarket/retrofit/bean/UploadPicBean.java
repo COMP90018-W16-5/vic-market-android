@@ -17,7 +17,7 @@ public class UploadPicBean {
      */
     private int code;
     private String msg;
-    private DataBean data;
+    private List<DataBean> data;
 
     public int getCode() {
         return code;
@@ -35,11 +35,11 @@ public class UploadPicBean {
         this.msg = msg;
     }
 
-    public DataBean getData() {
+    public List<DataBean> getData() {
         return data;
     }
 
-    public void setData(DataBean data) {
+    public void setData(List<DataBean> data) {
         this.data = data;
     }
 

@@ -95,7 +95,7 @@ public class RetrofitHelper {
         }
         String extName = file.getName().substring(file.getName().lastIndexOf("."));
         String fileName = UUID.randomUUID().toString().replace("-", "") + extName;
-        builder.addFormDataPart("file" , fileName ,
+        builder.addFormDataPart("images" , fileName ,
                 RequestBody.create(MediaType.parse("multipart/form-data"), file));
         MultipartBody requestBody = builder.build();
         execute(api.uploadAvator(URL, requestBody) , observer);
