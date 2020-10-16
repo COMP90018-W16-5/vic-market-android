@@ -14,6 +14,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.josephvuoto.customdialog.loading.LoadingDialog;
 
 import group.unimelb.vicmarket.R;
+import group.unimelb.vicmarket.retrofit.RegexUtils;
 import group.unimelb.vicmarket.retrofit.RetrofitHelper;
 import group.unimelb.vicmarket.retrofit.bean.SignInBean;
 import io.reactivex.Observer;
@@ -37,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
 
         /* Find views */
         findViews();
-        
+
         /* Initialize loading dialog */
         loadingDialog = new LoadingDialog.Builder(LoginActivity.this)
                 .setLoadingText("Loading...")
@@ -94,7 +95,11 @@ public class LoginActivity extends AppCompatActivity {
                 }
             };
             /* Perform the HTTP request */
-            RetrofitHelper.getInstance().doLogin(observer, email, password);
+            if (!RegexUtils.isEmail(email)) {
+                ToastUtils.showShort("Please enter the Correct Form of email!");
+            } else {
+                RetrofitHelper.getInstance().doLogin(observer, email, password);
+            }
         });
 
         buttonRegister.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this,
@@ -108,5 +113,5 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin = findViewById(R.id.button_login);
         buttonRegister = findViewById(R.id.button_register);
         buttonBack = findViewById(R.id.button_back);
-        }
-        }
+    }
+}

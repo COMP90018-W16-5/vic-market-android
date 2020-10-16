@@ -69,12 +69,14 @@ public class RetrofitHelper {
         execute(api.signIn(URL, params), observer);
     }
 
-    public void doSignUp(Observer<SignUpBean> observer, String username, String email, String password) {
+    public void doSignUp(Observer<SignUpBean> observer, String username, String email,String phone, String password ,String picUrl) {
         String URL = BASE_URL+ "/auth/signup";
         Map<String, Object> params = new HashMap<>();
-        params.put("name", username);
+        params.put("displayName", username);
         params.put("email" , email);
         params.put("password", password);
+        params.put("phone",phone);
+        params.put("photo", "picUrl");
         execute(api.SignUp(URL , params) , observer);
 
 

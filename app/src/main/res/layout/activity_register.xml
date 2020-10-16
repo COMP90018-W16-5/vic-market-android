@@ -23,13 +23,13 @@
         android:paddingBottom="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/upload_photo"
             android:layout_gravity="center"
             android:src="@mipmap/ic_launcher"
             android:layout_width="120dp"
             android:layout_height="120dp">
-        </ImageView>
+        </de.hdodenhof.circleimageview.CircleImageView>
 
         <EditText
             android:id="@+id/edit_name"
@@ -47,6 +47,15 @@
             android:hint="Email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/edit_phone"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/text_border"
+            android:padding="15dp"
+            android:hint="Phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <EditText
             android:id="@+id/edit_password"
             android:inputType="textPassword"

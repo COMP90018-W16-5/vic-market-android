@@ -2,8 +2,6 @@ package group.unimelb.vicmarket.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
@@ -16,10 +14,9 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.josephvuoto.customdialog.loading.LoadingDialog;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 import group.unimelb.vicmarket.R;
+import group.unimelb.vicmarket.retrofit.RegexUtils;
 import group.unimelb.vicmarket.retrofit.RetrofitHelper;
 import group.unimelb.vicmarket.retrofit.bean.SignUpBean;
 import group.unimelb.vicmarket.retrofit.bean.UploadPicBean;
@@ -35,6 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText textEmail;
     private EditText textPassword;
     private EditText textConfirmPassword;
+    private EditText phoneNum;
     private Button buttonRegister;
     private ImageView buttonBack;
     private ImageView photo;
@@ -44,7 +42,8 @@ public class RegisterActivity extends AppCompatActivity {
     private LoadingDialog loadingDialog;
 
     Observer<UploadPicBean> uploadPicObserver;
-    private String picUrl;
+    private String picLocation;
+    private String picUrl = "https://img.xieyangzhe.com/img/2020-10-16/7e834bebf8551bc218d66bf88f552e57.jpg";
 
 
     @Override
@@ -76,13 +75,13 @@ public class RegisterActivity extends AppCompatActivity {
 
                         @Override
                         public void onNext(UploadPicBean uploadPicBean) {
-                            Uri uri = Uri.fromFile(new File(picUrl));
+                            Uri uri = Uri.fromFile(new File(picLocation));
                             photo.setImageURI(uri);
+                            picUrl = uploadPicBean.getData().get(0).getUrl();
                         }
 
                         @Override
                         public void onError(Throwable e) {
-
                             /* Error(HTTP error or JSON format error) */
                             e.printStackTrace();
                             /* Hide the loading dialog */
@@ -98,16 +97,16 @@ public class RegisterActivity extends AppCompatActivity {
                     };
 
 
-                }
-        );
+                });
 
         buttonRegister.setOnClickListener(v -> {
             /* Get content typed in */
             String name = textName.getText().toString();
             String email = textEmail.getText().toString();
+            String phone = phoneNum.getText().toString();
             String password = textPassword.getText().toString();
-            String photoUrl;
             String passwordConfirm = textConfirmPassword.getText().toString();
+
 
 
             Observer<SignUpBean> signObserver = new Observer<SignUpBean>() {
@@ -123,7 +122,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if (signUpBean.getCode() == 200) {
                         /* SignUp succeed, save the param for future requests */
                         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                        ToastUtils.showShort(signUpBean.getMsg());
+                        ToastUtils.showShort("Sign Up Successfully!");
                         startActivity(intent);
                     } else {
                         ToastUtils.showShort(signUpBean.getMsg());
@@ -147,9 +146,21 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             };
             /* Perform the HTTP request */
-            RetrofitHelper.getInstance().doSignUp(signObserver, name, email, password);
+            if (!RegexUtils.isUsername(name)){
+                ToastUtils.showShort("Please enter the Correct Form of user name!");
+            }else if(!RegexUtils.isEmail(email)){
+                ToastUtils.showShort("Please enter the Correct Form of email!");
+            }else if (!password.equals(passwordConfirm) ){
+                ToastUtils.showShort("The passwords are not consistent!");
+            }else if (!RegexUtils.isPassword(password)){
+                ToastUtils.showShort("Please enter the Correct Form of password!");
+            }else {
+                RetrofitHelper.getInstance().doSignUp(signObserver, name, email,phone, password , picUrl);
+            }
+
 
         });
+
         buttonBack.setOnClickListener(v -> finish());
 
     }
@@ -162,6 +173,7 @@ public class RegisterActivity extends AppCompatActivity {
         buttonRegister = findViewById(R.id.button_Sign_up);
         buttonBack = findViewById(R.id.button_back);
         photo = findViewById(R.id.upload_photo);
+        phoneNum = findViewById(R.id.edit_phone);
     }
 
     @Override
@@ -169,9 +181,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-           picUrl =  data.getStringExtra("respond");
+           picLocation =  data.getStringExtra("respond");
             /* Perform the HTTP request */
-            RetrofitHelper.getInstance().uploadPic(uploadPicObserver , picUrl);
+            RetrofitHelper.getInstance().uploadPic(uploadPicObserver , picLocation);
 
         }
 
