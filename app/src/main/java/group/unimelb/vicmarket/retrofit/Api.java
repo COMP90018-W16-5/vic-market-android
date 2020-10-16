@@ -5,7 +5,11 @@ import java.util.Map;
 import group.unimelb.vicmarket.retrofit.bean.CategoriesBean;
 import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
 import group.unimelb.vicmarket.retrofit.bean.SignInBean;
+import group.unimelb.vicmarket.retrofit.bean.SignUpBean;
+import group.unimelb.vicmarket.retrofit.bean.UploadPicBean;
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
@@ -14,6 +18,13 @@ import retrofit2.http.Url;
 public interface Api {
     @POST
     Observable<SignInBean> signIn(@Url String url, @QueryMap Map<String, Object> map);
+
+    @POST
+    Observable<SignUpBean> SignUp(@Url String url , @QueryMap Map<String, Object> map);
+
+    @POST
+    Observable<UploadPicBean> uploadAvator(@Url  String url , @Body MultipartBody requestBody);
+
 
     @GET
     Observable<MainItemListBean> getItemList(@Url String url, @QueryMap Map<String, Object> map);
@@ -26,4 +37,6 @@ public interface Api {
 
     @GET
     Observable<MainItemListBean> getNearbyItems(@Url String url, @QueryMap Map<String, Object> map);
+
+
 }

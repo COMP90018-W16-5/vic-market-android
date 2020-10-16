@@ -108,5 +108,5 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin = findViewById(R.id.button_login);
         buttonRegister = findViewById(R.id.button_register);
         buttonBack = findViewById(R.id.button_back);
-    }
-}
+        }
+        }
