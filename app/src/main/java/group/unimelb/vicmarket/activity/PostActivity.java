@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -35,14 +36,14 @@ import java.util.Locale;
 
 import group.unimelb.vicmarket.R;
 
-public class PostActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class PostActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     private Button buttonCancel;
     private EditText locationField;
     private ImageView imagePicker;
-    private ImageView image1, image2, image3;
-    private ImageView image4, image5, image6;
-    private ImageView image7, image8, image9;
+//    private ImageView image1, image2, image3;
+//    private ImageView image4, image5, image6;
+//    private ImageView image7, image8, image9;
     private static final int REQUEST_CODE_CHOOSE = 23;
     LocationManager locationManager;
     Double latitude, longitude;
@@ -51,6 +52,7 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -66,9 +68,6 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
 
-
-
-
         Spinner spinnerCate = (Spinner) findViewById(R.id.spin_cate);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.array_category, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -82,8 +81,14 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
         spinnerPrice.setOnItemSelectedListener(this);
 
         buttonCancel.setOnClickListener(v -> finish());
-        imagePicker.setOnClickListener(v -> {
-            pickImage();
+
+        imagePicker = findViewById(R.id.image_picker);
+        imagePicker.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                BottomSheetDialog bottomSheet = new BottomSheetDialog();
+                bottomSheet.show(getSupportFragmentManager(),"exampleBottomSheet");
+            }
         });
     }
 
@@ -94,32 +99,32 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    public void pickImage(){
-        Matisse.from(PostActivity.this)
-                .choose(MimeType.ofImage(), false)
-                .countable(true)
-                .capture(true)
-                .captureStrategy(
-                        new CaptureStrategy(true, "com.zhihu.matisse.sample.fileprovider", "test"))
-                .maxSelectable(9)
-//                .addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
-//                .gridExpectedSize(
-//                        getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
-                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
-                .thumbnailScale(0.85f)
-                .imageEngine(new GlideEngine())
-                .setOnSelectedListener((uriList, pathList) -> {
-                    Log.e("onSelected", "onSelected: pathList=" + pathList);
-                })
-                .showSingleMediaType(true)
-                .originalEnable(true)
-                .maxOriginalSize(10)
-                .autoHideToolbarOnSingleTap(true)
-                .setOnCheckedListener(isChecked -> {
-                    Log.e("isChecked", "onCheck: isChecked=" + isChecked);
-                })
-                .forResult(REQUEST_CODE_CHOOSE);
-    }
+//    public void pickImage(){
+//        Matisse.from(PostActivity.this)
+//                .choose(MimeType.ofImage(), false)
+//                .countable(true)
+//                .capture(true)
+//                .captureStrategy(
+//                        new CaptureStrategy(true, "com.zhihu.matisse.sample.fileprovider", "test"))
+//                .maxSelectable(9)
+////                .addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
+////                .gridExpectedSize(
+////                        getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
+//                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+//                .thumbnailScale(0.85f)
+//                .imageEngine(new GlideEngine())
+//                .setOnSelectedListener((uriList, pathList) -> {
+//                    Log.e("onSelected", "onSelected: pathList=" + pathList);
+//                })
+//                .showSingleMediaType(true)
+//                .originalEnable(true)
+//                .maxOriginalSize(10)
+//                .autoHideToolbarOnSingleTap(true)
+//                .setOnCheckedListener(isChecked -> {
+//                    Log.e("isChecked", "onCheck: isChecked=" + isChecked);
+//                })
+//                .forResult(REQUEST_CODE_CHOOSE);
+//    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
@@ -163,4 +168,6 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         }
     }
+
+
 }

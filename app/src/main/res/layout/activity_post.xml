@@ -118,85 +118,85 @@
 
                 <ImageView
                     android:id="@+id/image_picker"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
                     android:adjustViewBounds="false"
 
                     android:background="@drawable/border"
                     app:srcCompat="@drawable/ic_photo_camera_white_24dp"
                     app:tint="#7C000000" />
 
-                <ImageView
-                    android:id="@+id/image1"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:adjustViewBounds="false"
-                    android:background="#FFFFFF"
-                    app:srcCompat="@drawable/border" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/image1"-->
+<!--                    android:layout_width="75dp"-->
+<!--                    android:layout_height="75dp"-->
+<!--                    android:adjustViewBounds="false"-->
+<!--                    android:background="#FFFFFF"-->
+<!--                    app:srcCompat="@drawable/border" />-->
 
-                <ImageView
-                    android:id="@+id/image2"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:adjustViewBounds="false"
-                    android:background="#FFFFFF"
-                    app:srcCompat="@drawable/border" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/image2"-->
+<!--                    android:layout_width="75dp"-->
+<!--                    android:layout_height="75dp"-->
+<!--                    android:adjustViewBounds="false"-->
+<!--                    android:background="#FFFFFF"-->
+<!--                    app:srcCompat="@drawable/border" />-->
 
-                <ImageView
-                    android:id="@+id/image3"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:adjustViewBounds="false"
-                    android:background="#FFFFFF"
-                    app:srcCompat="@drawable/border" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/image3"-->
+<!--                    android:layout_width="75dp"-->
+<!--                    android:layout_height="75dp"-->
+<!--                    android:adjustViewBounds="false"-->
+<!--                    android:background="#FFFFFF"-->
+<!--                    app:srcCompat="@drawable/border" />-->
 
-                <ImageView
-                    android:id="@+id/image4"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:adjustViewBounds="false"
-                    android:background="#FFFFFF"
-                    app:srcCompat="@drawable/border" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/image4"-->
+<!--                    android:layout_width="75dp"-->
+<!--                    android:layout_height="75dp"-->
+<!--                    android:adjustViewBounds="false"-->
+<!--                    android:background="#FFFFFF"-->
+<!--                    app:srcCompat="@drawable/border" />-->
 
-                <ImageView
-                    android:id="@+id/image5"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:adjustViewBounds="false"
-                    android:background="#FFFFFF"
-                    app:srcCompat="@drawable/border" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/image5"-->
+<!--                    android:layout_width="75dp"-->
+<!--                    android:layout_height="75dp"-->
+<!--                    android:adjustViewBounds="false"-->
+<!--                    android:background="#FFFFFF"-->
+<!--                    app:srcCompat="@drawable/border" />-->
 
-                <ImageView
-                    android:id="@+id/image6"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:adjustViewBounds="false"
-                    android:background="#FFFFFF"
-                    app:srcCompat="@drawable/border" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/image6"-->
+<!--                    android:layout_width="75dp"-->
+<!--                    android:layout_height="75dp"-->
+<!--                    android:adjustViewBounds="false"-->
+<!--                    android:background="#FFFFFF"-->
+<!--                    app:srcCompat="@drawable/border" />-->
 
-                <ImageView
-                    android:id="@+id/image7"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:adjustViewBounds="false"
-                    android:background="#FFFFFF"
-                    app:srcCompat="@drawable/border" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/image7"-->
+<!--                    android:layout_width="75dp"-->
+<!--                    android:layout_height="75dp"-->
+<!--                    android:adjustViewBounds="false"-->
+<!--                    android:background="#FFFFFF"-->
+<!--                    app:srcCompat="@drawable/border" />-->
 
-                <ImageView
-                    android:id="@+id/image8"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:adjustViewBounds="false"
-                    android:background="#FFFFFF"
-                    app:srcCompat="@drawable/border" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/image8"-->
+<!--                    android:layout_width="75dp"-->
+<!--                    android:layout_height="75dp"-->
+<!--                    android:adjustViewBounds="false"-->
+<!--                    android:background="#FFFFFF"-->
+<!--                    app:srcCompat="@drawable/border" />-->
 
-                <ImageView
-                    android:id="@+id/image9"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:adjustViewBounds="false"
-                    android:background="#FFFFFF"
-                    app:srcCompat="@drawable/border" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/image9"-->
+<!--                    android:layout_width="75dp"-->
+<!--                    android:layout_height="75dp"-->
+<!--                    android:adjustViewBounds="false"-->
+<!--                    android:background="#FFFFFF"-->
+<!--                    app:srcCompat="@drawable/border" />-->
 
 
             </GridLayout>
