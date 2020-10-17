@@ -11,15 +11,6 @@
         android:layout_height="?attr/actionBarSize">
 
     </androidx.appcompat.widget.Toolbar>
-<!--    <ImageView-->
-<!--        android:id="@+id/button_back"-->
-<!--        android:src="@drawable/ic_back"-->
-<!--        android:layout_margin="20dp"-->
-<!--        android:clickable="true"-->
-<!--        android:focusable="true"-->
-<!--        android:background="?selectableItemBackgroundBorderless"-->
-<!--        android:layout_width="40dp"-->
-<!--        android:layout_height="40dp" />-->
 
     <LinearLayout
         android:layout_centerInParent="true"

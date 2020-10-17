@@ -1,23 +1,33 @@
 package group.unimelb.vicmarket.retrofit;
 
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.SPUtils;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import group.unimelb.vicmarket.common.MarketApplication;
 import group.unimelb.vicmarket.retrofit.bean.CategoriesBean;
 import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
 import group.unimelb.vicmarket.retrofit.bean.SignInBean;
+import group.unimelb.vicmarket.retrofit.bean.SignUpBean;
+import group.unimelb.vicmarket.retrofit.bean.UploadPicBean;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import top.zibin.luban.Luban;
 
 public class RetrofitHelper {
     private static final int DEFAULT_TIMEOUT = 10;
@@ -59,6 +69,41 @@ public class RetrofitHelper {
         params.put("email", username);
         params.put("password", password);
         execute(api.signIn(URL, params), observer);
+    }
+
+    public void doSignUp(Observer<SignUpBean> observer, String username, String email,String phone, String password ,String picUrl) {
+        String URL = BASE_URL+ "/auth/signup";
+        Map<String, Object> params = new HashMap<>();
+        params.put("displayName", username);
+        params.put("email" , email);
+        params.put("password", password);
+        params.put("phone",phone);
+        params.put("photo", "picUrl");
+        execute(api.SignUp(URL , params) , observer);
+
+
+    }
+
+    public void uploadPic(Observer<UploadPicBean> observer , String picUrl ){
+        String URL = BASE_URL+ "/item/image";
+        MultipartBody.Builder builder = new MultipartBody.Builder();
+        builder.setType(MultipartBody.FORM);
+
+
+        File file = new File(picUrl);
+        try {
+            file = Luban.with(MarketApplication.getAppContext()).load(file).get().get(0);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        String extName = file.getName().substring(file.getName().lastIndexOf("."));
+        String fileName = UUID.randomUUID().toString().replace("-", "") + extName;
+        builder.addFormDataPart("images" , fileName ,
+                RequestBody.create(MediaType.parse("multipart/form-data"), file));
+        MultipartBody requestBody = builder.build();
+        execute(api.uploadAvator(URL, requestBody) , observer);
+
     }
 
     public void getItemList(Observer<MainItemListBean> observer, String page) {
