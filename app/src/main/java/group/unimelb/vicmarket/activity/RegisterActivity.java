@@ -89,6 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
                     .setOnCheckedListener(isChecked -> {
                         Log.e("isChecked", "onCheck: isChecked=" + isChecked);
                     })
+                    .theme(R.style.Matisse_Market)
                     .forResult(REQUEST_CODE_CHOOSE);
                 });
 
