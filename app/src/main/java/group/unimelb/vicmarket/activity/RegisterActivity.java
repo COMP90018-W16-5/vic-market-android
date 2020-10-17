@@ -2,8 +2,10 @@ package group.unimelb.vicmarket.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -12,9 +14,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.josephvuoto.customdialog.loading.LoadingDialog;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.engine.impl.GlideEngine;
+import com.zhihu.matisse.filter.Filter;
+import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.io.File;
 
+import group.unimelb.vicmarket.GifSizeFilter;
 import group.unimelb.vicmarket.R;
 import group.unimelb.vicmarket.retrofit.RegexUtils;
 import group.unimelb.vicmarket.retrofit.RetrofitHelper;
@@ -26,7 +34,7 @@ import io.reactivex.disposables.Disposable;
 public class RegisterActivity extends AppCompatActivity {
     private final static String TAG = RegisterActivity.class.getSimpleName();
 
-    public final int REQUEST_SELECTPIC = 1;
+    private static final int REQUEST_CODE_CHOOSE = 23;
 
     private EditText textName;
     private EditText textEmail;
@@ -37,14 +45,10 @@ public class RegisterActivity extends AppCompatActivity {
     private ImageView buttonBack;
     private ImageView photo;
 
-
-
     private LoadingDialog loadingDialog;
 
-    Observer<UploadPicBean> uploadPicObserver;
     private String picLocation;
-    private String picUrl = "https://img.xieyangzhe.com/img/2020-10-16/7e834bebf8551bc218d66bf88f552e57.jpg";
-
+    private String picUrl = "https://img.xieyangzhe.com/img/default.jpg";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,41 +66,30 @@ public class RegisterActivity extends AppCompatActivity {
                 .build();
 
         photo.setOnClickListener(v -> {
-
-                    Intent intent = new Intent(RegisterActivity.this, UploadPicActivity.class);
-                    //startActivity(intent);
-                    startActivityForResult(intent,REQUEST_SELECTPIC);
-                    uploadPicObserver = new Observer<UploadPicBean>() {
-
-                        @Override
-                        public void onSubscribe(Disposable d) {
-                            loadingDialog.show();
-                        }
-
-                        @Override
-                        public void onNext(UploadPicBean uploadPicBean) {
-                            Uri uri = Uri.fromFile(new File(picLocation));
-                            photo.setImageURI(uri);
-                            picUrl = uploadPicBean.getData().get(0).getUrl();
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            /* Error(HTTP error or JSON format error) */
-                            e.printStackTrace();
-                            /* Hide the loading dialog */
-                            loadingDialog.dismiss();
-                            ToastUtils.showShort("Unknown error");
-                        }
-
-                        @Override
-                        public void onComplete() {
-                            /* Hide the loading dialog */
-                            loadingDialog.dismiss();
-                        }
-                    };
-
-
+            Matisse.from(RegisterActivity.this)
+                    .choose(MimeType.ofImage(), false)
+                    .countable(true)
+                    .capture(true)
+                    .captureStrategy(
+                            new CaptureStrategy(true, "group.unimelb.vicmarket.activity.fileprovider", "test"))
+                    .maxSelectable(1)
+                    .addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
+                    .gridExpectedSize(
+                            getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
+                    .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+                    .thumbnailScale(0.85f)
+                    .imageEngine(new GlideEngine())
+                    .setOnSelectedListener((uriList, pathList) -> {
+                        Log.e("onSelected", "onSelected: pathList=" + pathList);
+                    })
+                    .showSingleMediaType(true)
+                    .originalEnable(true)
+                    .maxOriginalSize(10)
+                    .autoHideToolbarOnSingleTap(true)
+                    .setOnCheckedListener(isChecked -> {
+                        Log.e("isChecked", "onCheck: isChecked=" + isChecked);
+                    })
+                    .forResult(REQUEST_CODE_CHOOSE);
                 });
 
         buttonRegister.setOnClickListener(v -> {
@@ -106,8 +99,6 @@ public class RegisterActivity extends AppCompatActivity {
             String phone = phoneNum.getText().toString();
             String password = textPassword.getText().toString();
             String passwordConfirm = textConfirmPassword.getText().toString();
-
-
 
             Observer<SignUpBean> signObserver = new Observer<SignUpBean>() {
 
@@ -160,9 +151,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         });
-
         buttonBack.setOnClickListener(v -> finish());
-
     }
 
     private void findViews() {
@@ -178,16 +167,40 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-           picLocation =  data.getStringExtra("respond");
-            /* Perform the HTTP request */
+        if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
+            // Get picture location and upload the picture
+            picLocation = Matisse.obtainPathResult(data).get(0);
+            Observer<UploadPicBean> uploadPicObserver = new Observer<UploadPicBean>() {
+
+                @Override
+                public void onSubscribe(Disposable d) {
+                    loadingDialog.show();
+                }
+
+                @Override
+                public void onNext(UploadPicBean uploadPicBean) {
+                    Uri uri = Uri.fromFile(new File(picLocation));
+                    photo.setImageURI(uri);
+                    picUrl = uploadPicBean.getData().get(0).getUrl();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    /* Error(HTTP error or JSON format error) */
+                    e.printStackTrace();
+                    /* Hide the loading dialog */
+                    loadingDialog.dismiss();
+                    ToastUtils.showShort("Unknown error");
+                }
+
+                @Override
+                public void onComplete() {
+                    /* Hide the loading dialog */
+                    loadingDialog.dismiss();
+                }
+            };
             RetrofitHelper.getInstance().uploadPic(uploadPicObserver , picLocation);
-
         }
-
-
-
     }
 }
