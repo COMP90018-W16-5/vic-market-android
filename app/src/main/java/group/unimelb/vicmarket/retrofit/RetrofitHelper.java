@@ -78,7 +78,7 @@ public class RetrofitHelper {
         params.put("email" , email);
         params.put("password", password);
         params.put("phone",phone);
-        params.put("photo", "picUrl");
+        params.put("photo", picUrl);
         execute(api.SignUp(URL , params) , observer);
 
 

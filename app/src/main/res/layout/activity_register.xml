@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activity.LoginActivity">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/register_toolbar"
@@ -12,75 +13,79 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <LinearLayout
-        android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:paddingBottom="40dp"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/upload_photo"
-            android:layout_gravity="center"
-            android:src="@mipmap/ic_launcher"
-            android:layout_width="120dp"
-            android:layout_height="120dp">
-        </de.hdodenhof.circleimageview.CircleImageView>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:paddingBottom="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/upload_photo"
+                android:layout_gravity="center"
+                android:src="@mipmap/ic_launcher"
+                android:layout_width="100dp"
+                android:layout_height="100dp">
+            </de.hdodenhof.circleimageview.CircleImageView>
 
-        <EditText
-            android:id="@+id/edit_name"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/text_border"
-            android:padding="15dp"
-            android:hint="Your Name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/edit_email"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/text_border"
-            android:padding="15dp"
-            android:hint="Email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/edit_phone"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/text_border"
-            android:padding="15dp"
-            android:hint="Phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/edit_name"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/text_border"
+                android:padding="15dp"
+                android:hint="Your Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/edit_email"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/text_border"
+                android:padding="15dp"
+                android:hint="Email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/edit_phone"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/text_border"
+                android:padding="15dp"
+                android:hint="Phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/edit_password"
-            android:inputType="textPassword"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/text_border"
-            android:padding="15dp"
-            android:hint="Password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/edit_password_again"
-            android:inputType="textPassword"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/text_border"
-            android:padding="15dp"
-            android:hint="Confirm Password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/edit_password"
+                android:inputType="textPassword"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/text_border"
+                android:padding="15dp"
+                android:hint="Password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/edit_password_again"
+                android:inputType="textPassword"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/text_border"
+                android:padding="15dp"
+                android:hint="Confirm Password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/button_Sign_up"
-            android:text="Sign up"
-            android:textColor="@color/white"
-            android:background="@drawable/bg_ripple_ok"
-            android:layout_marginTop="40dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/button_Sign_up"
+                android:text="Sign up"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_ripple_ok"
+                android:layout_marginTop="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
 
-    </LinearLayout>
-</RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

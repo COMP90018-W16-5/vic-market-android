@@ -1,5 +1,7 @@
 package group.unimelb.vicmarket.activity;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -9,12 +11,14 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.josephvuoto.customdialog.loading.LoadingDialog;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
@@ -51,6 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
     private String picLocation;
     private String picUrl = "https://img.xieyangzhe.com/img/default.jpg";
 
+    @SuppressLint("CheckResult")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -72,32 +77,40 @@ public class RegisterActivity extends AppCompatActivity {
                 .build();
 
         photo.setOnClickListener(v -> {
-            Matisse.from(RegisterActivity.this)
-                    .choose(MimeType.ofImage(), false)
-                    .countable(true)
-                    .capture(true)
-                    .captureStrategy(
-                            new CaptureStrategy(true, "group.unimelb.vicmarket.activity.fileprovider", "test"))
-                    .maxSelectable(1)
-                    .addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
-                    .gridExpectedSize(
-                            getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
-                    .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
-                    .thumbnailScale(0.85f)
-                    .imageEngine(new GlideEngine())
-                    .setOnSelectedListener((uriList, pathList) -> {
-                        Log.e("onSelected", "onSelected: pathList=" + pathList);
-                    })
-                    .showSingleMediaType(true)
-                    .originalEnable(true)
-                    .maxOriginalSize(10)
-                    .autoHideToolbarOnSingleTap(true)
-                    .setOnCheckedListener(isChecked -> {
-                        Log.e("isChecked", "onCheck: isChecked=" + isChecked);
-                    })
-                    .theme(R.style.Matisse_Market)
-                    .forResult(REQUEST_CODE_CHOOSE);
-                });
+            RxPermissions rxPermissions = new RxPermissions(this);
+            rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    .subscribe(aBoolean -> {
+                        if (aBoolean) {
+                            Matisse.from(RegisterActivity.this)
+                                    .choose(MimeType.ofImage(), false)
+                                    .countable(false)
+                                    .capture(false)
+                                    .maxSelectable(1)
+                                    .addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
+                                    .gridExpectedSize(
+                                            getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
+                                    .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+                                    .thumbnailScale(0.85f)
+                                    .imageEngine(new GlideEngine())
+                                    .setOnSelectedListener((uriList, pathList) -> {
+                                        Log.e("onSelected", "onSelected: pathList=" + pathList);
+                                    })
+                                    .showSingleMediaType(true)
+                                    .originalEnable(true)
+                                    .maxOriginalSize(10)
+                                    .autoHideToolbarOnSingleTap(true)
+                                    .setOnCheckedListener(isChecked -> {
+                                        Log.e("isChecked", "onCheck: isChecked=" + isChecked);
+                                    })
+                                    .theme(R.style.Matisse_Market)
+                                    .forResult(REQUEST_CODE_CHOOSE);
+                        } else {
+                            Toast.makeText(RegisterActivity.this, R.string.permission_request_denied, Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    }, Throwable::printStackTrace);
+
+        });
 
         buttonRegister.setOnClickListener(v -> {
             /* Get content typed in */
@@ -119,9 +132,8 @@ public class RegisterActivity extends AppCompatActivity {
                     /* Received HTTP response and the JSON has been converted to Java object */
                     if (signUpBean.getCode() == 200) {
                         /* SignUp succeed, save the param for future requests */
-                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                        finish();
                         ToastUtils.showShort("Sign Up Successfully!");
-                        startActivity(intent);
                     } else {
                         ToastUtils.showShort(signUpBean.getMsg());
                     }
@@ -144,13 +156,13 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             };
             /* Perform the HTTP request */
-            if (!RegexUtils.isUsername(name)){
-                ToastUtils.showShort("Please enter the Correct Form of user name!");
+            if (name == null || name.equals("")){
+                ToastUtils.showShort("Please enter the correct form of user name!");
             }else if(!RegexUtils.isEmail(email)){
-                ToastUtils.showShort("Please enter the Correct Form of email!");
+                ToastUtils.showShort("Please enter the correct form of email!");
             }else if (!password.equals(passwordConfirm) ){
                 ToastUtils.showShort("The passwords are not consistent!");
-            }else if (!RegexUtils.isPassword(password)){
+            }else if (password.length() < 8){
                 ToastUtils.showShort("Please enter the Correct Form of password!");
             }else {
                 RetrofitHelper.getInstance().doSignUp(signObserver, name, email,phone, password , picUrl);
