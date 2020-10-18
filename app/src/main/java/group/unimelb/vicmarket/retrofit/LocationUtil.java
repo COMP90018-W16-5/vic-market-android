@@ -82,7 +82,7 @@ public class LocationUtil {
             }
             locationManager.requestLocationUpdates(provider,10,0,mLocationListener);
             Location location = locationManager.getLastKnownLocation(provider);
-            while (location == null){
+            if (location == null){
                 locationManager.requestLocationUpdates(provider,10,0,mLocationListener);
             }
             locationManager.removeUpdates(mLocationListener);
