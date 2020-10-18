@@ -1,5 +1,7 @@
 package group.unimelb.vicmarket.retrofit;
 
+import android.util.Log;
+
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.SPUtils;
 
@@ -119,6 +121,7 @@ public class RetrofitHelper {
         params.put("latitude", latitude);
         params.put("longitude",longitude);
         params.put("image", picUrl);
+        Log.d("DEMO", "PostItem: " + params);
         execute(api.PostItem(URL , params) , observer);
     }
 

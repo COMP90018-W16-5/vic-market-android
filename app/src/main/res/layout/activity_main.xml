@@ -213,6 +213,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         fab:fab_addButtonColorNormal="@color/colorAccent"
+        fab:fab_addButtonColorPressed="@color/colorPrimaryDark"
         android:layout_marginBottom="30dp"
         android:layout_marginEnd="30dp">
 
@@ -221,15 +222,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="Add New Post"
-            android:src="@android:drawable/ic_menu_camera"
+            android:src="@drawable/ic_camera"
             fab:fab_colorNormal="@color/colorAccentPress"
+            fab:fab_colorPressed="@color/colorAccentPressDark"
             fab:fab_title="Demo1" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/action_b"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/ic_discover"
             fab:fab_colorNormal="@color/colorAccentPress"
+            fab:fab_colorPressed="@color/colorAccentPressDark"
             fab:fab_title="Demo2" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>

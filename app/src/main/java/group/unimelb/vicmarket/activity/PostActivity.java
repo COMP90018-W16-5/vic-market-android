@@ -63,7 +63,7 @@ public class PostActivity extends AppCompatActivity {
     private EditText text_price;
     private EditText text_location;
     private RelativeLayout postButton;
-    private LinearLayout buttonLocation;
+    private RelativeLayout buttonLocation;
 
     private double latitude;
     private double longitude;
