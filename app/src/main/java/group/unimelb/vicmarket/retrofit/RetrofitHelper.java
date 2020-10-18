@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 import group.unimelb.vicmarket.common.MarketApplication;
 import group.unimelb.vicmarket.retrofit.bean.CategoriesBean;
 import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
+import group.unimelb.vicmarket.retrofit.bean.PostItemBean;
 import group.unimelb.vicmarket.retrofit.bean.SignInBean;
 import group.unimelb.vicmarket.retrofit.bean.SignUpBean;
 import group.unimelb.vicmarket.retrofit.bean.UploadPicBean;
@@ -81,7 +82,6 @@ public class RetrofitHelper {
         params.put("photo", picUrl);
         execute(api.SignUp(URL , params) , observer);
 
-
     }
 
     public void uploadPic(Observer<UploadPicBean> observer , String picUrl ){
@@ -104,6 +104,22 @@ public class RetrofitHelper {
         MultipartBody requestBody = builder.build();
         execute(api.uploadAvator(URL, requestBody) , observer);
 
+    }
+
+    public void PostItem(Observer<PostItemBean> observer, String title, String description,
+                     int category, double price, String location, double latitude,
+                     double longitude, String picUrl) {
+        String URL = BASE_URL+ "/user/post";
+        Map<String, Object> params = new HashMap<>();
+        params.put("title", title);
+        params.put("description" , description);
+        params.put("category", category);
+        params.put("price", price);
+        params.put("address", location);
+        params.put("latitude", latitude);
+        params.put("longitude",longitude);
+        params.put("image", picUrl);
+        execute(api.PostItem(URL , params) , observer);
     }
 
     public void getItemList(Observer<MainItemListBean> observer, String page) {

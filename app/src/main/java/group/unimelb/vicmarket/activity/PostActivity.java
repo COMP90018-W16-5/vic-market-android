@@ -1,14 +1,15 @@
 package group.unimelb.vicmarket.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -18,29 +19,37 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.bumptech.glide.Glide;
 import com.josephvuoto.customdialog.loading.LoadingDialog;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
 import com.zhihu.matisse.filter.Filter;
-import com.zhihu.matisse.internal.entity.CaptureStrategy;
-
-import java.io.File;
 
 
 import group.unimelb.vicmarket.GifSizeFilter;
 import group.unimelb.vicmarket.R;
 import group.unimelb.vicmarket.retrofit.LocationUtil;
+import group.unimelb.vicmarket.retrofit.RegexUtils;
 import group.unimelb.vicmarket.retrofit.RetrofitHelper;
+import group.unimelb.vicmarket.retrofit.bean.PostItemBean;
 import group.unimelb.vicmarket.retrofit.bean.UploadPicBean;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 public class PostActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Toolbar toolbar;
-    private EditText locationField;
+    private EditText text_title;
+    private  EditText text_description;
     private ImageView imagePicker;
+    private Spinner spinnerCategory;
+    private EditText text_price;
+    private EditText text_location;
+    private Button postButton;
+
+    private double latitude;
+    private double longitude;
 
     private static final int REQUEST_CODE_CHOOSE = 23;
     private String picLocation;
@@ -48,6 +57,7 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
     private LoadingDialog loadingDialog;
 
 
+    @SuppressLint("CheckResult")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,10 +69,7 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(v -> finish());
 
-
-
         getCurrentLocation();
-
 
         loadingDialog = new LoadingDialog.Builder(PostActivity.this)
                 .setLoadingText("Loading...")
@@ -70,17 +77,11 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
                 .build();
 
 
-        Spinner spinnerCate = (Spinner) findViewById(R.id.spin_category);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.array_category, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCate.setAdapter(adapter);
-        spinnerCate.setOnItemSelectedListener(this);
+        spinnerCategory.setAdapter(adapter);
+        spinnerCategory.setOnItemSelectedListener(this);
 
-        Spinner spinnerPrice = (Spinner) findViewById(R.id.spin_price);
-        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this, R.array.array_price, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerPrice.setAdapter(adapter1);
-        spinnerPrice.setOnItemSelectedListener(this);
 
         imagePicker.setOnClickListener(v -> {
             RxPermissions rxPermissions = new RxPermissions(this);
@@ -117,12 +118,82 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
                     }, Throwable::printStackTrace);
 
         });
+
+        postButton.setOnClickListener(v -> {
+            /* Get content typed in */
+            String title = text_title.getText().toString();
+            String description = text_description.getText().toString();
+            int category = 1;
+            String price = text_price.getText().toString();
+            String location = text_location.getText().toString();
+
+            Observer<PostItemBean> postBeanObserver = new Observer<PostItemBean>() {
+
+                @Override
+                public void onSubscribe(Disposable d) {
+                    loadingDialog.show();
+                }
+
+                @Override
+                public void onNext(PostItemBean postBean) {
+                    /* Received HTTP response and the JSON has been converted to Java object */
+                    if (postBean.getCode() == 200) {
+                        /* SignUp succeed, save the param for future requests */
+                        finish();
+                        ToastUtils.showShort("Post Successfully!");
+                    } else {
+                        ToastUtils.showShort(postBean.getMsg());
+                    }
+
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    /* Error(HTTP error or JSON format error) */
+                    e.printStackTrace();
+                    /* Hide the loading dialog */
+                    loadingDialog.dismiss();
+                    ToastUtils.showShort("Unknown error");
+                }
+
+                @Override
+                public void onComplete() {
+                    /* Hide the loading dialog */
+                    loadingDialog.dismiss();
+                }
+            };
+            /* Perform the HTTP request */
+            if (title == null || title.equals("")){
+                ToastUtils.showShort("Please enter the correct form of user name!");
+            }
+            else if (description == null || description.equals("")){
+                ToastUtils.showShort("Please enter the correct form of description!");
+            }
+            else if (price == null || price.equals("")){
+                ToastUtils.showShort("Please enter the correct form of price!");
+            }
+            else if (location == null || location.equals("")){
+                ToastUtils.showShort("Please enter the correct form of location!");
+            }
+            else {
+                RetrofitHelper.getInstance().PostItem(postBeanObserver,title, description,
+                category, Double.parseDouble(price), location,latitude,longitude, picUrl);
+            }
+
+
+        });
+
     }
 
     public void findViews(){
-        locationField = findViewById(R.id.text_location);
+        text_location = findViewById(R.id.text_location);
         imagePicker = findViewById(R.id.image_picker);
         toolbar = findViewById(R.id.post_toolbar);
+        postButton = findViewById(R.id.post_button);
+        text_title = findViewById(R.id.text_title);
+        text_description = findViewById(R.id.text_description);
+        spinnerCategory = findViewById(R.id.spin_category);
+        text_price = findViewById(R.id.text_price);
     }
 
 
@@ -132,9 +203,6 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
         switch (parent.getId()) {
             case R.id.spin_category:
                 Toast.makeText(parent.getContext(), "Category:" + text, Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.spin_price:
-                Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
@@ -146,16 +214,22 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
+    @SuppressLint("CheckResult")
     public void getCurrentLocation(){
         RxPermissions rxPermissions = new RxPermissions(this);
-        rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION)
+        rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
                 .subscribe(aBoolean -> {
                     if (aBoolean) {
                         LocationUtil locationUtil = LocationUtil.getInstance(this);
-                        Log.i("location", locationUtil.getAddressLine());
+                        String addressline = locationUtil.getAddressLine();
+                        latitude = locationUtil.getLatitude();
+                        longitude = locationUtil.getLongitude();
+                        Log.i("location", addressline);
+                        text_location.setText(addressline);
                     }
                     else {
-
+                        Toast.makeText(PostActivity.this, R.string.permission_request_denied, Toast.LENGTH_LONG)
+                                .show();
                     }
                 });
     }
@@ -170,8 +244,6 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
             picLocation = Matisse.obtainPathResult(data).get(0);
             Observer<UploadPicBean> uploadPicObserver = new Observer<UploadPicBean>() {
 
-
-
                 @Override
                 public void onSubscribe(Disposable d) {
                     loadingDialog.show();
@@ -179,9 +251,19 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
 
                 @Override
                 public void onNext(UploadPicBean uploadPicBean) {
-                    Uri uri = Uri.fromFile(new File(picLocation));
-                    imagePicker.setImageURI(uri);
-                    picUrl = uploadPicBean.getData().get(0).getUrl();
+//                    Uri uri = Uri.fromFile(new File(picLocation));
+//                    imagePicker.setImageURI(uri);
+//                    Log.i("image uri", String.valueOf(uri));
+                    if (uploadPicBean.getCode()!=200||
+                            uploadPicBean.getData()== null||
+                            uploadPicBean.getData().isEmpty()){
+                        ToastUtils.showShort("Unknown error");
+                    }
+                    else {
+                        picUrl = uploadPicBean.getData().get(0).getUrl();
+                        Glide.with(PostActivity.this).load(picUrl).into(imagePicker);
+                    }
+
                 }
 
                 @Override

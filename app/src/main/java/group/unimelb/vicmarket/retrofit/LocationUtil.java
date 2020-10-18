@@ -9,38 +9,40 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.Locale;
 
 public class LocationUtil {
-    private LocationManager locationManager;
-    private Context mContext;
+    private static LocationManager locationManager;
+    private static Context mContext;
     private static LocationUtil mInstance;
-    private double latitude;
-    private double longitude;
-    private String addressLine;
-    private List<Address> addresses;
+    private static double latitude;
+    private static double longitude;
+    private static String addressLine;
+    private static List<Address> addresses;
     private static LocationListener mLocationListener = new LocationListener() {
 
         @Override
         public void onLocationChanged(Location location) {
+            Log.i("updata location","change");
 
         }
 
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
-
+            Log.i("updata location","status change");
         }
 
         @Override
         public void onProviderEnabled(String provider) {
-
+            Log.i("updata location","enable");
         }
 
         @Override
         public void onProviderDisabled(String provider) {
-
+            Log.i("updata location","disable");
         }
     };
 
@@ -66,10 +68,6 @@ public class LocationUtil {
         return longitude;
     }
 
-    public List<Address> getAddresses() {
-        getLocation();
-        return addresses;
-    }
 
     public String getAddressLine() {
         getLocation();
@@ -77,11 +75,30 @@ public class LocationUtil {
     }
 
     @SuppressLint("MissingPermission")
-    public void getLocation() {
+    private static void getLocation() {
         try {
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, mLocationListener);
-            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            System.out.println(location.toString());
+            List<String> list = locationManager.getProviders(true);
+
+            String provider;
+
+            if (list.contains(LocationManager.GPS_PROVIDER)) {
+                provider = LocationManager.GPS_PROVIDER;
+                Log.i("location service","GPS");
+            }
+            else if (list.contains(LocationManager.NETWORK_PROVIDER)) {
+                provider = LocationManager.NETWORK_PROVIDER;
+                Log.i("location service","network");
+
+            } else {
+                Toast.makeText(mContext, "Please check your GPS status", Toast.LENGTH_LONG).show();
+                return;
+            }
+            locationManager.requestLocationUpdates(provider,10,0,mLocationListener);
+            Location location = locationManager.getLastKnownLocation(provider);
+            while (location == null){
+                locationManager.requestLocationUpdates(provider,10,0,mLocationListener);
+            }
+            locationManager.removeUpdates(mLocationListener);
             if (location != null) {
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();

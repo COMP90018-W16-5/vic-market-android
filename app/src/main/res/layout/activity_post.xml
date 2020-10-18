@@ -44,11 +44,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
+                android:gravity="start"
                 android:paddingLeft="10dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
+                android:paddingBottom="5dp"
                 android:singleLine="true"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/desView"
@@ -68,10 +70,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="186dp"
                 android:background="#FFFFFF"
+                android:editable="true"
+                android:gravity="start"
                 android:paddingLeft="10dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
-                android:textSize="24sp" />
+                android:textAlignment="viewStart"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/text_photo"
@@ -96,15 +101,15 @@
                     android:id="@+id/image_picker"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_gravity="center"
                     android:layout_marginLeft="60dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="60dp"
                     android:layout_marginBottom="20dp"
-                    android:layout_marginTop="10dp"
                     android:adjustViewBounds="false"
 
                     android:background="@drawable/border"
-                    app:srcCompat="@drawable/ic_photo_camera_white_24dp"
-                    app:tint="#7C000000" />
+                    app:srcCompat="@drawable/ic_photo_camera_gray_24dp" />
 
 
             </LinearLayout>
@@ -140,7 +145,7 @@
                         android:background="#FFFFFF"
                         android:paddingRight="10dp"
                         android:spinnerMode="dropdown"
-                        android:textSize="24sp" />
+                        android:textSize="18sp" />
 
                     <ImageView
                         android:layout_width="30dp"
@@ -173,28 +178,6 @@
                     android:textColor="#A5000000"
                     android:textSize="24sp" />
 
-                <RelativeLayout
-                    android:layout_width="140dp"
-                    android:layout_height="match_parent">
-
-                    <Spinner
-                        android:id="@+id/spin_price"
-                        android:layout_width="138dp"
-                        android:layout_height="match_parent"
-                        android:background="#FFFFFF"
-                        android:spinnerMode="dropdown" />
-
-                    <ImageView
-                        android:id="@+id/dropdown"
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
-                        android:layout_alignEnd="@id/spin_price"
-                        android:background="#FFFFFF"
-                        android:layout_marginRight="20dp"
-                        android:foreground="@drawable/common_filter_arrow_down"
-                        android:paddingRight="20dp" />
-                </RelativeLayout>
-
                 <EditText
                     android:id="@+id/text_price"
 
@@ -202,57 +185,58 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="#FFFFFF"
-                    android:gravity="center_horizontal"
+                    android:gravity="start"
+                    android:inputType="numberSigned|number|numberDecimal"
                     android:singleLine="true"
                     android:textColor="#000000"
-                    android:textSize="24sp" />
+                    android:textSize="18sp"/>
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:background="#FFFFFF"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="Contact Name:"
-                android:textColor="#A5000000"
-                android:textSize="24sp" />
+<!--            <TextView-->
+<!--                android:id="@+id/name"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="30dp"-->
+<!--                android:background="#FFFFFF"-->
+<!--                android:paddingLeft="10dp"-->
+<!--                android:paddingRight="10dp"-->
+<!--                android:text="Contact Name:"-->
+<!--                android:textColor="#A5000000"-->
+<!--                android:textSize="24sp" />-->
 
-            <EditText
-                android:id="@+id/text_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FFFFFF"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"
-                android:singleLine="true" />
+<!--            <EditText-->
+<!--                android:id="@+id/text_name"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="#FFFFFF"-->
+<!--                android:paddingLeft="10dp"-->
+<!--                android:paddingTop="10dp"-->
+<!--                android:paddingRight="10dp"-->
+<!--                android:singleLine="true" />-->
 
-            <TextView
-                android:id="@+id/contact"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:background="#FFFFFF"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"
-                android:text="Phone Number:"
-                android:textColor="#A5000000"
-                android:textSize="24sp" />
+<!--            <TextView-->
+<!--                android:id="@+id/contact"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="30dp"-->
+<!--                android:background="#FFFFFF"-->
+<!--                android:paddingLeft="10dp"-->
+<!--                android:paddingTop="10dp"-->
+<!--                android:paddingRight="10dp"-->
+<!--                android:text="Phone Number:"-->
+<!--                android:textColor="#A5000000"-->
+<!--                android:textSize="24sp" />-->
 
-            <EditText
-                android:id="@+id/text_phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FFFFFF"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:singleLine="true"
-                android:textSize="24sp" />
+<!--            <EditText-->
+<!--                android:id="@+id/text_phone"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="#FFFFFF"-->
+<!--                android:paddingLeft="10dp"-->
+<!--                android:paddingRight="10dp"-->
+<!--                android:singleLine="true"-->
+<!--                android:textSize="24sp" />-->
 
             <TextView
                 android:id="@+id/location"
@@ -275,7 +259,7 @@
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
                 android:singleLine="false"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/post_button"
