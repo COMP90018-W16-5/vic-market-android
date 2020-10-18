@@ -130,29 +130,30 @@
                 android:text="@string/category_electronics" />
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/cate_sport"
+            android:id="@+id/cate_nearby"
             android:background="@drawable/bg_ripple_white"
             android:clickable="true"
             android:gravity="center"
-            android:orientation="vertical"
-            android:layout_weight="1"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
+            android:orientation="vertical"
+            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:focusable="true">
             <ImageView
-                android:src="@drawable/ic_sport"
-                fab:tint="@color/colorAccent"
+                android:src="@drawable/ic_location"
                 android:layout_width="35dp"
-                android:layout_height="35dp" />
+                android:layout_height="35dp"
+                fab:tint="@color/colorAccent" />
             <TextView
                 android:gravity="center"
                 android:textSize="12sp"
+                android:lines="2"
                 android:textColor="@color/colorTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/category_sport_and_fitness" />
+                android:text="@string/category_nearby" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/cate_more"

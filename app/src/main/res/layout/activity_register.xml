@@ -27,7 +27,7 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/upload_photo"
                 android:layout_gravity="center"
-                android:src="@mipmap/ic_launcher"
+                android:src="@drawable/ic_account"
                 android:layout_width="100dp"
                 android:layout_height="100dp">
             </de.hdodenhof.circleimageview.CircleImageView>

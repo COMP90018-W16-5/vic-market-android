@@ -53,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
     private LoadingDialog loadingDialog;
 
     private String picLocation;
-    private String picUrl = "https://img.xieyangzhe.com/img/default.jpg";
+    private String picUrl = "";
 
     @SuppressLint("CheckResult")
     @Override

@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout buttonCategoryCars;
     private LinearLayout buttonCategoryHome;
     private LinearLayout buttonCategoryPhone;
-    private LinearLayout buttonCategorySport;
+    private LinearLayout buttonCategoryNearby;
     private LinearLayout buttonCategoryMore;
 
     /* Adapter for RecyclerView */
@@ -103,9 +103,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         buttonCategoryCars.setOnClickListener(this);
         buttonCategoryHome.setOnClickListener(this);
-        buttonCategorySport.setOnClickListener(this);
-//        buttonCategoryPhone.setOnClickListener(this);
-        buttonCategoryPhone.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, NearbyItemsActivity.class)));
+        buttonCategoryPhone.setOnClickListener(this);
+        buttonCategoryNearby.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, NearbyItemsActivity.class)));
         buttonCategoryMore.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, CategoryListActivity.class)));
     }
 
@@ -115,7 +114,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (SPUtils.getInstance().getBoolean("login")) {
             login = true;
             String photo = SPUtils.getInstance().getString("photo");
-            Glide.with(this).load(photo).into(imageHead);
+            if (!"".equals(photo)) {
+                Glide.with(this).load(photo).into(imageHead);
+            } else {
+                Glide.with(this).load(R.drawable.ic_account);
+            }
         }
     }
 
@@ -127,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonCategoryCars = findViewById(R.id.cate_cars);
         buttonCategoryHome = findViewById(R.id.cate_home);
         buttonCategoryPhone = findViewById(R.id.cate_phone);
-        buttonCategorySport = findViewById(R.id.cate_sport);
+        buttonCategoryNearby = findViewById(R.id.cate_nearby);
         buttonCategoryMore = findViewById(R.id.cate_more);
     }
 
@@ -206,10 +209,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.cate_phone:
                 intent.putExtra("category_id", 3);
                 intent.putExtra("category_name", getString(R.string.category_electronics));
-                break;
-            case R.id.cate_sport:
-                intent.putExtra("category_id", 4);
-                intent.putExtra("category_name", getString(R.string.category_sport_and_fitness));
                 break;
         }
         startActivity(intent);
