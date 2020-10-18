@@ -27,7 +27,6 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.io.File;
 
-import group.unimelb.vicmarket.GifSizeFilter;
 import group.unimelb.vicmarket.R;
 import group.unimelb.vicmarket.retrofit.RegexUtils;
 import group.unimelb.vicmarket.retrofit.RetrofitHelper;
@@ -86,7 +85,6 @@ public class RegisterActivity extends AppCompatActivity {
                                     .countable(false)
                                     .capture(false)
                                     .maxSelectable(1)
-                                    .addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
                                     .gridExpectedSize(
                                             getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
                                     .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)

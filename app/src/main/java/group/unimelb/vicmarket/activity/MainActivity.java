@@ -1,5 +1,6 @@
 package group.unimelb.vicmarket.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,8 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.bumptech.glide.Glide;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.josephvuoto.customdialog.alert.CustomDialog;
+import com.josephvuoto.customdialog.common.OnCancelClickListener;
+import com.josephvuoto.customdialog.common.OnOkClickListener;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 
@@ -43,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout buttonCategoryPhone;
     private LinearLayout buttonCategoryNearby;
     private LinearLayout buttonCategoryMore;
+    private FloatingActionButton buttonPostNew;
 
     /* Adapter for RecyclerView */
     private MainItemListAdapter adapter;
@@ -106,6 +112,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonCategoryPhone.setOnClickListener(this);
         buttonCategoryNearby.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, NearbyItemsActivity.class)));
         buttonCategoryMore.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, CategoryListActivity.class)));
+        buttonPostNew.setOnClickListener(v -> {
+            if (!login) {
+                new CustomDialog.Builder(MainActivity.this)
+                        .setTitle("Message")
+                        .setMessage("Login to post items.")
+                        .setOkButton("Login", dialog -> startActivity(new Intent(MainActivity.this, LoginActivity.class)))
+                        .setCancelButton("Cancel", Dialog::dismiss)
+                        .build()
+                        .show();
+            } else {
+                startActivity(new Intent(MainActivity.this, PostActivity.class));
+            }
+        });
     }
 
     @Override
@@ -132,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonCategoryPhone = findViewById(R.id.cate_phone);
         buttonCategoryNearby = findViewById(R.id.cate_nearby);
         buttonCategoryMore = findViewById(R.id.cate_more);
+        buttonPostNew = findViewById(R.id.action_a);
     }
 
     private void loadData() {

@@ -4,6 +4,7 @@ import java.util.Map;
 
 import group.unimelb.vicmarket.retrofit.bean.CategoriesBean;
 import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
+import group.unimelb.vicmarket.retrofit.bean.PostItemBean;
 import group.unimelb.vicmarket.retrofit.bean.SignInBean;
 import group.unimelb.vicmarket.retrofit.bean.SignUpBean;
 import group.unimelb.vicmarket.retrofit.bean.UploadPicBean;
@@ -25,6 +26,8 @@ public interface Api {
     @POST
     Observable<UploadPicBean> uploadAvator(@Url  String url , @Body MultipartBody requestBody);
 
+    @POST
+    Observable<PostItemBean> PostItem(@Url String url, @QueryMap Map<String, Object> map);
 
     @GET
     Observable<MainItemListBean> getItemList(@Url String url, @QueryMap Map<String, Object> map);
