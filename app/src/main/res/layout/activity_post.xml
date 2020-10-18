@@ -7,36 +7,12 @@
     android:foreground="@drawable/border"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/post_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#00A667">
+        android:layout_height="?attr/actionBarSize">
 
-        <TextView
-            android:id="@+id/title_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Post"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textSize="24sp" />
-
-        <Button
-            android:id="@+id/title_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="5dp"
-            android:background="#007AFA8B"
-            android:text="Cancel"
-            android:textColor="#000" />
-
-
-    </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
 
 
     <ScrollView
@@ -53,6 +29,7 @@
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:background="#FFFFFF"
                 android:gravity="left"
                 android:lineSpacingExtra="8sp"
@@ -63,7 +40,7 @@
                 android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/editTitle"
+                android:id="@+id/text_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
@@ -87,7 +64,7 @@
                 android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/editDes"
+                android:id="@+id/text_description"
                 android:layout_width="match_parent"
                 android:layout_height="186dp"
                 android:background="#FFFFFF"
@@ -109,97 +86,28 @@
                 android:textColor="#A5000000"
                 android:textSize="24sp" />
 
-            <GridLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
+                android:layout_height="200dp"
                 android:background="#FFFFFF"
-                android:columnCount="5"
-                android:useDefaultMargins="true">
+                android:columnCount="5">
 
                 <ImageView
                     android:id="@+id/image_picker"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginRight="60dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="10dp"
                     android:adjustViewBounds="false"
 
                     android:background="@drawable/border"
                     app:srcCompat="@drawable/ic_photo_camera_white_24dp"
                     app:tint="#7C000000" />
 
-                <ImageView
-                    android:id="@+id/image1"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:adjustViewBounds="false"
-                    android:background="#FFFFFF"
-                    app:srcCompat="@drawable/border" />
 
-                <ImageView
-                    android:id="@+id/image2"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:adjustViewBounds="false"
-                    android:background="#FFFFFF"
-                    app:srcCompat="@drawable/border" />
-
-                <ImageView
-                    android:id="@+id/image3"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:adjustViewBounds="false"
-                    android:background="#FFFFFF"
-                    app:srcCompat="@drawable/border" />
-
-                <ImageView
-                    android:id="@+id/image4"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:adjustViewBounds="false"
-                    android:background="#FFFFFF"
-                    app:srcCompat="@drawable/border" />
-
-                <ImageView
-                    android:id="@+id/image5"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:adjustViewBounds="false"
-                    android:background="#FFFFFF"
-                    app:srcCompat="@drawable/border" />
-
-                <ImageView
-                    android:id="@+id/image6"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:adjustViewBounds="false"
-                    android:background="#FFFFFF"
-                    app:srcCompat="@drawable/border" />
-
-                <ImageView
-                    android:id="@+id/image7"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:adjustViewBounds="false"
-                    android:background="#FFFFFF"
-                    app:srcCompat="@drawable/border" />
-
-                <ImageView
-                    android:id="@+id/image8"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:adjustViewBounds="false"
-                    android:background="#FFFFFF"
-                    app:srcCompat="@drawable/border" />
-
-                <ImageView
-                    android:id="@+id/image9"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:adjustViewBounds="false"
-                    android:background="#FFFFFF"
-                    app:srcCompat="@drawable/border" />
-
-
-            </GridLayout>
+            </LinearLayout>
 
 
             <LinearLayout
@@ -225,7 +133,7 @@
                     android:layout_height="match_parent">
 
                     <Spinner
-                        android:id="@+id/spin_cate"
+                        android:id="@+id/spin_category"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -237,8 +145,9 @@
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="match_parent"
-                        android:layout_alignEnd="@id/spin_cate"
+                        android:layout_alignEnd="@id/spin_category"
                         android:background="#FFFFFF"
+                        android:layout_marginRight="20dp"
                         android:foreground="@drawable/common_filter_arrow_down" />
 
                 </RelativeLayout>
@@ -254,7 +163,7 @@
 
 
                 <TextView
-                    android:id="@+id/text_price"
+                    android:id="@+id/price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="#FFFFFF"
@@ -281,12 +190,13 @@
                         android:layout_height="match_parent"
                         android:layout_alignEnd="@id/spin_price"
                         android:background="#FFFFFF"
+                        android:layout_marginRight="20dp"
                         android:foreground="@drawable/common_filter_arrow_down"
                         android:paddingRight="20dp" />
                 </RelativeLayout>
 
                 <EditText
-                    android:id="@+id/edit_price"
+                    android:id="@+id/text_price"
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -300,7 +210,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/text_name"
+                android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
@@ -312,7 +222,7 @@
                 android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/editName"
+                android:id="@+id/text_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
@@ -322,7 +232,7 @@
                 android:singleLine="true" />
 
             <TextView
-                android:id="@+id/text_contact"
+                android:id="@+id/contact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
@@ -335,7 +245,7 @@
                 android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/editnumber"
+                android:id="@+id/text_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
@@ -345,7 +255,7 @@
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/text_location"
+                android:id="@+id/location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
@@ -357,7 +267,7 @@
                 android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/location"
+                android:id="@+id/text_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"

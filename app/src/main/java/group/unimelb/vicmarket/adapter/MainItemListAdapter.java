@@ -1,6 +1,7 @@
 package group.unimelb.vicmarket.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,12 @@ public class MainItemListAdapter extends RecyclerView.Adapter<MainItemListAdapte
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.item_post_main, parent, false);
+
+
+        ViewHolder myViewHolder = new ViewHolder(view);
+        //view.setOnClickListener(this);
+
+
         return new ViewHolder(view);
     }
 
@@ -59,6 +66,15 @@ public class MainItemListAdapter extends RecyclerView.Adapter<MainItemListAdapte
         if (onListItemClickListener != null) {
             holder.holderLayout.setOnClickListener(v -> onListItemClickListener.onListItemClick(position));
         }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onListItemClickListener != null) {
+                    onListItemClickListener.onListItemClick(position);
+                }
+            }
+        });
+
     }
 
     @Override

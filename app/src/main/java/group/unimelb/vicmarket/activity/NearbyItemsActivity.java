@@ -13,6 +13,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,10 @@ public class NearbyItemsActivity extends AppCompatActivity {
     private int page = 1;
     private int maxDistance = 20;
     private int category = 0;
+
+    //TODO: initialize location info
+    private BigDecimal longitude = BigDecimal.valueOf(100);
+    private BigDecimal latitude = BigDecimal.valueOf(30);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,45 +82,45 @@ public class NearbyItemsActivity extends AppCompatActivity {
         DropMenuAdapter dropMenuAdapter = new DropMenuAdapter(this, titleList);
         dropMenuAdapter.setOnItemSelectedListener((type, code, value) -> {
             dropdownMenu.close();
-            ToastUtils.showShort(type + " " + code + " " + value);
             if (type == 0) {
-                // TODO: Distance
+                maxDistance = code;
             } else if (type == 1) {
-                // TODO: Category
+                category = code;
             }
+            refreshLayout.autoRefresh();
         });
         dropdownMenu.setMenuAdapter(dropMenuAdapter);
 
     }
 
     private void loadData() {
-//        /* Send HTTP request to get data */
-//        RetrofitHelper.getInstance().getItemListByCategory(new Observer<MainItemListBean>() {
-//            @Override
-//            public void onSubscribe(Disposable d) {
-//
-//            }
-//
-//            @Override
-//            public void onNext(MainItemListBean mainItemListBean) {
-//                if (refreshLayout.getState() == RefreshState.Refreshing) {
-//                    dataBeans.clear();
-//                }
-//                dataBeans.addAll(mainItemListBean.getData());
-//                adapter.setData(dataBeans);
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//                e.printStackTrace();
-//                endLoading();
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//                endLoading();
-//            }
-//        }, String.valueOf(page), cateId);
+        /* Send HTTP request to get data */
+        RetrofitHelper.getInstance().getNearbyItems(new Observer<MainItemListBean>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(MainItemListBean mainItemListBean) {
+                if (refreshLayout.getState() == RefreshState.Refreshing) {
+                    dataBeans.clear();
+                }
+                dataBeans.addAll(mainItemListBean.getData());
+                adapter.setData(dataBeans);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                endLoading();
+            }
+
+            @Override
+            public void onComplete() {
+                endLoading();
+            }
+        }, longitude, latitude, maxDistance, page, category);
     }
 
     private void findViews() {

@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (!login) {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
             } else {
-                // TODO: start another activity
+                startActivity(new Intent(MainActivity.this, AccountActivity.class));
             }
         });
 
@@ -178,6 +178,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }.getType();
             dataBeans = new Gson().fromJson(cachedJson, listType);
             adapter.setData(dataBeans);
+            adapter.setOnListItemClickListener(new MainItemListAdapter.OnListItemClickListener() {
+                @Override
+                public void onListItemClick(int index) {
+                    System.out.println(index +" 被点击了");
+                }
+            });
         }
     }
 

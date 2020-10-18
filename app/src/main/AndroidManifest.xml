@@ -2,30 +2,31 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="group.unimelb.vicmarket">
 
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name=".common.MarketApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:requestLegacyExternalStorage="true">
-        <activity android:name=".activity.CategoryListActivity"></activity>
+        android:theme="@style/AppTheme">
+        <activity android:name=".activity.AccountActivity"></activity>
+        <activity android:name=".activity.CategoryListActivity" />
         <activity android:name=".activity.NearbyItemsActivity" />
         <activity android:name=".activity.CategoryDetailActivity" />
         <activity android:name=".activity.SearchActivity" />
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.RegisterActivity" />
-        <activity android:name=".activity.PostActivity" />
+        <activity android:name=".activity.PostActivity"/>
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,13 +37,10 @@
 
         <meta-data
             android:name="design_width_in_dp"
-            android:value="480" />
+            android:value="450" />
         <meta-data
             android:name="design_height_in_dp"
-            android:value="960" />
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCVdPMBAXDrJH3x0il_sMu491cCHMsK6hk"/>
+            android:value="900" />
     </application>
 
 </manifest>
