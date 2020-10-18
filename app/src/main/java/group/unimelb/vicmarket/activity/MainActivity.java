@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.blankj.utilcode.util.SPUtils;
 import com.bumptech.glide.Glide;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.josephvuoto.customdialog.alert.CustomDialog;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout buttonCategoryNearby;
     private LinearLayout buttonCategoryMore;
     private FloatingActionButton buttonPostNew;
+    private FloatingActionsMenu actionsMenu;
 
     /* Adapter for RecyclerView */
     private MainItemListAdapter adapter;
@@ -124,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else {
                 startActivity(new Intent(MainActivity.this, PostActivity.class));
             }
+            actionsMenu.collapse();
         });
     }
 
@@ -152,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonCategoryNearby = findViewById(R.id.cate_nearby);
         buttonCategoryMore = findViewById(R.id.cate_more);
         buttonPostNew = findViewById(R.id.action_a);
+        actionsMenu = findViewById(R.id.multiple_actions);
     }
 
     private void loadData() {
