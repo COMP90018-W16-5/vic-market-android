@@ -2,24 +2,32 @@ package group.unimelb.vicmarket.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
+import com.josephvuoto.customdialog.custom.CustomViewDialog;
+import com.josephvuoto.customdialog.list.ListDialog;
+import com.josephvuoto.customdialog.list.ListItemModel;
 import com.josephvuoto.customdialog.loading.LoadingDialog;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
@@ -28,36 +36,43 @@ import com.zhihu.matisse.engine.impl.GlideEngine;
 import com.zhihu.matisse.filter.Filter;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import group.unimelb.vicmarket.GifSizeFilter;
 import group.unimelb.vicmarket.R;
+import group.unimelb.vicmarket.adapter.CategoryListAdapter;
+import group.unimelb.vicmarket.adapter.CategorySpinnerAdapter;
+import group.unimelb.vicmarket.adapter.LocationListAdapter;
 import group.unimelb.vicmarket.retrofit.LocationUtil;
 import group.unimelb.vicmarket.retrofit.RegexUtils;
 import group.unimelb.vicmarket.retrofit.RetrofitHelper;
+import group.unimelb.vicmarket.retrofit.bean.CategoriesBean;
 import group.unimelb.vicmarket.retrofit.bean.PostItemBean;
 import group.unimelb.vicmarket.retrofit.bean.UploadPicBean;
 import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 
-public class PostActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class PostActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private EditText text_title;
-    private  EditText text_description;
+    private EditText text_description;
     private ImageView imagePicker;
     private Spinner spinnerCategory;
     private EditText text_price;
     private EditText text_location;
-    private Button postButton;
+    private RelativeLayout postButton;
+    private LinearLayout buttonLocation;
 
     private double latitude;
     private double longitude;
 
     private static final int REQUEST_CODE_CHOOSE = 23;
-    private String picLocation;
-    private String picUrl = "https://img.xieyangzhe.com/img/default.jpg";
+    private String picUrl = "";
     private LoadingDialog loadingDialog;
+    private int selectedCategory = 1;
 
-
-    @SuppressLint("CheckResult")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,11 +91,40 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
                 .setCanceledOnTouchOutside(false)
                 .build();
 
+        RetrofitHelper.getInstance().getCategories(new Observer<CategoriesBean>() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.array_category, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCategory.setAdapter(adapter);
-        spinnerCategory.setOnItemSelectedListener(this);
+            }
+
+            @Override
+            public void onNext(@NonNull CategoriesBean categoriesBean) {
+                CategorySpinnerAdapter adapter = new CategorySpinnerAdapter(PostActivity.this,
+                        android.R.layout.simple_spinner_dropdown_item, categoriesBean.getData());
+                spinnerCategory.setAdapter(adapter);
+                spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        selectedCategory = categoriesBean.getData().get(position).getCid();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
 
 
         imagePicker.setOnClickListener(v -> {
@@ -123,7 +167,6 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
             /* Get content typed in */
             String title = text_title.getText().toString();
             String description = text_description.getText().toString();
-            int category = 1;
             String price = text_price.getText().toString();
             String location = text_location.getText().toString();
 
@@ -174,15 +217,14 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
             }
             else if (location == null || location.equals("")){
                 ToastUtils.showShort("Please enter the correct form of location!");
+            } else if (picUrl == null || picUrl.equals("")) {
+                ToastUtils.showShort("Please upload an image!");
             }
             else {
                 RetrofitHelper.getInstance().PostItem(postBeanObserver,title, description,
-                category, Double.parseDouble(price), location,latitude,longitude, picUrl);
+                selectedCategory, Double.parseDouble(price), location,latitude,longitude, picUrl);
             }
-
-
         });
-
     }
 
     public void findViews(){
@@ -194,24 +236,7 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
         text_description = findViewById(R.id.text_description);
         spinnerCategory = findViewById(R.id.spin_category);
         text_price = findViewById(R.id.text_price);
-    }
-
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
-        String text = parent.getItemAtPosition(position).toString();
-        switch (parent.getId()) {
-            case R.id.spin_category:
-                Toast.makeText(parent.getContext(), "Category:" + text, Toast.LENGTH_SHORT).show();
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
+        buttonLocation = findViewById(R.id.button_location);
     }
 
     @SuppressLint("CheckResult")
@@ -220,12 +245,33 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
         rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
                 .subscribe(aBoolean -> {
                     if (aBoolean) {
-                        LocationUtil locationUtil = LocationUtil.getInstance(this);
-                        String addressline = locationUtil.getAddressLine();
-                        latitude = locationUtil.getLatitude();
-                        longitude = locationUtil.getLongitude();
-                        Log.i("location", addressline);
-                        text_location.setText(addressline);
+                        LocationUtil.LocationInfo locationInfo = LocationUtil.getInstance().getLocationInfo();
+                        String addressLine = locationInfo.getAddresses().get(0);
+                        latitude = locationInfo.getLatitude();
+                        longitude = locationInfo.getLongitude();
+                        text_location.setText(addressLine);
+
+                        LinearLayout customView = (LinearLayout) LayoutInflater.from(this)
+                                .inflate(R.layout.layout_location_list, null, false);
+                        RecyclerView recyclerView = customView.findViewById(R.id.cate_list_recycler);
+                        LocationListAdapter adapter = new LocationListAdapter(locationInfo.getAddresses());
+                        recyclerView.setAdapter(adapter);
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this,
+                                LinearLayoutManager.VERTICAL, false);
+                        recyclerView.setAdapter(adapter);
+                        recyclerView.setLayoutManager(layoutManager);
+                        CustomViewDialog dialog = new CustomViewDialog.Builder(this)
+                                .setOkButton("Cancel", Dialog::dismiss)
+                                .setCustomView(customView)
+                                .build();
+                        adapter.setOnItemClickedListener(position -> {
+                            text_location.setText(locationInfo.getAddresses().get(position));
+                            dialog.dismiss();
+                        });
+
+                        buttonLocation.setOnClickListener(v -> {
+                            dialog.show();
+                        });
                     }
                     else {
                         Toast.makeText(PostActivity.this, R.string.permission_request_denied, Toast.LENGTH_LONG)
@@ -241,7 +287,7 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
             // Get picture location and upload the picture
-            picLocation = Matisse.obtainPathResult(data).get(0);
+            String picLocation = Matisse.obtainPathResult(data).get(0);
             Observer<UploadPicBean> uploadPicObserver = new Observer<UploadPicBean>() {
 
                 @Override
@@ -251,9 +297,6 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
 
                 @Override
                 public void onNext(UploadPicBean uploadPicBean) {
-//                    Uri uri = Uri.fromFile(new File(picLocation));
-//                    imagePicker.setImageURI(uri);
-//                    Log.i("image uri", String.valueOf(uri));
                     if (uploadPicBean.getCode()!=200||
                             uploadPicBean.getData()== null||
                             uploadPicBean.getData().isEmpty()){

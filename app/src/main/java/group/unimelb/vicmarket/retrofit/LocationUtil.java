@@ -1,6 +1,7 @@
 package group.unimelb.vicmarket.retrofit;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
@@ -11,17 +12,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import group.unimelb.vicmarket.common.MarketApplication;
 
 public class LocationUtil {
     private static LocationManager locationManager;
     private static Context mContext;
     private static LocationUtil mInstance;
-    private static double latitude;
-    private static double longitude;
-    private static String addressLine;
-    private static List<Address> addresses;
+    private LocationInfo locationInfo;
     private static LocationListener mLocationListener = new LocationListener() {
 
         @Override
@@ -46,36 +47,25 @@ public class LocationUtil {
         }
     };
 
+    public LocationInfo getLocationInfo() {
+        getLocation();
+        return locationInfo;
+    }
+
     private LocationUtil(Context context) {
-        this.mContext = context;
+        mContext = context;
         locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
     }
 
-    public static LocationUtil getInstance(Context context) {
+    public static LocationUtil getInstance() {
         if (mInstance == null) {
-            mInstance = new LocationUtil(context.getApplicationContext());
+            mInstance = new LocationUtil(MarketApplication.getAppContext());
         }
         return mInstance;
     }
 
-    public double getLatitude() {
-        getLocation();
-        return latitude;
-    }
-
-    public double getLongitude() {
-        getLocation();
-        return longitude;
-    }
-
-
-    public String getAddressLine() {
-        getLocation();
-        return addressLine;
-    }
-
     @SuppressLint("MissingPermission")
-    private static void getLocation() {
+    private void getLocation() {
         try {
             List<String> list = locationManager.getProviders(true);
 
@@ -83,12 +73,9 @@ public class LocationUtil {
 
             if (list.contains(LocationManager.GPS_PROVIDER)) {
                 provider = LocationManager.GPS_PROVIDER;
-                Log.i("location service","GPS");
             }
             else if (list.contains(LocationManager.NETWORK_PROVIDER)) {
                 provider = LocationManager.NETWORK_PROVIDER;
-                Log.i("location service","network");
-
             } else {
                 Toast.makeText(mContext, "Please check your GPS status", Toast.LENGTH_LONG).show();
                 return;
@@ -100,12 +87,16 @@ public class LocationUtil {
             }
             locationManager.removeUpdates(mLocationListener);
             if (location != null) {
-                latitude = location.getLatitude();
-                longitude = location.getLongitude();
+                double latitude = location.getLatitude();
+                double  longitude = location.getLongitude();
                 Geocoder geocoder = new Geocoder(mContext, Locale.getDefault());
-                addresses = geocoder.getFromLocation(latitude, longitude,1);
-                addressLine = addresses.get(0).getAddressLine(0);
-                Log.i("location",addresses.get(0).getAddressLine(0)+" "+ latitude+" "+longitude);
+                List<String> addresses = new ArrayList<>();
+                for (Address address : geocoder.getFromLocation(latitude, longitude,20)) {
+                    addresses.add(address.getAddressLine(0));
+                }
+                locationInfo = new LocationInfo(latitude, longitude, addresses);
+
+                Log.i("location", locationInfo.toString());
             } else {
                 Log.i("Location","cannot find location");
         }} catch (Exception e){
@@ -114,5 +105,49 @@ public class LocationUtil {
     }
 
 
+    public static class LocationInfo {
+        private double latitude;
+        private double longitude;
+        private List<String> addresses;
+
+        public LocationInfo(double latitude, double longitude, List<String> addresses) {
+            this.latitude = latitude;
+            this.longitude = longitude;
+            this.addresses = addresses;
+        }
+
+        public double getLatitude() {
+            return latitude;
+        }
+
+        public void setLatitude(double latitude) {
+            this.latitude = latitude;
+        }
+
+        public double getLongitude() {
+            return longitude;
+        }
+
+        public void setLongitude(double longitude) {
+            this.longitude = longitude;
+        }
+
+        public List<String> getAddresses() {
+            return addresses;
+        }
+
+        public void setAddresses(List<String> addresses) {
+            this.addresses = addresses;
+        }
+
+        @Override
+        public String toString() {
+            return "LocationInfo{" +
+                    "latitude=" + latitude +
+                    ", longitude=" + longitude +
+                    ", addresses=" + addresses +
+                    '}';
+        }
+    }
 }
 
