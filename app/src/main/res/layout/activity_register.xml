@@ -34,28 +34,33 @@
 
             <EditText
                 android:id="@+id/edit_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:background="@drawable/text_border"
-                android:padding="15dp"
                 android:hint="Your Name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:maxLines="1"
+                android:padding="15dp" />
+
             <EditText
                 android:id="@+id/edit_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:background="@drawable/text_border"
-                android:padding="15dp"
                 android:hint="Email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:maxLines="1"
+                android:padding="15dp" />
+
             <EditText
                 android:id="@+id/edit_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:background="@drawable/text_border"
-                android:padding="15dp"
                 android:hint="Phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:maxLines="1"
+                android:padding="15dp" />
 
             <EditText
                 android:id="@+id/edit_password"
@@ -64,6 +69,7 @@
                 android:background="@drawable/text_border"
                 android:padding="15dp"
                 android:hint="Password"
+                android:maxLines="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <EditText
@@ -73,6 +79,7 @@
                 android:background="@drawable/text_border"
                 android:padding="15dp"
                 android:hint="Confirm Password"
+                android:maxLines="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
