@@ -41,5 +41,6 @@ public interface Api {
     @GET
     Observable<MainItemListBean> getNearbyItems(@Url String url, @QueryMap Map<String, Object> map);
 
-
+    @GET
+    Observable<MainItemListBean> getWishList(@Url String url, @QueryMap Map<String, Object> map);
 }

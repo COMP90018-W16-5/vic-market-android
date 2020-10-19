@@ -11,35 +11,25 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.baiiu.filter.DropDownMenu;
-import com.baiiu.filter.interfaces.OnFilterDoneListener;
-import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import group.unimelb.vicmarket.R;
 import group.unimelb.vicmarket.adapter.CommonItemListAdapter;
-import group.unimelb.vicmarket.adapter.DropMenuAdapter;
 import group.unimelb.vicmarket.retrofit.RetrofitHelper;
 import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
 import group.unimelb.vicmarket.util.LocationUtil;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-public class NearbyItemsActivity extends AppCompatActivity {
+public class WishlistActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private SmartRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
-    private DropDownMenu dropdownMenu;
-
-    private double longitude = 0;
-    private double latitude = 0;
-
     private RelativeLayout emptyView;
 
     /* Adapter for RecyclerView */
@@ -48,20 +38,20 @@ public class NearbyItemsActivity extends AppCompatActivity {
     private List<MainItemListBean.DataBean> dataBeans = new ArrayList<>();
 
     private int page = 1;
-    private int maxDistance = 20;
-    private int category = 0;
+
+    private double longitude = 0;
+    private double latitude = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nearby_item);
+        setContentView(R.layout.activity_category_detail);
 
         findViews();
-
         initLocation();
 
         toolbar.setNavigationIcon(R.drawable.ic_back);
-        toolbar.setTitle("Nearby");
+        toolbar.setTitle("Wishlist");
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(v -> finish());
 
@@ -75,19 +65,6 @@ public class NearbyItemsActivity extends AppCompatActivity {
             page++;
             loadData();
         });
-
-        String[] titleList = new String[] { "Distance", "Category"};
-        DropMenuAdapter dropMenuAdapter = new DropMenuAdapter(this, titleList);
-        dropMenuAdapter.setOnItemSelectedListener((type, code, value) -> {
-            dropdownMenu.close();
-            if (type == 0) {
-                maxDistance = code;
-            } else if (type == 1) {
-                category = code;
-            }
-            refreshLayout.autoRefresh();
-        });
-        dropdownMenu.setMenuAdapter(dropMenuAdapter);
     }
 
     @SuppressLint("CheckResult")
@@ -116,7 +93,7 @@ public class NearbyItemsActivity extends AppCompatActivity {
 
     private void loadData() {
         /* Send HTTP request to get data */
-        RetrofitHelper.getInstance().getNearbyItems(new Observer<MainItemListBean>() {
+        RetrofitHelper.getInstance().getWishList(new Observer<MainItemListBean>() {
             @Override
             public void onSubscribe(Disposable d) {
 
@@ -146,14 +123,13 @@ public class NearbyItemsActivity extends AppCompatActivity {
             public void onComplete() {
                 endLoading();
             }
-        }, longitude, latitude, maxDistance, page, category);
+        }, String.valueOf(page));
     }
 
     private void findViews() {
         toolbar = findViewById(R.id.cate_detail_toolbar);
         refreshLayout = findViewById(R.id.cate_detail_refresh);
         recyclerView = findViewById(R.id.cate_detail_list_recycler);
-        dropdownMenu = findViewById(R.id.filterDropDownView);
         emptyView = findViewById(R.id.empty_view);
     }
 

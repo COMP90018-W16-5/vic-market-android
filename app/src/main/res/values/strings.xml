@@ -8,6 +8,7 @@
     <string name="category_more">More\n Categories</string>
     <string name="category_nearby">Nearby</string>
     <string name="permission_request_denied">Permission request denied</string>
+    <string name="empty_list_msg">Oops, no items yet!</string>
 
     <!--categories need to be modified -->
     <string-array name="array_category">

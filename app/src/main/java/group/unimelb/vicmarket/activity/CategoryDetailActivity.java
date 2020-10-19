@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.google.gson.Gson;
@@ -30,6 +32,7 @@ public class CategoryDetailActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private SmartRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
+    private RelativeLayout emptyView;
 
     /* Adapter for RecyclerView */
     private CommonItemListAdapter adapter;
@@ -107,6 +110,11 @@ public class CategoryDetailActivity extends AppCompatActivity {
                     dataBeans.clear();
                 }
                 dataBeans.addAll(mainItemListBean.getData());
+                if (dataBeans.isEmpty()) {
+                    emptyView.setVisibility(View.VISIBLE);
+                } else {
+                    emptyView.setVisibility(View.GONE);
+                }
                 adapter.setData(dataBeans);
             }
 
@@ -127,6 +135,7 @@ public class CategoryDetailActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.cate_detail_toolbar);
         refreshLayout = findViewById(R.id.cate_detail_refresh);
         recyclerView = findViewById(R.id.cate_detail_list_recycler);
+        emptyView = findViewById(R.id.empty_view);
     }
 
     private void endLoading() {

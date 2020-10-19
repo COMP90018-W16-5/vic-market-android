@@ -56,7 +56,7 @@ public class AccountActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(v -> finish());
 
         layoutWishList.setOnClickListener(v -> {
-            // TODO: open wishlist page
+            startActivity(new Intent(AccountActivity.this, WishlistActivity.class));
         });
 
         layoutMyPosts.setOnClickListener(v -> {

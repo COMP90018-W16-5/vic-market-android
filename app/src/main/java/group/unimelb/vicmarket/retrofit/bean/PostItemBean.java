@@ -11,7 +11,6 @@ public class PostItemBean {
      */
     private int code;
     private String msg;
-    private List<CategoriesBean.DataBean> data;
 
     public int getCode() {
         return code;
@@ -28,14 +27,4 @@ public class PostItemBean {
     public void setMsg(String msg) {
         this.msg = msg;
     }
-
-    public List<CategoriesBean.DataBean> getData() {
-        return data;
-    }
-
-    public void setData(List<CategoriesBean.DataBean> data) {
-        this.data = data;
-    }
-
-
 }

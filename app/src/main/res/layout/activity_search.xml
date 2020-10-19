@@ -36,6 +36,8 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_centerVertical="true"
+                android:imeOptions="actionSearch"
+                android:singleLine="true"
                 android:textColor="@color/colorTitle"
                 android:focusableInTouchMode="true"
                 android:textSize="15sp"
@@ -64,14 +66,40 @@
         android:background="#F1F1F1"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/search_list_recycler"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:overScrollMode="never"
-            android:padding="6dp"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent" >
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/search_list_recycler"
+                android:layout_width="match_parent"
+                android:overScrollMode="never"
+                android:padding="6dp"
+                android:layout_height="match_parent">
 
-        </androidx.recyclerview.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
+            <RelativeLayout
+                android:id="@+id/empty_view"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/empty_text"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorGrey"
+                    android:text="@string/empty_list_msg"
+                    android:layout_centerInParent="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/ic_empty"
+                    android:layout_above="@id/empty_text"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp" />
+            </RelativeLayout>
+        </RelativeLayout>
+
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

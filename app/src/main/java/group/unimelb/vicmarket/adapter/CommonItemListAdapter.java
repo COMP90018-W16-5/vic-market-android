@@ -60,16 +60,20 @@ public class CommonItemListAdapter extends RecyclerView.Adapter<CommonItemListAd
         }
         holder.textTitle.setText(dataBean.getTitle());
         holder.textPrice.setText("$" + dataBean.getPrice());
-        double distance = LocationUtil.getInstance().getDistance(dataBean.getLongitude(),
-                dataBean.getLatitude(), longitude, latitude);
-        String distanceDisplay;
-        if (distance < 1) {
-            distance *= 1000;
-            distanceDisplay = String.format("%sm", String.format("%.2f", distance));
+        if (longitude == 0 || latitude == 0) {
+            holder.textDistance.setVisibility(View.GONE);
         } else {
-            distanceDisplay = String.format("%skm", String.format("%.2f", distance));
+            double distance = LocationUtil.getInstance().getDistance(dataBean.getLongitude(),
+                    dataBean.getLatitude(), longitude, latitude);
+            String distanceDisplay;
+            if (distance < 1) {
+                distance *= 1000;
+                distanceDisplay = String.format("%sm", String.format("%.2f", distance));
+            } else {
+                distanceDisplay = String.format("%skm", String.format("%.2f", distance));
+            }
+            holder.textDistance.setText(distanceDisplay);
         }
-        holder.textDistance.setText( distanceDisplay);
 
         if (onListItemClickListener != null) {
             holder.holderLayout.setOnClickListener(v -> onListItemClickListener.onListItemClick(position));

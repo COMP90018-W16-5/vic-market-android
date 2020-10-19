@@ -140,6 +140,14 @@ public class RetrofitHelper {
         execute(api.getItemList(URL, params), observer);
     }
 
+    public void getWishList(Observer<MainItemListBean> observer, String page) {
+        String URL = BASE_URL + "/user/wishlist";
+        Map<String, Object> params = new HashMap<>();
+        params.put("page", page);
+        params.put("pageSize", 15);
+        execute(api.getWishList(URL, params), observer);
+    }
+
     public void searchItemList(Observer<MainItemListBean> observer, String keyword, String page) {
         String URL = BASE_URL + "/item/search";
         Map<String, Object> params = new HashMap<>();

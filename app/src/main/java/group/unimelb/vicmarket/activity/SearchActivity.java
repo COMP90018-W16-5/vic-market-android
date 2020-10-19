@@ -2,11 +2,16 @@ package group.unimelb.vicmarket.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -22,6 +27,8 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import group.unimelb.vicmarket.R;
 import group.unimelb.vicmarket.adapter.CommonItemListAdapter;
@@ -38,6 +45,7 @@ public class SearchActivity extends AppCompatActivity {
     private ImageView buttonSearch;
     private SmartRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
+    private RelativeLayout emptyView;
 
     private int page = 1;
     private String keyword = null;
@@ -60,6 +68,30 @@ public class SearchActivity extends AppCompatActivity {
         initLocation();
 
         buttonBack.setOnClickListener(v -> finish());
+
+        textSearch.requestFocus();
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                InputMethodManager inputManager =
+                        (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.showSoftInput(textSearch, 0);
+            }
+        }, 500);
+        textSearch.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                keyword = textSearch.getText().toString();
+                page = 1;
+                if ("".equals(keyword)) {
+                    ToastUtils.showShort("Keyword cannot be empty");
+                } else {
+                    refreshLayout.setVisibility(View.VISIBLE);
+                    refreshLayout.autoRefresh();
+                }
+            }
+            return false;
+        });
 
         buttonSearch.setOnClickListener(v -> {
             keyword = textSearch.getText().toString();
@@ -118,6 +150,11 @@ public class SearchActivity extends AppCompatActivity {
                 }
                 /* Add data */
                 dataBeans.addAll(mainItemListBean.getData());
+                if (dataBeans.isEmpty()) {
+                    emptyView.setVisibility(View.VISIBLE);
+                } else {
+                    emptyView.setVisibility(View.GONE);
+                }
                 adapter.setData(dataBeans);
             }
 
@@ -140,6 +177,7 @@ public class SearchActivity extends AppCompatActivity {
         refreshLayout = findViewById(R.id.search_refresh);
         recyclerView = findViewById(R.id.search_list_recycler);
         buttonSearch = findViewById(R.id.search_action);
+        emptyView = findViewById(R.id.empty_view);
     }
 
     private void endLoading() {
