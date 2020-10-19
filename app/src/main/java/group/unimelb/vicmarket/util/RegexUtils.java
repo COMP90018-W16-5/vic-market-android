@@ -1,4 +1,4 @@
-package group.unimelb.vicmarket.retrofit;
+package group.unimelb.vicmarket.util;
 
 import java.util.ArrayList;
 import java.util.List;

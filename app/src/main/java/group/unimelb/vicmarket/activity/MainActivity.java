@@ -1,16 +1,21 @@
 package group.unimelb.vicmarket.activity;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.SPUtils;
@@ -22,17 +27,21 @@ import com.google.gson.reflect.TypeToken;
 import com.josephvuoto.customdialog.alert.CustomDialog;
 import com.josephvuoto.customdialog.common.OnCancelClickListener;
 import com.josephvuoto.customdialog.common.OnOkClickListener;
+import com.josephvuoto.customdialog.custom.CustomViewDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 import group.unimelb.vicmarket.R;
+import group.unimelb.vicmarket.adapter.LocationListAdapter;
 import group.unimelb.vicmarket.adapter.MainItemListAdapter;
 import group.unimelb.vicmarket.retrofit.RetrofitHelper;
 import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
+import group.unimelb.vicmarket.util.LocationUtil;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -60,6 +69,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int page = 1;
     private boolean login = false;
 
+    private double longitude = 0;
+    private double latitude = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,24 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        /* Initialize the adapter and add to RecyclerView */
-        adapter = new MainItemListAdapter(this);
-        recyclerView.setAdapter(adapter);
-        /* Use GridLayout to display two columns */
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
-        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                return 1;
-            }
-        });
-        recyclerView.setLayoutManager(gridLayoutManager);
-
-        /* Init data, see if there is cache */
-        initData();
-
-        /* Start refreshing when starting the page */
-        refreshLayout.autoRefresh();
+        initLocation();
 
         refreshLayout.setOnRefreshListener(refreshlayout -> {
             /* Refresh */
@@ -156,6 +151,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonCategoryMore = findViewById(R.id.cate_more);
         buttonPostNew = findViewById(R.id.action_a);
         actionsMenu = findViewById(R.id.multiple_actions);
+    }
+
+    @SuppressLint("CheckResult")
+    private void initLocation() {
+        RxPermissions rxPermissions = new RxPermissions(this);
+        rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+                .subscribe(aBoolean -> {
+                    if (aBoolean) {
+                        LocationUtil.LocationInfo locationInfo = LocationUtil.getInstance().getLocationInfo();
+                        latitude = locationInfo.getLatitude();
+                        longitude = locationInfo.getLongitude();
+                    }
+
+                    /* Initialize the adapter and add to RecyclerView */
+                    adapter = new MainItemListAdapter(this, longitude, latitude);
+                    recyclerView.setAdapter(adapter);
+                    /* Use GridLayout to display two columns */
+                    GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+                    gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                        @Override
+                        public int getSpanSize(int position) {
+                            return 1;
+                        }
+                    });
+
+                    recyclerView.setLayoutManager(gridLayoutManager);
+                    /* Init data, see if there is cache */
+                    initData();
+
+                    /* Start refreshing when starting the page */
+                    refreshLayout.autoRefresh();
+                });
     }
 
     private void loadData() {

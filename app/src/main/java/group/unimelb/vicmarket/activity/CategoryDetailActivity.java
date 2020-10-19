@@ -5,12 +5,15 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +22,7 @@ import group.unimelb.vicmarket.R;
 import group.unimelb.vicmarket.adapter.CommonItemListAdapter;
 import group.unimelb.vicmarket.retrofit.RetrofitHelper;
 import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
+import group.unimelb.vicmarket.util.LocationUtil;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -35,12 +39,16 @@ public class CategoryDetailActivity extends AppCompatActivity {
     private int page = 1;
     private int cateId;
 
+    private double longitude = 0;
+    private double latitude = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_detail);
 
         findViews();
+        initLocation();
         cateId = getIntent().getIntExtra("category_id", 1);
         String cateName = getIntent().getStringExtra("category_name");
 
@@ -48,17 +56,6 @@ public class CategoryDetailActivity extends AppCompatActivity {
         toolbar.setTitle(cateName);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(v -> finish());
-
-        /* Initialize the adapter and add to RecyclerView */
-        adapter = new CommonItemListAdapter(this);
-        recyclerView.setAdapter(adapter);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this,
-                LinearLayoutManager.VERTICAL, false);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(layoutManager);
-
-        /* Start refreshing when starting the page */
-        refreshLayout.autoRefresh();
 
         refreshLayout.setOnRefreshListener(refreshlayout -> {
             /* Refresh */
@@ -70,6 +67,30 @@ public class CategoryDetailActivity extends AppCompatActivity {
             page++;
             loadData();
         });
+    }
+
+    @SuppressLint("CheckResult")
+    private void initLocation() {
+        RxPermissions rxPermissions = new RxPermissions(this);
+        rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+                .subscribe(aBoolean -> {
+                    if (aBoolean) {
+                        LocationUtil.LocationInfo locationInfo = LocationUtil.getInstance().getLocationInfo();
+                        latitude = locationInfo.getLatitude();
+                        longitude = locationInfo.getLongitude();
+                    }
+
+                    /* Initialize the adapter and add to RecyclerView */
+                    adapter = new CommonItemListAdapter(this, longitude, latitude);
+                    recyclerView.setAdapter(adapter);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this,
+                            LinearLayoutManager.VERTICAL, false);
+                    recyclerView.setAdapter(adapter);
+                    recyclerView.setLayoutManager(layoutManager);
+
+                    /* Start refreshing when starting the page */
+                    refreshLayout.autoRefresh();
+                });
     }
 
     private void loadData() {

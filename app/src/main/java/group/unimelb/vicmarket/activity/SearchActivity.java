@@ -1,5 +1,7 @@
 package group.unimelb.vicmarket.activity;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -16,6 +18,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +28,7 @@ import group.unimelb.vicmarket.adapter.CommonItemListAdapter;
 import group.unimelb.vicmarket.adapter.MainItemListAdapter;
 import group.unimelb.vicmarket.retrofit.RetrofitHelper;
 import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
+import group.unimelb.vicmarket.util.LocationUtil;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -43,6 +47,9 @@ public class SearchActivity extends AppCompatActivity {
     /* Deserialized data from the server */
     private List<MainItemListBean.DataBean> dataBeans = new ArrayList<>();
 
+    private double longitude = 0;
+    private double latitude = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,13 +57,7 @@ public class SearchActivity extends AppCompatActivity {
 
         findViews();
 
-        /* Initialize the adapter and add to RecyclerView */
-        adapter = new CommonItemListAdapter(this);
-        recyclerView.setAdapter(adapter);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this,
-                LinearLayoutManager.VERTICAL, false);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(layoutManager);
+        initLocation();
 
         buttonBack.setOnClickListener(v -> finish());
 
@@ -79,6 +80,27 @@ public class SearchActivity extends AppCompatActivity {
             page++;
             loadData();
         });
+    }
+
+    @SuppressLint("CheckResult")
+    private void initLocation() {
+        RxPermissions rxPermissions = new RxPermissions(this);
+        rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+                .subscribe(aBoolean -> {
+                    if (aBoolean) {
+                        LocationUtil.LocationInfo locationInfo = LocationUtil.getInstance().getLocationInfo();
+                        latitude = locationInfo.getLatitude();
+                        longitude = locationInfo.getLongitude();
+                    }
+
+                    /* Initialize the adapter and add to RecyclerView */
+                    adapter = new CommonItemListAdapter(this, longitude, latitude);
+                    recyclerView.setAdapter(adapter);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this,
+                            LinearLayoutManager.VERTICAL, false);
+                    recyclerView.setAdapter(adapter);
+                    recyclerView.setLayoutManager(layoutManager);
+                });
     }
 
     private void loadData() {

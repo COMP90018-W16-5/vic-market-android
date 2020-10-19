@@ -1,5 +1,7 @@
 package group.unimelb.vicmarket.activity;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +14,7 @@ import com.baiiu.filter.interfaces.OnFilterDoneListener;
 import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ import group.unimelb.vicmarket.adapter.CommonItemListAdapter;
 import group.unimelb.vicmarket.adapter.DropMenuAdapter;
 import group.unimelb.vicmarket.retrofit.RetrofitHelper;
 import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
+import group.unimelb.vicmarket.util.LocationUtil;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -30,6 +34,9 @@ public class NearbyItemsActivity extends AppCompatActivity {
     private SmartRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private DropDownMenu dropdownMenu;
+
+    private double longitude = 0;
+    private double latitude = 0;
 
     /* Adapter for RecyclerView */
     private CommonItemListAdapter adapter;
@@ -40,10 +47,6 @@ public class NearbyItemsActivity extends AppCompatActivity {
     private int maxDistance = 20;
     private int category = 0;
 
-    //TODO: initialize location info
-    private BigDecimal longitude = BigDecimal.valueOf(100);
-    private BigDecimal latitude = BigDecimal.valueOf(30);
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,21 +54,12 @@ public class NearbyItemsActivity extends AppCompatActivity {
 
         findViews();
 
+        initLocation();
+
         toolbar.setNavigationIcon(R.drawable.ic_back);
         toolbar.setTitle("Nearby");
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(v -> finish());
-
-        /* Initialize the adapter and add to RecyclerView */
-        adapter = new CommonItemListAdapter(this);
-        recyclerView.setAdapter(adapter);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this,
-                LinearLayoutManager.VERTICAL, false);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(layoutManager);
-
-        /* Start refreshing when starting the page */
-        refreshLayout.autoRefresh();
 
         refreshLayout.setOnRefreshListener(refreshlayout -> {
             /* Refresh */
@@ -90,7 +84,30 @@ public class NearbyItemsActivity extends AppCompatActivity {
             refreshLayout.autoRefresh();
         });
         dropdownMenu.setMenuAdapter(dropMenuAdapter);
+    }
 
+    @SuppressLint("CheckResult")
+    private void initLocation() {
+        RxPermissions rxPermissions = new RxPermissions(this);
+        rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+                .subscribe(aBoolean -> {
+                    if (aBoolean) {
+                        LocationUtil.LocationInfo locationInfo = LocationUtil.getInstance().getLocationInfo();
+                        latitude = locationInfo.getLatitude();
+                        longitude = locationInfo.getLongitude();
+                    }
+
+                    /* Initialize the adapter and add to RecyclerView */
+                    adapter = new CommonItemListAdapter(this, longitude, latitude);
+                    recyclerView.setAdapter(adapter);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this,
+                            LinearLayoutManager.VERTICAL, false);
+                    recyclerView.setAdapter(adapter);
+                    recyclerView.setLayoutManager(layoutManager);
+
+                    /* Start refreshing when starting the page */
+                    refreshLayout.autoRefresh();
+                });
     }
 
     private void loadData() {

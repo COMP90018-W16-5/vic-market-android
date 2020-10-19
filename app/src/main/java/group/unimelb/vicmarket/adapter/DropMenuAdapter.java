@@ -81,7 +81,6 @@ public class DropMenuAdapter implements MenuAdapter {
                         onItemSelectedListener.onSelected(position, item.getCode(), item.getDisplay());
                     }
                 });
-
         List<DropdownMenuBean> list = new ArrayList<>();
         if (position == 0) {
             list.add(new DropdownMenuBean(1, "1 KM"));
@@ -99,6 +98,7 @@ public class DropMenuAdapter implements MenuAdapter {
 
                 @Override
                 public void onNext(CategoriesBean categoriesBean) {
+                    list.add(new DropdownMenuBean(0, "All"));
                     for (CategoriesBean.DataBean dataBean : categoriesBean.getData()) {
                         list.add(new DropdownMenuBean(dataBean.getCid(), dataBean.getName()));
                     }

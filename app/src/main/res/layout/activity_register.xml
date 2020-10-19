@@ -80,7 +80,7 @@
                 android:id="@+id/button_Sign_up"
                 android:text="Sign up"
                 android:textColor="@color/white"
-                android:background="@drawable/bg_ripple_ok"
+                android:background="@drawable/bg_ripple_ok_round"
                 android:layout_marginTop="40dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

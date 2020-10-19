@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,25 +25,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.josephvuoto.customdialog.custom.CustomViewDialog;
-import com.josephvuoto.customdialog.list.ListDialog;
-import com.josephvuoto.customdialog.list.ListItemModel;
 import com.josephvuoto.customdialog.loading.LoadingDialog;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
-import com.zhihu.matisse.filter.Filter;
 
-
-import java.util.ArrayList;
-import java.util.List;
 
 import group.unimelb.vicmarket.R;
-import group.unimelb.vicmarket.adapter.CategoryListAdapter;
 import group.unimelb.vicmarket.adapter.CategorySpinnerAdapter;
 import group.unimelb.vicmarket.adapter.LocationListAdapter;
-import group.unimelb.vicmarket.retrofit.LocationUtil;
-import group.unimelb.vicmarket.retrofit.RegexUtils;
+import group.unimelb.vicmarket.util.LocationUtil;
 import group.unimelb.vicmarket.retrofit.RetrofitHelper;
 import group.unimelb.vicmarket.retrofit.bean.CategoriesBean;
 import group.unimelb.vicmarket.retrofit.bean.PostItemBean;

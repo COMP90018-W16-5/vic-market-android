@@ -2,7 +2,6 @@ package group.unimelb.vicmarket.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
@@ -22,13 +21,11 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
-import com.zhihu.matisse.filter.Filter;
-import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.io.File;
 
 import group.unimelb.vicmarket.R;
-import group.unimelb.vicmarket.retrofit.RegexUtils;
+import group.unimelb.vicmarket.util.RegexUtils;
 import group.unimelb.vicmarket.retrofit.RetrofitHelper;
 import group.unimelb.vicmarket.retrofit.bean.SignUpBean;
 import group.unimelb.vicmarket.retrofit.bean.UploadPicBean;

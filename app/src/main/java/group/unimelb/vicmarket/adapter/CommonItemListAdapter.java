@@ -18,14 +18,19 @@ import java.util.List;
 
 import group.unimelb.vicmarket.R;
 import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
+import group.unimelb.vicmarket.util.LocationUtil;
 
 public class CommonItemListAdapter extends RecyclerView.Adapter<CommonItemListAdapter.ViewHolder> {
     List<MainItemListBean.DataBean> data = new ArrayList<>();
-    private Context context;
+    private final Context context;
     private OnListItemClickListener onListItemClickListener;
+    private final double longitude;
+    private final double latitude;
 
-    public CommonItemListAdapter(Context context) {
+    public CommonItemListAdapter(Context context, double longitude, double latitude) {
         this.context = context;
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
     public void setOnListItemClickListener(OnListItemClickListener onListItemClickListener) {
@@ -55,6 +60,16 @@ public class CommonItemListAdapter extends RecyclerView.Adapter<CommonItemListAd
         }
         holder.textTitle.setText(dataBean.getTitle());
         holder.textPrice.setText("$" + dataBean.getPrice());
+        double distance = LocationUtil.getInstance().getDistance(dataBean.getLongitude(),
+                dataBean.getLatitude(), longitude, latitude);
+        String distanceDisplay;
+        if (distance < 1) {
+            distance *= 1000;
+            distanceDisplay = String.format("%sm", String.format("%.2f", distance));
+        } else {
+            distanceDisplay = String.format("%skm", String.format("%.2f", distance));
+        }
+        holder.textDistance.setText( distanceDisplay);
 
         if (onListItemClickListener != null) {
             holder.holderLayout.setOnClickListener(v -> onListItemClickListener.onListItemClick(position));
@@ -75,6 +90,7 @@ public class CommonItemListAdapter extends RecyclerView.Adapter<CommonItemListAd
         private TextView textTitle;
         private TextView textPrice;
         private LinearLayout holderLayout;
+        private TextView textDistance;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -83,6 +99,7 @@ public class CommonItemListAdapter extends RecyclerView.Adapter<CommonItemListAd
             textTitle = itemView.findViewById(R.id.common_item_title);
             textPrice = itemView.findViewById(R.id.common_item_price);
             holderLayout = itemView.findViewById(R.id.common_item_holder);
+            textDistance = itemView.findViewById(R.id.common_item_distance);
         }
     }
 }

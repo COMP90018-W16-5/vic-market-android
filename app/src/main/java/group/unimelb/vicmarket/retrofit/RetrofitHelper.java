@@ -150,8 +150,8 @@ public class RetrofitHelper {
     }
 
     public void getNearbyItems(Observer<MainItemListBean> observer,
-                               BigDecimal longitude,
-                               BigDecimal latitude,
+                               double longitude,
+                               double latitude,
                                int maxDistance,
                                int page,
                                int category) {
