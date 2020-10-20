@@ -55,13 +55,9 @@ public class AccountActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(v -> finish());
 
-        layoutWishList.setOnClickListener(v -> {
-            startActivity(new Intent(AccountActivity.this, WishlistActivity.class));
-        });
+        layoutWishList.setOnClickListener(v -> startActivity(new Intent(AccountActivity.this, WishlistActivity.class)));
 
-        layoutMyPosts.setOnClickListener(v -> {
-            // TODO: open my post page
-        });
+        layoutMyPosts.setOnClickListener(v -> startActivity(new Intent(AccountActivity.this, MyPostActivity.class)));
 
         layoutLogout.setOnClickListener(v -> {
             new CustomDialog.Builder(AccountActivity.this)

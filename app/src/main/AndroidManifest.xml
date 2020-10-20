@@ -29,6 +29,7 @@
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.PostActivity"/>
         <activity android:name=".activity.WishlistActivity"/>
+        <activity android:name=".activity.MyPostActivity"/>
         <activity android:name=".activity.MainActivity">
 
             <intent-filter>

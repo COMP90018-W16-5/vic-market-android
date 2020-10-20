@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             login = true;
             String photo = SPUtils.getInstance().getString("photo");
             if (!"".equals(photo)) {
-                Glide.with(this).load(photo).into(imageHead);
+                Glide.with(this).load(photo).placeholder(R.drawable.ic_account).into(imageHead);
             } else {
                 Glide.with(this).load(R.drawable.ic_account);
             }

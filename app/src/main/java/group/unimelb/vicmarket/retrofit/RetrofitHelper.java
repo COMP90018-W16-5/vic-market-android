@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 import group.unimelb.vicmarket.common.MarketApplication;
 import group.unimelb.vicmarket.retrofit.bean.CategoriesBean;
+import group.unimelb.vicmarket.retrofit.bean.DeleteItemBean;
 import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
 import group.unimelb.vicmarket.retrofit.bean.PostItemBean;
 import group.unimelb.vicmarket.retrofit.bean.SignInBean;
@@ -146,6 +147,21 @@ public class RetrofitHelper {
         params.put("page", page);
         params.put("pageSize", 15);
         execute(api.getWishList(URL, params), observer);
+    }
+
+    public void getMyPost(Observer<MainItemListBean> observer, String page) {
+        String URL = BASE_URL + "/user/items";
+        Map<String, Object> params = new HashMap<>();
+        params.put("page", page);
+        params.put("pageSize", 15);
+        execute(api.getMyPost(URL, params), observer);
+    }
+
+    public void deleteMyPost(Observer<DeleteItemBean> observer, int itemId) {
+        String URL = BASE_URL + "/user/item";
+        Map<String, Object> params = new HashMap<>();
+        params.put("itemId", itemId);
+        execute(api.deleteMyPost(URL, params), observer);
     }
 
     public void searchItemList(Observer<MainItemListBean> observer, String keyword, String page) {

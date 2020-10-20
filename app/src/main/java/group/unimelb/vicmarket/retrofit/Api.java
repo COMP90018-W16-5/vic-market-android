@@ -3,6 +3,7 @@ package group.unimelb.vicmarket.retrofit;
 import java.util.Map;
 
 import group.unimelb.vicmarket.retrofit.bean.CategoriesBean;
+import group.unimelb.vicmarket.retrofit.bean.DeleteItemBean;
 import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
 import group.unimelb.vicmarket.retrofit.bean.PostItemBean;
 import group.unimelb.vicmarket.retrofit.bean.SignInBean;
@@ -11,6 +12,7 @@ import group.unimelb.vicmarket.retrofit.bean.UploadPicBean;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
@@ -43,4 +45,10 @@ public interface Api {
 
     @GET
     Observable<MainItemListBean> getWishList(@Url String url, @QueryMap Map<String, Object> map);
+
+    @GET
+    Observable<MainItemListBean> getMyPost(@Url String url, @QueryMap Map<String, Object> map);
+
+    @DELETE
+    Observable<DeleteItemBean> deleteMyPost(@Url String url, @QueryMap Map<String, Object> map);
 }

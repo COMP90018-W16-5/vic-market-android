@@ -24,6 +24,7 @@ public class CommonItemListAdapter extends RecyclerView.Adapter<CommonItemListAd
     List<MainItemListBean.DataBean> data = new ArrayList<>();
     private final Context context;
     private OnListItemClickListener onListItemClickListener;
+    private OnListItemLongClickListener onListItemLongClickListener;
     private final double longitude;
     private final double latitude;
 
@@ -35,6 +36,10 @@ public class CommonItemListAdapter extends RecyclerView.Adapter<CommonItemListAd
 
     public void setOnListItemClickListener(OnListItemClickListener onListItemClickListener) {
         this.onListItemClickListener = onListItemClickListener;
+    }
+
+    public void setOnListItemLongClickListener(OnListItemLongClickListener onListItemLongClickListener) {
+        this.onListItemLongClickListener = onListItemLongClickListener;
     }
 
     public void setData(List<MainItemListBean.DataBean> data) {
@@ -78,6 +83,12 @@ public class CommonItemListAdapter extends RecyclerView.Adapter<CommonItemListAd
         if (onListItemClickListener != null) {
             holder.holderLayout.setOnClickListener(v -> onListItemClickListener.onListItemClick(position));
         }
+        if (onListItemLongClickListener != null) {
+            holder.holderLayout.setOnLongClickListener(v -> {
+                onListItemLongClickListener.onListItemLongClick(position);
+                return false;
+            });
+        }
     }
 
     @Override
@@ -87,6 +98,10 @@ public class CommonItemListAdapter extends RecyclerView.Adapter<CommonItemListAd
 
     public interface OnListItemClickListener {
         void onListItemClick(int index);
+    }
+
+    public interface OnListItemLongClickListener {
+        void onListItemLongClick(int index);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
