@@ -1,6 +1,7 @@
 package group.unimelb.vicmarket.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import group.unimelb.vicmarket.R;
+import group.unimelb.vicmarket.activity.ItemDetailActivity;
 import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
 import group.unimelb.vicmarket.util.LocationUtil;
 
@@ -80,9 +82,12 @@ public class CommonItemListAdapter extends RecyclerView.Adapter<CommonItemListAd
             holder.textDistance.setText(distanceDisplay);
         }
 
-        if (onListItemClickListener != null) {
-            holder.holderLayout.setOnClickListener(v -> onListItemClickListener.onListItemClick(position));
-        }
+        holder.holderLayout.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ItemDetailActivity.class);
+            intent.putExtra("ITEM_ID", dataBean.getItemId());
+            context.startActivity(intent);
+        });
+
         if (onListItemLongClickListener != null) {
             holder.holderLayout.setOnLongClickListener(v -> {
                 onListItemLongClickListener.onListItemLongClick(position);

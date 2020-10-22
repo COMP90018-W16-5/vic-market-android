@@ -269,12 +269,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }.getType();
             dataBeans = new Gson().fromJson(cachedJson, listType);
             adapter.setData(dataBeans);
-            adapter.setOnListItemClickListener(new MainItemListAdapter.OnListItemClickListener() {
-                @Override
-                public void onListItemClick(int index) {
-                    System.out.println(index +" 被点击了");
-                }
-            });
         }
     }
 

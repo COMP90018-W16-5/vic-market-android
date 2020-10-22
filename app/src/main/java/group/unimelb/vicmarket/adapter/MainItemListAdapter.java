@@ -2,6 +2,7 @@ package group.unimelb.vicmarket.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,13 +20,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import group.unimelb.vicmarket.R;
+import group.unimelb.vicmarket.activity.ItemDetailActivity;
 import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
 import group.unimelb.vicmarket.util.LocationUtil;
 
 public class MainItemListAdapter extends RecyclerView.Adapter<MainItemListAdapter.ViewHolder> {
     List<MainItemListBean.DataBean> data = new ArrayList<>();
     private final Context context;
-    private OnListItemClickListener onListItemClickListener;
 
     private final double longitude;
     private final double latitude;
@@ -34,10 +35,6 @@ public class MainItemListAdapter extends RecyclerView.Adapter<MainItemListAdapte
         this.context = context;
         this.longitude = longitude;
         this.latitude = latitude;
-    }
-
-    public void setOnListItemClickListener(OnListItemClickListener onListItemClickListener) {
-        this.onListItemClickListener = onListItemClickListener;
     }
 
     public void setData(List<MainItemListBean.DataBean> data) {
@@ -85,27 +82,16 @@ public class MainItemListAdapter extends RecyclerView.Adapter<MainItemListAdapte
             holder.textDistance.setText(distanceDisplay);
         }
 
-        if (onListItemClickListener != null) {
-            holder.holderLayout.setOnClickListener(v -> onListItemClickListener.onListItemClick(position));
-        }
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onListItemClickListener != null) {
-                    onListItemClickListener.onListItemClick(position);
-                }
-            }
+        holder.holderLayout.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ItemDetailActivity.class);
+            intent.putExtra("ITEM_ID", dataBean.getItemId());
+            context.startActivity(intent);
         });
-
     }
 
     @Override
     public int getItemCount() {
         return data.size();
-    }
-
-    public interface OnListItemClickListener {
-        void onListItemClick(int index);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
