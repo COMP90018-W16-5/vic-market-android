@@ -51,7 +51,7 @@ public class WishlistActivity extends AppCompatActivity {
         initLocation();
 
         toolbar.setNavigationIcon(R.drawable.ic_back);
-        toolbar.setTitle("Wishlist");
+        toolbar.setTitle("Wish List");
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(v -> finish());
 

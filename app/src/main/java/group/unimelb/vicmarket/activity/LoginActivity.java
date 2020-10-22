@@ -76,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                         SPUtils.getInstance().put("phone", signInBean.getData().getPhone());
                         SPUtils.getInstance().put("photo", signInBean.getData().getPhoto());
                         SPUtils.getInstance().put("token", signInBean.getData().getToken());
+                        SPUtils.getInstance().put("password", password);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     } else {

@@ -3,11 +3,13 @@ package group.unimelb.vicmarket.activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -28,6 +30,7 @@ import com.josephvuoto.customdialog.alert.CustomDialog;
 import com.josephvuoto.customdialog.common.OnCancelClickListener;
 import com.josephvuoto.customdialog.common.OnOkClickListener;
 import com.josephvuoto.customdialog.custom.CustomViewDialog;
+import com.josephvuoto.customdialog.loading.LoadingDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -35,6 +38,8 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import group.unimelb.vicmarket.R;
 import group.unimelb.vicmarket.adapter.LocationListAdapter;
@@ -42,6 +47,7 @@ import group.unimelb.vicmarket.adapter.MainItemListAdapter;
 import group.unimelb.vicmarket.retrofit.RetrofitHelper;
 import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
 import group.unimelb.vicmarket.util.LocationUtil;
+import group.unimelb.vicmarket.util.SensorManagerHelper;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -59,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout buttonCategoryNearby;
     private LinearLayout buttonCategoryMore;
     private FloatingActionButton buttonPostNew;
+    private FloatingActionButton buttonRandom;
     private FloatingActionsMenu actionsMenu;
 
     /* Adapter for RecyclerView */
@@ -71,6 +78,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private double longitude = 0;
     private double latitude = 0;
+
+    private SensorManagerHelper sensorManagerHelper;
+    private LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +114,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             loadData();
         });
 
+        loadingDialog = new LoadingDialog.Builder(MainActivity.this)
+                .setLoadingText("Loading...")
+                .setCanceledOnTouchOutside(false)
+                .build();
+        sensorManagerHelper = new SensorManagerHelper(this);
+        sensorManagerHelper.setOnShakeListener(() -> {
+            loadingDialog.show();
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    loadingDialog.dismiss();
+                    // TODO
+                }
+            }, 1500);
+        });
+
+
         buttonCategoryCars.setOnClickListener(this);
         buttonCategoryHome.setOnClickListener(this);
         buttonCategoryPhone.setOnClickListener(this);
@@ -122,6 +150,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(MainActivity.this, PostActivity.class));
             }
             actionsMenu.collapse();
+        });
+
+        buttonRandom.setOnClickListener(v -> {
+
+            sensorManagerHelper.start();
+            new CustomDialog.Builder(MainActivity.this)
+                    .setTitle("I'm feeling lucky")
+                    .setMessage("Shake your phone to see a random item!")
+                    .setCancelButton("Cancel", dialog -> {
+                        sensorManagerHelper.stop();
+                        dialog.dismiss();
+                    }).build().show();
         });
     }
 
@@ -151,6 +191,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonCategoryMore = findViewById(R.id.cate_more);
         buttonPostNew = findViewById(R.id.action_a);
         actionsMenu = findViewById(R.id.multiple_actions);
+        buttonRandom = findViewById(R.id.action_b);
     }
 
     @SuppressLint("CheckResult")

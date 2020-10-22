@@ -226,16 +226,17 @@
             android:src="@drawable/ic_camera"
             fab:fab_colorNormal="@color/colorAccentPress"
             fab:fab_colorPressed="@color/colorAccentPressDark"
-            fab:fab_title="Demo1" />
+            fab:fab_title="Add New Post" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/action_b"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_discover"
+            android:contentDescription="I'm feeling lucky"
             fab:fab_colorNormal="@color/colorAccentPress"
             fab:fab_colorPressed="@color/colorAccentPressDark"
-            fab:fab_title="Demo2" />
+            fab:fab_title="I'm feeling lucky" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 </RelativeLayout>

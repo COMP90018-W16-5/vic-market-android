@@ -4,6 +4,7 @@ import java.util.Map;
 
 import group.unimelb.vicmarket.retrofit.bean.CategoriesBean;
 import group.unimelb.vicmarket.retrofit.bean.DeleteItemBean;
+import group.unimelb.vicmarket.retrofit.bean.ItemDetailBean;
 import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
 import group.unimelb.vicmarket.retrofit.bean.PostItemBean;
 import group.unimelb.vicmarket.retrofit.bean.SignInBean;
@@ -51,4 +52,10 @@ public interface Api {
 
     @DELETE
     Observable<DeleteItemBean> deleteMyPost(@Url String url, @QueryMap Map<String, Object> map);
+
+    @GET
+    Observable<ItemDetailBean> getItemDetails(@Url String url, @QueryMap Map<String, Object> map);
+
+    @GET
+    Observable<ItemDetailBean> getRandomItem(@Url String url);
 }

@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 import group.unimelb.vicmarket.common.MarketApplication;
 import group.unimelb.vicmarket.retrofit.bean.CategoriesBean;
 import group.unimelb.vicmarket.retrofit.bean.DeleteItemBean;
+import group.unimelb.vicmarket.retrofit.bean.ItemDetailBean;
 import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
 import group.unimelb.vicmarket.retrofit.bean.PostItemBean;
 import group.unimelb.vicmarket.retrofit.bean.SignInBean;
@@ -188,6 +189,18 @@ public class RetrofitHelper {
         params.put("page", page);
         params.put("pageSize", 15);
         execute(api.getNearbyItems(URL, params), observer);
+    }
+
+    public void getItemDetails(Observer<ItemDetailBean> observer, int id) {
+        String URL = BASE_URL + "/item/detail";
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", id);
+        execute(api.getItemDetails(URL, params), observer);
+    }
+
+    public void getRandomItem(Observer<ItemDetailBean> observer) {
+        String URL = BASE_URL + "/item/random";
+        execute(api.getRandomItem(URL), observer);
     }
 
     public void getCategories(Observer<CategoriesBean> observer) {
