@@ -235,10 +235,12 @@ public class PostActivity extends AppCompatActivity {
                 .subscribe(aBoolean -> {
                     if (aBoolean) {
                         LocationUtil.LocationInfo locationInfo = LocationUtil.getInstance().getLocationInfo();
-                        String addressLine = locationInfo.getAddresses().get(0);
-                        latitude = locationInfo.getLatitude();
-                        longitude = locationInfo.getLongitude();
-                        text_location.setText(addressLine);
+                        if (locationInfo != null) {
+                            String addressLine = locationInfo.getAddresses().get(0);
+                            latitude = locationInfo.getLatitude();
+                            longitude = locationInfo.getLongitude();
+                            text_location.setText(addressLine);
+                        }
 
                         LinearLayout customView = (LinearLayout) LayoutInflater.from(this)
                                 .inflate(R.layout.layout_location_list, null, false);

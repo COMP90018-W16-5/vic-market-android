@@ -76,8 +76,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int page = 1;
     private boolean login = false;
 
-    private double longitude = 0;
-    private double latitude = 0;
+    private double longitude = 144.9628;
+    private double latitude = -37.8102;
 
     private SensorManagerHelper sensorManagerHelper;
     private LoadingDialog loadingDialog;
@@ -201,8 +201,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .subscribe(aBoolean -> {
                     if (aBoolean) {
                         LocationUtil.LocationInfo locationInfo = LocationUtil.getInstance().getLocationInfo();
-                        latitude = locationInfo.getLatitude();
-                        longitude = locationInfo.getLongitude();
+                        if (locationInfo != null) {
+                            latitude = locationInfo.getLatitude();
+                            longitude = locationInfo.getLongitude();
+                        }
                     }
 
                     /* Initialize the adapter and add to RecyclerView */

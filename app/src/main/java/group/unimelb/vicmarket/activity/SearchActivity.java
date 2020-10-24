@@ -55,8 +55,8 @@ public class SearchActivity extends AppCompatActivity {
     /* Deserialized data from the server */
     private List<MainItemListBean.DataBean> dataBeans = new ArrayList<>();
 
-    private double longitude = 0;
-    private double latitude = 0;
+    private double longitude = 144.9628;
+    private double latitude = -37.8102;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,8 +121,10 @@ public class SearchActivity extends AppCompatActivity {
                 .subscribe(aBoolean -> {
                     if (aBoolean) {
                         LocationUtil.LocationInfo locationInfo = LocationUtil.getInstance().getLocationInfo();
-                        latitude = locationInfo.getLatitude();
-                        longitude = locationInfo.getLongitude();
+                        if (locationInfo != null) {
+                            latitude = locationInfo.getLatitude();
+                            longitude = locationInfo.getLongitude();
+                        }
                     }
 
                     /* Initialize the adapter and add to RecyclerView */
