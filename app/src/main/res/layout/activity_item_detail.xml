@@ -1,9 +1,289 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.ItemDetailActivity">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_above="@id/item_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true" >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.appbar.AppBarLayout
+            android:fitsSystemWindows="true"
+            android:layout_width="match_parent"
+            android:layout_height="400dp">
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                app:contentScrim="@color/white"
+                app:statusBarScrim="@android:color/transparent"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/item_image"
+                    android:background="@color/colorGrey"
+                    app:layout_collapseMode="parallax"
+                    android:scaleType="centerCrop"
+                    android:fitsSystemWindows="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/item_detail_toolbar"
+                    app:layout_collapseMode="pin"
+                    android:background="@color/colorStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:id="@+id/item_like"
+                            android:background="?android:attr/selectableItemBackgroundBorderless"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:layout_centerInParent="true"
+                            android:layout_marginEnd="20dp"
+                            android:layout_alignParentEnd="true"
+                            android:src="@drawable/ic_like"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp" />
+                    </RelativeLayout>
+                </androidx.appcompat.widget.Toolbar>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+        <androidx.core.widget.NestedScrollView
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:padding="20dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/item_title"
+                    android:textColor="@color/colorTitle"
+                    android:text="Nintendo Switch"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <RelativeLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/item_dollar"
+                        android:textSize="16sp"
+                        android:layout_marginTop="3dp"
+                        android:text="$"
+                        android:textColor="@color/colorTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/item_price"
+                        android:text="480"
+                        android:textColor="@color/colorTitle"
+                        android:textSize="22sp"
+                        android:layout_marginLeft="1dp"
+                        android:layout_toRightOf="@id/item_dollar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:src="@drawable/ic_location"
+                        android:layout_marginTop="1dp"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp" />
+                    <TextView
+                        android:id="@+id/item_address"
+                        android:layout_marginLeft="5dp"
+                        android:text="380 Little Lonstale St."
+                        android:textColor="@color/colorTextGrey"
+                        android:textSize="15sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:background="@color/colorLightGrey"
+                    android:layout_height="2px" />
+
+                <RelativeLayout
+                    android:id="@+id/image_name_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp" >
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/item_user_image"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentStart="true"
+                        android:src="@drawable/ic_account" />
+
+                    <TextView
+                        android:id="@+id/item_user_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:textColor="@color/colorTitle"
+                        android:layout_toEndOf="@+id/item_user_image"
+                        android:layout_marginStart="10dp"
+                        android:layout_centerVertical="true"
+                        android:text="DisplayName"
+                        android:textSize="18sp" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:background="@color/colorLightGrey"
+                    android:layout_height="2px" />
+
+                <TextView
+                    android:textColor="@color/colorTitle"
+                    android:textSize="20sp"
+                    android:text="Item Description: "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/item_description"
+                    android:lineSpacingExtra="3dp"
+                    android:textColor="@color/colorTitle"
+                    android:layout_marginTop="10dp"
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <LinearLayout
+        android:id="@+id/item_buttons"
+        android:layout_margin="15dp"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:layout_height="45dp">
+        <RelativeLayout
+            android:id="@+id/item_call"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/bg_ripple_ok_round"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_centerInParent="true"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@drawable/ic_phone"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    app:tint="@color/white" />
+                <TextView
+                    android:layout_marginLeft="3dp"
+                    android:text="Call"
+                    android:textSize="16sp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/item_email"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/bg_ripple_ok_round"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_centerInParent="true"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@drawable/ic_email"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    app:tint="@color/white" />
+                <TextView
+                    android:layout_marginLeft="3dp"
+                    android:text="Email"
+                    android:textSize="16sp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/item_direction"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/bg_ripple_ok_round"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_centerInParent="true"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@drawable/ic_cars"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    app:tint="@color/white" />
+                <TextView
+                    android:layout_marginLeft="3dp"
+                    android:text="Direction"
+                    android:textSize="16sp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_above="@id/item_buttons"
+        android:layout_width="match_parent"
+        android:background="@color/colorLightGrey"
+        android:layout_height="2px" />
+</RelativeLayout>
