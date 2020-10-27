@@ -12,13 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.baiiu.filter.DropDownMenu;
-import com.baiiu.filter.interfaces.OnFilterDoneListener;
-import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +34,8 @@ public class NearbyItemsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private DropDownMenu dropdownMenu;
 
-    private double longitude = 0;
-    private double latitude = 0;
+    private double longitude = 144.9628;
+    private double latitude = -37.8102;
 
     private RelativeLayout emptyView;
 
@@ -76,7 +73,7 @@ public class NearbyItemsActivity extends AppCompatActivity {
             loadData();
         });
 
-        String[] titleList = new String[] { "Distance", "Category"};
+        String[] titleList = new String[]{"Distance", "Category"};
         DropMenuAdapter dropMenuAdapter = new DropMenuAdapter(this, titleList);
         dropMenuAdapter.setOnItemSelectedListener((type, code, value) -> {
             dropdownMenu.close();
@@ -97,8 +94,10 @@ public class NearbyItemsActivity extends AppCompatActivity {
                 .subscribe(aBoolean -> {
                     if (aBoolean) {
                         LocationUtil.LocationInfo locationInfo = LocationUtil.getInstance().getLocationInfo();
-                        latitude = locationInfo.getLatitude();
-                        longitude = locationInfo.getLongitude();
+                        if (locationInfo != null) {
+                            latitude = locationInfo.getLatitude();
+                            longitude = locationInfo.getLongitude();
+                        }
                     }
 
                     /* Initialize the adapter and add to RecyclerView */

@@ -3,21 +3,15 @@ package group.unimelb.vicmarket.activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.SPUtils;
@@ -27,9 +21,6 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.josephvuoto.customdialog.alert.CustomDialog;
-import com.josephvuoto.customdialog.common.OnCancelClickListener;
-import com.josephvuoto.customdialog.common.OnOkClickListener;
-import com.josephvuoto.customdialog.custom.CustomViewDialog;
 import com.josephvuoto.customdialog.loading.LoadingDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
@@ -42,7 +33,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import group.unimelb.vicmarket.R;
-import group.unimelb.vicmarket.adapter.LocationListAdapter;
 import group.unimelb.vicmarket.adapter.MainItemListAdapter;
 import group.unimelb.vicmarket.retrofit.RetrofitHelper;
 import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
@@ -76,8 +66,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int page = 1;
     private boolean login = false;
 
-    private double longitude = 0;
-    private double latitude = 0;
+    private double longitude = 144.9628;
+    private double latitude = -37.8102;
 
     private SensorManagerHelper sensorManagerHelper;
     private LoadingDialog loadingDialog;
@@ -201,8 +191,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .subscribe(aBoolean -> {
                     if (aBoolean) {
                         LocationUtil.LocationInfo locationInfo = LocationUtil.getInstance().getLocationInfo();
-                        latitude = locationInfo.getLatitude();
-                        longitude = locationInfo.getLongitude();
+                        if (locationInfo != null) {
+                            latitude = locationInfo.getLatitude();
+                            longitude = locationInfo.getLongitude();
+                        }
                     }
 
                     /* Initialize the adapter and add to RecyclerView */

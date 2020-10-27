@@ -23,12 +23,12 @@ import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
 import group.unimelb.vicmarket.util.LocationUtil;
 
 public class CommonItemListAdapter extends RecyclerView.Adapter<CommonItemListAdapter.ViewHolder> {
-    List<MainItemListBean.DataBean> data = new ArrayList<>();
     private final Context context;
-    private OnListItemClickListener onListItemClickListener;
-    private OnListItemLongClickListener onListItemLongClickListener;
     private final double longitude;
     private final double latitude;
+    List<MainItemListBean.DataBean> data = new ArrayList<>();
+    private OnListItemClickListener onListItemClickListener;
+    private OnListItemLongClickListener onListItemLongClickListener;
 
     public CommonItemListAdapter(Context context, double longitude, double latitude) {
         this.context = context;

@@ -19,4 +19,6 @@
     <color name="colorDef">#FAFAFA</color>
     <color name="colorError">#FF4040</color>
     <color name="list_bg">#3B3B3B</color>
+
+    <color name="colorStatus">#27000000</color>
 </resources>

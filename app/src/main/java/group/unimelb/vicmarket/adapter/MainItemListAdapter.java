@@ -3,7 +3,6 @@ package group.unimelb.vicmarket.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +24,10 @@ import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
 import group.unimelb.vicmarket.util.LocationUtil;
 
 public class MainItemListAdapter extends RecyclerView.Adapter<MainItemListAdapter.ViewHolder> {
-    List<MainItemListBean.DataBean> data = new ArrayList<>();
     private final Context context;
-
     private final double longitude;
     private final double latitude;
+    List<MainItemListBean.DataBean> data = new ArrayList<>();
 
     public MainItemListAdapter(Context context, double longitude, double latitude) {
         this.context = context;

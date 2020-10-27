@@ -1,6 +1,6 @@
 package group.unimelb.vicmarket.retrofit.bean;
 
-public class DeleteItemBean {
+public class CommonBean {
     /**
      * {
      * "code": 200,

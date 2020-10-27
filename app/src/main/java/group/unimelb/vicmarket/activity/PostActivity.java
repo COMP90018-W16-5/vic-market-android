@@ -31,20 +31,20 @@ import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
 
-
 import group.unimelb.vicmarket.R;
 import group.unimelb.vicmarket.adapter.CategorySpinnerAdapter;
 import group.unimelb.vicmarket.adapter.LocationListAdapter;
-import group.unimelb.vicmarket.util.LocationUtil;
 import group.unimelb.vicmarket.retrofit.RetrofitHelper;
 import group.unimelb.vicmarket.retrofit.bean.CategoriesBean;
 import group.unimelb.vicmarket.retrofit.bean.PostItemBean;
 import group.unimelb.vicmarket.retrofit.bean.UploadPicBean;
+import group.unimelb.vicmarket.util.LocationUtil;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 
 public class PostActivity extends AppCompatActivity {
+    private static final int REQUEST_CODE_CHOOSE = 23;
     private Toolbar toolbar;
     private EditText text_title;
     private EditText text_description;
@@ -54,11 +54,8 @@ public class PostActivity extends AppCompatActivity {
     private EditText text_location;
     private RelativeLayout postButton;
     private RelativeLayout buttonLocation;
-
     private double latitude;
     private double longitude;
-
-    private static final int REQUEST_CODE_CHOOSE = 23;
     private String picUrl = "";
     private LoadingDialog loadingDialog;
     private int selectedCategory = 1;
@@ -195,28 +192,24 @@ public class PostActivity extends AppCompatActivity {
                 }
             };
             /* Perform the HTTP request */
-            if (title == null || title.equals("")){
+            if (title == null || title.equals("")) {
                 ToastUtils.showShort("Please enter the correct form of user name!");
-            }
-            else if (description == null || description.equals("")){
+            } else if (description == null || description.equals("")) {
                 ToastUtils.showShort("Please enter the correct form of description!");
-            }
-            else if (price == null || price.equals("")){
+            } else if (price == null || price.equals("")) {
                 ToastUtils.showShort("Please enter the correct form of price!");
-            }
-            else if (location == null || location.equals("")){
+            } else if (location == null || location.equals("")) {
                 ToastUtils.showShort("Please enter the correct form of location!");
             } else if (picUrl == null || picUrl.equals("")) {
                 ToastUtils.showShort("Please upload an image!");
-            }
-            else {
-                RetrofitHelper.getInstance().PostItem(postBeanObserver,title, description,
-                selectedCategory, Double.parseDouble(price), location,latitude,longitude, picUrl);
+            } else {
+                RetrofitHelper.getInstance().PostItem(postBeanObserver, title, description,
+                        selectedCategory, Double.parseDouble(price), location, latitude, longitude, picUrl);
             }
         });
     }
 
-    public void findViews(){
+    public void findViews() {
         text_location = findViewById(R.id.text_location);
         imagePicker = findViewById(R.id.image_picker);
         toolbar = findViewById(R.id.post_toolbar);
@@ -229,16 +222,18 @@ public class PostActivity extends AppCompatActivity {
     }
 
     @SuppressLint("CheckResult")
-    public void getCurrentLocation(){
+    public void getCurrentLocation() {
         RxPermissions rxPermissions = new RxPermissions(this);
         rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
                 .subscribe(aBoolean -> {
                     if (aBoolean) {
                         LocationUtil.LocationInfo locationInfo = LocationUtil.getInstance().getLocationInfo();
-                        String addressLine = locationInfo.getAddresses().get(0);
-                        latitude = locationInfo.getLatitude();
-                        longitude = locationInfo.getLongitude();
-                        text_location.setText(addressLine);
+                        if (locationInfo != null) {
+                            String addressLine = locationInfo.getAddresses().get(0);
+                            latitude = locationInfo.getLatitude();
+                            longitude = locationInfo.getLongitude();
+                            text_location.setText(addressLine);
+                        }
 
                         LinearLayout customView = (LinearLayout) LayoutInflater.from(this)
                                 .inflate(R.layout.layout_location_list, null, false);
@@ -261,14 +256,12 @@ public class PostActivity extends AppCompatActivity {
                         buttonLocation.setOnClickListener(v -> {
                             dialog.show();
                         });
-                    }
-                    else {
+                    } else {
                         Toast.makeText(PostActivity.this, R.string.permission_request_denied, Toast.LENGTH_LONG)
                                 .show();
                     }
                 });
     }
-
 
 
     @Override
@@ -286,12 +279,11 @@ public class PostActivity extends AppCompatActivity {
 
                 @Override
                 public void onNext(UploadPicBean uploadPicBean) {
-                    if (uploadPicBean.getCode()!=200||
-                            uploadPicBean.getData()== null||
-                            uploadPicBean.getData().isEmpty()){
+                    if (uploadPicBean.getCode() != 200 ||
+                            uploadPicBean.getData() == null ||
+                            uploadPicBean.getData().isEmpty()) {
                         ToastUtils.showShort("Unknown error");
-                    }
-                    else {
+                    } else {
                         picUrl = uploadPicBean.getData().get(0).getUrl();
                         Glide.with(PostActivity.this).load(picUrl).into(imagePicker);
                     }
@@ -313,7 +305,7 @@ public class PostActivity extends AppCompatActivity {
                     loadingDialog.dismiss();
                 }
             };
-            RetrofitHelper.getInstance().uploadPic(uploadPicObserver , picLocation);
+            RetrofitHelper.getInstance().uploadPic(uploadPicObserver, picLocation);
         }
     }
 

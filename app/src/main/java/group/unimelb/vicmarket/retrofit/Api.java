@@ -3,6 +3,7 @@ package group.unimelb.vicmarket.retrofit;
 import java.util.Map;
 
 import group.unimelb.vicmarket.retrofit.bean.CategoriesBean;
+import group.unimelb.vicmarket.retrofit.bean.CommonBean;
 import group.unimelb.vicmarket.retrofit.bean.DeleteItemBean;
 import group.unimelb.vicmarket.retrofit.bean.ItemDetailBean;
 import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
@@ -24,10 +25,10 @@ public interface Api {
     Observable<SignInBean> signIn(@Url String url, @QueryMap Map<String, Object> map);
 
     @POST
-    Observable<SignUpBean> SignUp(@Url String url , @QueryMap Map<String, Object> map);
+    Observable<SignUpBean> SignUp(@Url String url, @QueryMap Map<String, Object> map);
 
     @POST
-    Observable<UploadPicBean> uploadAvator(@Url  String url , @Body MultipartBody requestBody);
+    Observable<UploadPicBean> uploadAvator(@Url String url, @Body MultipartBody requestBody);
 
     @POST
     Observable<PostItemBean> PostItem(@Url String url, @QueryMap Map<String, Object> map);
@@ -46,6 +47,12 @@ public interface Api {
 
     @GET
     Observable<MainItemListBean> getWishList(@Url String url, @QueryMap Map<String, Object> map);
+
+    @POST
+    Observable<CommonBean> addWishList(@Url String url, @QueryMap Map<String, Object> map);
+
+    @DELETE
+    Observable<CommonBean> deleteWishList(@Url String url, @QueryMap Map<String, Object> map);
 
     @GET
     Observable<MainItemListBean> getMyPost(@Url String url, @QueryMap Map<String, Object> map);

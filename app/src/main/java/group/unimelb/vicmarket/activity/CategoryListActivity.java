@@ -1,19 +1,17 @@
 package group.unimelb.vicmarket.activity;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-
 import com.blankj.utilcode.util.ToastUtils;
 import com.josephvuoto.customdialog.loading.LoadingDialog;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import group.unimelb.vicmarket.R;
 import group.unimelb.vicmarket.adapter.CategoryListAdapter;
-import group.unimelb.vicmarket.adapter.CommonItemListAdapter;
 import group.unimelb.vicmarket.retrofit.RetrofitHelper;
 import group.unimelb.vicmarket.retrofit.bean.CategoriesBean;
 import io.reactivex.Observer;

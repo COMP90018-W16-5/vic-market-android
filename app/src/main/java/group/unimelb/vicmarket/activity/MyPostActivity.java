@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.josephvuoto.customdialog.alert.CustomDialog;
-import com.josephvuoto.customdialog.common.OnOkClickListener;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -45,8 +44,8 @@ public class MyPostActivity extends AppCompatActivity {
 
     private int page = 1;
 
-    private double longitude = 0;
-    private double latitude = 0;
+    private double longitude = 144.9628;
+    private double latitude = -37.8102;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +79,10 @@ public class MyPostActivity extends AppCompatActivity {
                 .subscribe(aBoolean -> {
                     if (aBoolean) {
                         LocationUtil.LocationInfo locationInfo = LocationUtil.getInstance().getLocationInfo();
-                        latitude = locationInfo.getLatitude();
-                        longitude = locationInfo.getLongitude();
+                        if (locationInfo != null) {
+                            latitude = locationInfo.getLatitude();
+                            longitude = locationInfo.getLongitude();
+                        }
                     }
 
                     /* Initialize the adapter and add to RecyclerView */

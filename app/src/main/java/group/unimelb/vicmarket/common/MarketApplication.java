@@ -2,16 +2,12 @@ package group.unimelb.vicmarket.common;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
 
 import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import group.unimelb.vicmarket.R;
-import group.unimelb.vicmarket.activity.LoginActivity;
-import group.unimelb.vicmarket.activity.MainActivity;
 import group.unimelb.vicmarket.retrofit.RetrofitHelper;
 import group.unimelb.vicmarket.retrofit.bean.SignInBean;
 import group.unimelb.vicmarket.ui.CustomFooter;

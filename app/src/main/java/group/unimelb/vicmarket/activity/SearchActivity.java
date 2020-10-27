@@ -4,23 +4,18 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -32,7 +27,6 @@ import java.util.TimerTask;
 
 import group.unimelb.vicmarket.R;
 import group.unimelb.vicmarket.adapter.CommonItemListAdapter;
-import group.unimelb.vicmarket.adapter.MainItemListAdapter;
 import group.unimelb.vicmarket.retrofit.RetrofitHelper;
 import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
 import group.unimelb.vicmarket.util.LocationUtil;
@@ -55,8 +49,8 @@ public class SearchActivity extends AppCompatActivity {
     /* Deserialized data from the server */
     private List<MainItemListBean.DataBean> dataBeans = new ArrayList<>();
 
-    private double longitude = 0;
-    private double latitude = 0;
+    private double longitude = 144.9628;
+    private double latitude = -37.8102;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,8 +115,10 @@ public class SearchActivity extends AppCompatActivity {
                 .subscribe(aBoolean -> {
                     if (aBoolean) {
                         LocationUtil.LocationInfo locationInfo = LocationUtil.getInstance().getLocationInfo();
-                        latitude = locationInfo.getLatitude();
-                        longitude = locationInfo.getLongitude();
+                        if (locationInfo != null) {
+                            latitude = locationInfo.getLatitude();
+                            longitude = locationInfo.getLongitude();
+                        }
                     }
 
                     /* Initialize the adapter and add to RecyclerView */

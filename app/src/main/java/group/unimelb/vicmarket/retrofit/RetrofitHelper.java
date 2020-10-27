@@ -1,11 +1,10 @@
 package group.unimelb.vicmarket.retrofit;
 
 import android.util.Log;
-import com.blankj.utilcode.util.AppUtils;
+
 import com.blankj.utilcode.util.SPUtils;
 
 import java.io.File;
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -13,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 import group.unimelb.vicmarket.common.MarketApplication;
 import group.unimelb.vicmarket.retrofit.bean.CategoriesBean;
+import group.unimelb.vicmarket.retrofit.bean.CommonBean;
 import group.unimelb.vicmarket.retrofit.bean.DeleteItemBean;
 import group.unimelb.vicmarket.retrofit.bean.ItemDetailBean;
 import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
@@ -75,19 +75,19 @@ public class RetrofitHelper {
         execute(api.signIn(URL, params), observer);
     }
 
-    public void doSignUp(Observer<SignUpBean> observer, String username, String email,String phone, String password ,String picUrl) {
-        String URL = BASE_URL+ "/auth/signup";
+    public void doSignUp(Observer<SignUpBean> observer, String username, String email, String phone, String password, String picUrl) {
+        String URL = BASE_URL + "/auth/signup";
         Map<String, Object> params = new HashMap<>();
         params.put("displayName", username);
-        params.put("email" , email);
+        params.put("email", email);
         params.put("password", password);
-        params.put("phone",phone);
+        params.put("phone", phone);
         params.put("photo", picUrl);
-        execute(api.SignUp(URL , params) , observer);
+        execute(api.SignUp(URL, params), observer);
     }
 
-    public void uploadPic(Observer<UploadPicBean> observer , String picUrl ){
-        String URL = BASE_URL+ "/item/image";
+    public void uploadPic(Observer<UploadPicBean> observer, String picUrl) {
+        String URL = BASE_URL + "/item/image";
         MultipartBody.Builder builder = new MultipartBody.Builder();
         builder.setType(MultipartBody.FORM);
 
@@ -95,34 +95,33 @@ public class RetrofitHelper {
         File file = new File(picUrl);
         try {
             file = Luban.with(MarketApplication.getAppContext()).load(file).get().get(0);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         String extName = file.getName().substring(file.getName().lastIndexOf("."));
         String fileName = UUID.randomUUID().toString().replace("-", "") + extName;
-        builder.addFormDataPart("images" , fileName ,
+        builder.addFormDataPart("images", fileName,
                 RequestBody.create(MediaType.parse("multipart/form-data"), file));
         MultipartBody requestBody = builder.build();
-        execute(api.uploadAvator(URL, requestBody) , observer);
+        execute(api.uploadAvator(URL, requestBody), observer);
 
     }
 
     public void PostItem(Observer<PostItemBean> observer, String title, String description,
-                     int category, double price, String location, double latitude,
-                     double longitude, String picUrl) {
-        String URL = BASE_URL+ "/user/post";
+                         int category, double price, String location, double latitude,
+                         double longitude, String picUrl) {
+        String URL = BASE_URL + "/user/post";
         Map<String, Object> params = new HashMap<>();
         params.put("title", title);
-        params.put("description" , description);
+        params.put("description", description);
         params.put("category", category);
         params.put("price", price);
         params.put("address", location);
         params.put("latitude", latitude);
-        params.put("longitude",longitude);
+        params.put("longitude", longitude);
         params.put("image", picUrl);
         Log.d("DEMO", "PostItem: " + params);
-        execute(api.PostItem(URL , params) , observer);
+        execute(api.PostItem(URL, params), observer);
     }
 
     public void getItemList(Observer<MainItemListBean> observer, String page) {
@@ -148,6 +147,20 @@ public class RetrofitHelper {
         params.put("page", page);
         params.put("pageSize", 15);
         execute(api.getWishList(URL, params), observer);
+    }
+
+    public void addWishList(Observer<CommonBean> observer, int itemId) {
+        String URL = BASE_URL + "/user/wishlist";
+        Map<String, Object> params = new HashMap<>();
+        params.put("itemId", itemId);
+        execute(api.addWishList(URL, params), observer);
+    }
+
+    public void deleteWishList(Observer<CommonBean> observer, int itemId) {
+        String URL = BASE_URL + "/user/wishlist";
+        Map<String, Object> params = new HashMap<>();
+        params.put("itemId", itemId);
+        execute(api.deleteWishList(URL, params), observer);
     }
 
     public void getMyPost(Observer<MainItemListBean> observer, String page) {

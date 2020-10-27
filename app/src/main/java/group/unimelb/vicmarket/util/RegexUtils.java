@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 
 /**
- 正则相关工具类
+ * 正则相关工具类
  */
 public class RegexUtils {
     /******************** 正则相关常量 ********************/
@@ -18,16 +18,16 @@ public class RegexUtils {
     /**
      * 正则：邮箱
      */
-    public static final String REGEX_EMAIL         = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
+    public static final String REGEX_EMAIL = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
     /**
      * 正则：URL
      */
-    public static final String REGEX_URL           = "[a-zA-z]+://[^\\s]*";
+    public static final String REGEX_URL = "[a-zA-z]+://[^\\s]*";
 
     /**
      * 正则：用户名，取值范围为a-z,A-Z,0-9,"_",汉字，不能以"_"结尾,用户名必须是6-20位
      */
-    public static final String REGEX_USERNAME      = "^[\\w\\u4e00-\\u9fa5]{6,20}(?<!_)$";
+    public static final String REGEX_USERNAME = "^[\\w\\u4e00-\\u9fa5]{6,20}(?<!_)$";
 
     /**
      * 正则：密码，取值范围为a-z,A-Z,0-9,特殊字符，8-16个字符，至少1个大写字母，1个小写字母和1个数字
@@ -36,15 +36,15 @@ public class RegexUtils {
     /**
      * 正则：正整数
      */
-    public static final String REGEX_POSITIVE_INTEGER     = "^[1-9]\\d*$";
+    public static final String REGEX_POSITIVE_INTEGER = "^[1-9]\\d*$";
     /**
      * 正则：负整数
      */
-    public static final String REGEX_NEGATIVE_INTEGER     = "^-[1-9]\\d*$";
+    public static final String REGEX_NEGATIVE_INTEGER = "^-[1-9]\\d*$";
     /**
      * 正则：整数
      */
-    public static final String REGEX_INTEGER              = "^-?[1-9]\\d*$";
+    public static final String REGEX_INTEGER = "^-?[1-9]\\d*$";
     /**
      * 正则：非负整数(正整数 + 0)
      */
@@ -56,18 +56,16 @@ public class RegexUtils {
     /**
      * 正则：正浮点数
      */
-    public static final String REGEX_POSITIVE_FLOAT       = "^[1-9]\\d*\\.\\d*|0\\.\\d*[1-9]\\d*$";
+    public static final String REGEX_POSITIVE_FLOAT = "^[1-9]\\d*\\.\\d*|0\\.\\d*[1-9]\\d*$";
     /**
      * 正则：负浮点数
      */
-    public static final String REGEX_NEGATIVE_FLOAT       = "^-[1-9]\\d*\\.\\d*|-0\\.\\d*[1-9]\\d*$";
+    public static final String REGEX_NEGATIVE_FLOAT = "^-[1-9]\\d*\\.\\d*|-0\\.\\d*[1-9]\\d*$";
 
     /**
      * 正则：yyyy-MM-dd格式的日期校验，已考虑平闰年
      */
-    public static final String REGEX_DATE          = "^(?:(?!0000)[0-9]{4}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29)$";
-
-
+    public static final String REGEX_DATE = "^(?:(?!0000)[0-9]{4}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29)$";
 
 
     private RegexUtils() {
@@ -84,7 +82,6 @@ public class RegexUtils {
     public static boolean isMobileSimple(CharSequence input) {
         return isMatch(REGEX_MOBILE_SIMPLE, input);
     }
-
 
 
     /**
@@ -120,17 +117,15 @@ public class RegexUtils {
     }
 
     /**
-     *
      * 验证密码
      * 取值范围为a-z,A-Z,0-9,特殊字符，8-16个字符，至少1个大写字母，1个小写字母和1个数字
      *
      * @param input 待验证文本
      * @return {@code true}: 匹配<br>{@code false}: 不匹配
-     *
      */
 
-    public static boolean isPassword(CharSequence input){
-        return isMatch(REGEX_PASSWORD,input);
+    public static boolean isPassword(CharSequence input) {
+        return isMatch(REGEX_PASSWORD, input);
     }
 
     /**

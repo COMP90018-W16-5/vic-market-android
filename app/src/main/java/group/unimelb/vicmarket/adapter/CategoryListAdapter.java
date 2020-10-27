@@ -5,15 +5,11 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +17,6 @@ import java.util.List;
 import group.unimelb.vicmarket.R;
 import group.unimelb.vicmarket.activity.CategoryDetailActivity;
 import group.unimelb.vicmarket.retrofit.bean.CategoriesBean;
-import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
 
 public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.ViewHolder> {
     private List<CategoriesBean.DataBean> data = new ArrayList<>();

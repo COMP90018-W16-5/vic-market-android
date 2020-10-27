@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.ItemDetailActivity"></activity>
+        <activity android:name=".activity.ItemDetailActivity"
+            android:theme="@style/ItemDetailTheme" />
         <activity android:name=".activity.AccountActivity" />
         <activity android:name=".activity.CategoryListActivity" />
         <activity android:name=".activity.NearbyItemsActivity" />
