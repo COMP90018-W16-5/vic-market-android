@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 import group.unimelb.vicmarket.common.MarketApplication;
 import group.unimelb.vicmarket.retrofit.bean.CategoriesBean;
+import group.unimelb.vicmarket.retrofit.bean.CommonBean;
 import group.unimelb.vicmarket.retrofit.bean.DeleteItemBean;
 import group.unimelb.vicmarket.retrofit.bean.ItemDetailBean;
 import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
@@ -148,6 +149,20 @@ public class RetrofitHelper {
         params.put("page", page);
         params.put("pageSize", 15);
         execute(api.getWishList(URL, params), observer);
+    }
+
+    public void addWishList(Observer<CommonBean> observer, int itemId) {
+        String URL = BASE_URL + "/user/wishlist";
+        Map<String, Object> params = new HashMap<>();
+        params.put("itemId", itemId);
+        execute(api.addWishList(URL, params), observer);
+    }
+
+    public void deleteWishList(Observer<CommonBean> observer, int itemId) {
+        String URL = BASE_URL + "/user/wishlist";
+        Map<String, Object> params = new HashMap<>();
+        params.put("itemId", itemId);
+        execute(api.deleteWishList(URL, params), observer);
     }
 
     public void getMyPost(Observer<MainItemListBean> observer, String page) {

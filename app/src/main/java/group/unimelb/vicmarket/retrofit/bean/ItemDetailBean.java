@@ -59,6 +59,7 @@ public class ItemDetailBean {
         private double latitude;
         private double longitude;
         private double price;
+        private boolean liked;
         /**
          * displayName : Luke Skywalker
          * email : demo@demo.com
@@ -169,6 +170,14 @@ public class ItemDetailBean {
 
         public void setUrls(List<UrlsBean> urls) {
             this.urls = urls;
+        }
+
+        public boolean isLiked() {
+            return liked;
+        }
+
+        public void setLiked(boolean liked) {
+            this.liked = liked;
         }
 
         public static class SellerBean {

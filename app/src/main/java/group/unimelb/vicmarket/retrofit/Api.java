@@ -3,6 +3,7 @@ package group.unimelb.vicmarket.retrofit;
 import java.util.Map;
 
 import group.unimelb.vicmarket.retrofit.bean.CategoriesBean;
+import group.unimelb.vicmarket.retrofit.bean.CommonBean;
 import group.unimelb.vicmarket.retrofit.bean.DeleteItemBean;
 import group.unimelb.vicmarket.retrofit.bean.ItemDetailBean;
 import group.unimelb.vicmarket.retrofit.bean.MainItemListBean;
@@ -46,6 +47,12 @@ public interface Api {
 
     @GET
     Observable<MainItemListBean> getWishList(@Url String url, @QueryMap Map<String, Object> map);
+
+    @POST
+    Observable<CommonBean> addWishList(@Url String url, @QueryMap Map<String, Object> map);
+
+    @DELETE
+    Observable<CommonBean> deleteWishList(@Url String url, @QueryMap Map<String, Object> map);
 
     @GET
     Observable<MainItemListBean> getMyPost(@Url String url, @QueryMap Map<String, Object> map);
