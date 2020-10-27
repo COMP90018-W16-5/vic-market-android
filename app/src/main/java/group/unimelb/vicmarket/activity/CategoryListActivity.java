@@ -20,7 +20,7 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 public class CategoryListActivity extends AppCompatActivity {
-
+    
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private CategoryListAdapter adapter;
