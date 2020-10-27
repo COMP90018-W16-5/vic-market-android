@@ -51,6 +51,7 @@ public class ItemDetailActivity extends AppCompatActivity {
                 loadingDialog.dismiss();
             }
         };
+        
         if (itemId == -1) {
             // Random item
             RetrofitHelper.getInstance().getRandomItem(observer);
