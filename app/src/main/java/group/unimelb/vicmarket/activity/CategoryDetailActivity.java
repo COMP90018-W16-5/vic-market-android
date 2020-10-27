@@ -1,18 +1,16 @@
 package group.unimelb.vicmarket.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.blankj.utilcode.util.SPUtils;
-import com.google.gson.Gson;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.tbruyelle.rxpermissions2.RxPermissions;

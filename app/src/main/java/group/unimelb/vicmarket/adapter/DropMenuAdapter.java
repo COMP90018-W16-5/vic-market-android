@@ -1,21 +1,14 @@
 package group.unimelb.vicmarket.adapter;
 
 import android.content.Context;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import com.baiiu.filter.adapter.MenuAdapter;
 import com.baiiu.filter.adapter.SimpleTextAdapter;
-import com.baiiu.filter.interfaces.OnFilterDoneListener;
-import com.baiiu.filter.interfaces.OnFilterItemClickListener;
-import com.baiiu.filter.typeview.DoubleListView;
-import com.baiiu.filter.typeview.SingleGridView;
 import com.baiiu.filter.typeview.SingleListView;
-import com.baiiu.filter.util.CommonUtil;
 import com.baiiu.filter.util.UIUtil;
 import com.baiiu.filter.view.FilterCheckedTextView;
-import com.baiiu.filter.view.FixedTabIndicator;
 
 import java.util.ArrayList;
 import java.util.List;

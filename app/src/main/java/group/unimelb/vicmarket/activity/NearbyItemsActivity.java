@@ -12,13 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.baiiu.filter.DropDownMenu;
-import com.baiiu.filter.interfaces.OnFilterDoneListener;
-import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,7 +73,7 @@ public class NearbyItemsActivity extends AppCompatActivity {
             loadData();
         });
 
-        String[] titleList = new String[] { "Distance", "Category"};
+        String[] titleList = new String[]{"Distance", "Category"};
         DropMenuAdapter dropMenuAdapter = new DropMenuAdapter(this, titleList);
         dropMenuAdapter.setOnItemSelectedListener((type, code, value) -> {
             dropdownMenu.close();

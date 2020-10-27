@@ -25,10 +25,10 @@ public interface Api {
     Observable<SignInBean> signIn(@Url String url, @QueryMap Map<String, Object> map);
 
     @POST
-    Observable<SignUpBean> SignUp(@Url String url , @QueryMap Map<String, Object> map);
+    Observable<SignUpBean> SignUp(@Url String url, @QueryMap Map<String, Object> map);
 
     @POST
-    Observable<UploadPicBean> uploadAvator(@Url  String url , @Body MultipartBody requestBody);
+    Observable<UploadPicBean> uploadAvator(@Url String url, @Body MultipartBody requestBody);
 
     @POST
     Observable<PostItemBean> PostItem(@Url String url, @QueryMap Map<String, Object> map);

@@ -1,11 +1,12 @@
 package group.unimelb.vicmarket.retrofit.bean;
 
 public class DeleteItemBean {
-    /**{
-     "code": 200,
-     "msg": "success",
-     "data": {}
-     }
+    /**
+     * {
+     * "code": 200,
+     * "msg": "success",
+     * "data": {}
+     * }
      */
     private int code;
     private String msg;

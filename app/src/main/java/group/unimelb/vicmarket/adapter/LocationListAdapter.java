@@ -1,7 +1,5 @@
 package group.unimelb.vicmarket.adapter;
 
-import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import group.unimelb.vicmarket.R;
-import group.unimelb.vicmarket.activity.CategoryDetailActivity;
-import group.unimelb.vicmarket.retrofit.bean.CategoriesBean;
 
 public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapter.ViewHolder> {
     private List<String> data = new ArrayList<>();
+    private OnItemClickedListener onItemClickedListener;
 
     public LocationListAdapter(List<String> data) {
         this.data = data;
@@ -29,9 +26,6 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
         this.data = data;
         notifyDataSetChanged();
     }
-
-    private OnItemClickedListener onItemClickedListener;
-
 
     public void setOnItemClickedListener(OnItemClickedListener onItemClickedListener) {
         this.onItemClickedListener = onItemClickedListener;
@@ -60,6 +54,10 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
         return data.size();
     }
 
+    public interface OnItemClickedListener {
+        void onClick(int position);
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView textName;
         private RelativeLayout relativeLayout;
@@ -70,9 +68,5 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
             textName = itemView.findViewById(R.id.item_category_name);
             relativeLayout = itemView.findViewById(R.id.item_category_holder);
         }
-    }
-
-    public interface OnItemClickedListener {
-        void onClick(int position);
     }
 }

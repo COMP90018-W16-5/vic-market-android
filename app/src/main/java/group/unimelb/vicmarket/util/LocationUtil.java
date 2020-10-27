@@ -96,7 +96,7 @@ public class LocationUtil {
             }
             locationManager.requestLocationUpdates(provider, 10, 0, mLocationListener);
             Location location = locationManager.getLastKnownLocation(provider);
-            if (location == null){
+            if (location == null) {
                 provider = LocationManager.NETWORK_PROVIDER;
                 locationManager.requestLocationUpdates(provider, 10, 0, mLocationListener);
                 location = locationManager.getLastKnownLocation(provider);

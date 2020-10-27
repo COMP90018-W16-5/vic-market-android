@@ -25,10 +25,10 @@ import com.zhihu.matisse.engine.impl.GlideEngine;
 import java.io.File;
 
 import group.unimelb.vicmarket.R;
-import group.unimelb.vicmarket.util.RegexUtils;
 import group.unimelb.vicmarket.retrofit.RetrofitHelper;
 import group.unimelb.vicmarket.retrofit.bean.SignUpBean;
 import group.unimelb.vicmarket.retrofit.bean.UploadPicBean;
+import group.unimelb.vicmarket.util.RegexUtils;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -151,16 +151,16 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             };
             /* Perform the HTTP request */
-            if (name == null || name.equals("")){
+            if (name == null || name.equals("")) {
                 ToastUtils.showShort("Please enter the correct form of user name!");
-            }else if(!RegexUtils.isEmail(email)){
+            } else if (!RegexUtils.isEmail(email)) {
                 ToastUtils.showShort("Please enter the correct form of email!");
-            }else if (!password.equals(passwordConfirm) ){
+            } else if (!password.equals(passwordConfirm)) {
                 ToastUtils.showShort("The passwords are not consistent!");
-            }else if (password.length() < 8){
+            } else if (password.length() < 8) {
                 ToastUtils.showShort("Please enter the Correct Form of password!");
-            }else {
-                RetrofitHelper.getInstance().doSignUp(signObserver, name, email,phone, password , picUrl);
+            } else {
+                RetrofitHelper.getInstance().doSignUp(signObserver, name, email, phone, password, picUrl);
             }
 
 
@@ -213,7 +213,7 @@ public class RegisterActivity extends AppCompatActivity {
                     loadingDialog.dismiss();
                 }
             };
-            RetrofitHelper.getInstance().uploadPic(uploadPicObserver , picLocation);
+            RetrofitHelper.getInstance().uploadPic(uploadPicObserver, picLocation);
         }
     }
 }

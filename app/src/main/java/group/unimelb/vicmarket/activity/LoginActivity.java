@@ -14,9 +14,9 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.josephvuoto.customdialog.loading.LoadingDialog;
 
 import group.unimelb.vicmarket.R;
-import group.unimelb.vicmarket.util.RegexUtils;
 import group.unimelb.vicmarket.retrofit.RetrofitHelper;
 import group.unimelb.vicmarket.retrofit.bean.SignInBean;
+import group.unimelb.vicmarket.util.RegexUtils;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 

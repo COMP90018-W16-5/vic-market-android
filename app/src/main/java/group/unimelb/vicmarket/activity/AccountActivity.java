@@ -3,12 +3,9 @@ package group.unimelb.vicmarket.activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -17,10 +14,6 @@ import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.josephvuoto.customdialog.alert.CustomDialog;
-import com.josephvuoto.customdialog.common.OnCancelClickListener;
-import com.josephvuoto.customdialog.common.OnOkClickListener;
-
-import org.w3c.dom.Text;
 
 import group.unimelb.vicmarket.R;
 import group.unimelb.vicmarket.retrofit.RetrofitHelper;
@@ -37,7 +30,7 @@ public class AccountActivity extends AppCompatActivity {
     private RelativeLayout layoutLogout;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
 

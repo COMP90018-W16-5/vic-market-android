@@ -1,14 +1,13 @@
 package group.unimelb.vicmarket.retrofit.bean;
 
-import java.util.List;
-
 public class SignUpBean {
-    /**{
-        "code": 200,
-            "msg": "success",
-            "data": {}
-    }
-    */
+    /**
+     * {
+     * "code": 200,
+     * "msg": "success",
+     * "data": {}
+     * }
+     */
     private int code;
     private String msg;
 

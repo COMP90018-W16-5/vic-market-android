@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.josephvuoto.customdialog.alert.CustomDialog;
-import com.josephvuoto.customdialog.common.OnOkClickListener;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.tbruyelle.rxpermissions2.RxPermissions;
