@@ -125,7 +125,7 @@
             android:layout_toEndOf="@+id/wishlist_icon"
             android:gravity="center|left"
             android:paddingLeft="10dp"
-            android:text="Wishlist"
+            android:text="Wish List"
             android:textSize="18dp" />
 
         <ImageView

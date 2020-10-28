@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,6 +19,7 @@ import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.josephvuoto.customdialog.alert.CustomDialog;
 import com.josephvuoto.customdialog.loading.LoadingDialog;
 
@@ -47,11 +49,12 @@ public class ItemDetailActivity extends AppCompatActivity {
     private RelativeLayout buttonCall;
     private RelativeLayout buttonEmail;
     private RelativeLayout buttonDirection;
-    private RelativeLayout layout;
 
     private boolean liked = false;
 
     private int itemId = -1;
+
+    private final static String TAG = "ItemDetailActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +81,7 @@ public class ItemDetailActivity extends AppCompatActivity {
 
             @Override
             public void onNext(@NonNull ItemDetailBean itemDetailBean) {
-                if (itemDetailBean.getCode() == 200) {
+                if (itemDetailBean.getCode() == 200 && itemDetailBean.getData() != null) {
                     textTitle.setText(itemDetailBean.getData().getTitle());
                     textAddress.setText(itemDetailBean.getData().getAddress());
                     textDescription.setText(itemDetailBean.getData().getDescription());
@@ -122,9 +125,10 @@ public class ItemDetailActivity extends AppCompatActivity {
                     });
 
                     buttonLocation.setOnClickListener(v -> {
-                        String uri = String.format(Locale.ENGLISH, "geo:%f,%f", itemDetailBean.getData().getLatitude(), itemDetailBean.getData().getLongitude());
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                        startActivity(intent);
+                        Uri navigation = Uri.parse("google.navigation:q=" + itemDetailBean.getData().getLatitude() + "," + itemDetailBean.getData().getLongitude() + "");
+                        Intent navigationIntent = new Intent(Intent.ACTION_VIEW, navigation);
+                        navigationIntent.setPackage("com.google.android.apps.maps");
+                        startActivity(navigationIntent);
                     });
                 }
             }
@@ -234,6 +238,5 @@ public class ItemDetailActivity extends AppCompatActivity {
         buttonEmail = findViewById(R.id.item_email);
         buttonDirection = findViewById(R.id.item_direction);
         buttonLocation = findViewById(R.id.item_button_location);
-        layout = findViewById(R.id.item_layout);
     }
 }

@@ -72,6 +72,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SensorManagerHelper sensorManagerHelper;
     private LoadingDialog loadingDialog;
 
+    private CustomDialog randomDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +94,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         initLocation();
+
+        randomDialog = new CustomDialog.Builder(MainActivity.this)
+                .setTitle("I'm feeling lucky")
+                .setMessage("Shake your phone to see a random item!")
+                .setCancelButton("Cancel", dialog -> {
+                    sensorManagerHelper.stop();
+                    dialog.dismiss();
+                }).build();
 
         refreshLayout.setOnRefreshListener(refreshlayout -> {
             /* Refresh */
@@ -116,9 +126,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void run() {
                     loadingDialog.dismiss();
-                    // TODO
+                    sensorManagerHelper.stop();
+                    if (randomDialog != null && randomDialog.isShowing()) {
+                        randomDialog.dismiss();
+                    }
+                    startActivity(new Intent(MainActivity.this, ItemDetailActivity.class));
                 }
-            }, 1500);
+            }, 800);
         });
 
 
@@ -145,13 +159,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonRandom.setOnClickListener(v -> {
 
             sensorManagerHelper.start();
-            new CustomDialog.Builder(MainActivity.this)
-                    .setTitle("I'm feeling lucky")
-                    .setMessage("Shake your phone to see a random item!")
-                    .setCancelButton("Cancel", dialog -> {
-                        sensorManagerHelper.stop();
-                        dialog.dismiss();
-                    }).build().show();
+            randomDialog.show();
         });
     }
 
