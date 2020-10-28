@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/item_layout"
     tools:context=".activity.ItemDetailActivity">
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_above="@id/item_buttons"
@@ -190,6 +190,7 @@
         android:layout_height="45dp">
         <RelativeLayout
             android:id="@+id/item_call"
+            android:descendantFocusability="blocksDescendants"
             android:clickable="true"
             android:focusable="true"
             android:background="@drawable/bg_ripple_ok_round"
@@ -198,22 +199,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <LinearLayout
+                android:clickable="false"
+                android:focusable="false"
                 android:layout_centerInParent="true"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <ImageView
+                    android:clickable="false"
+                    android:focusable="false"
                     android:src="@drawable/ic_phone"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     app:tint="@color/white" />
                 <TextView
+                    android:clickable="false"
+                    android:focusable="false"
                     android:layout_marginLeft="3dp"
                     android:text="Call"
                     android:textSize="16sp"
-                    android:clickable="true"
-                    android:focusable="true"
                     android:textColor="@color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -222,6 +227,7 @@
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/item_email"
+            android:descendantFocusability="blocksDescendants"
             android:clickable="true"
             android:focusable="true"
             android:background="@drawable/bg_ripple_ok_round"
@@ -230,22 +236,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <LinearLayout
+                android:clickable="false"
+                android:focusable="false"
                 android:layout_centerInParent="true"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <ImageView
+                    android:clickable="false"
+                    android:focusable="false"
                     android:src="@drawable/ic_email"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     app:tint="@color/white" />
                 <TextView
+                    android:clickable="false"
+                    android:focusable="false"
                     android:layout_marginLeft="3dp"
                     android:text="Email"
                     android:textSize="16sp"
-                    android:clickable="true"
-                    android:focusable="true"
                     android:textColor="@color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -254,6 +264,7 @@
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/item_direction"
+            android:descendantFocusability="blocksDescendants"
             android:clickable="true"
             android:focusable="true"
             android:background="@drawable/bg_ripple_ok_round"
@@ -262,22 +273,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <LinearLayout
+                android:clickable="false"
+                android:focusable="false"
                 android:layout_centerInParent="true"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <ImageView
+                    android:clickable="false"
+                    android:focusable="false"
                     android:src="@drawable/ic_cars"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     app:tint="@color/white" />
                 <TextView
+                    android:clickable="false"
+                    android:focusable="false"
                     android:layout_marginLeft="3dp"
                     android:text="Direction"
                     android:textSize="16sp"
-                    android:clickable="true"
-                    android:focusable="true"
                     android:textColor="@color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />

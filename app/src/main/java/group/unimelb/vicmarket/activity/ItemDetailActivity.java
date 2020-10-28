@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -11,7 +12,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NavUtils;
 
+import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
@@ -44,6 +47,7 @@ public class ItemDetailActivity extends AppCompatActivity {
     private RelativeLayout buttonCall;
     private RelativeLayout buttonEmail;
     private RelativeLayout buttonDirection;
+    private RelativeLayout layout;
 
     private boolean liked = false;
 
@@ -230,5 +234,6 @@ public class ItemDetailActivity extends AppCompatActivity {
         buttonEmail = findViewById(R.id.item_email);
         buttonDirection = findViewById(R.id.item_direction);
         buttonLocation = findViewById(R.id.item_button_location);
+        layout = findViewById(R.id.item_layout);
     }
 }
