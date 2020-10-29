@@ -227,12 +227,14 @@ public class PostActivity extends AppCompatActivity {
         rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
                 .subscribe(aBoolean -> {
                     if (aBoolean) {
-                        LocationUtil.LocationInfo locationInfo = LocationUtil.getInstance().getLocationInfo();
+                        LocationUtil.LocationInfo locationInfo = LocationUtil.getInstance().getLocationInfoAndAddress();
                         if (locationInfo != null) {
-                            String addressLine = locationInfo.getAddresses().get(0);
+                            if (locationInfo.getAddresses() != null && !locationInfo.getAddresses().isEmpty()) {
+                                String addressLine = locationInfo.getAddresses().get(0);
+                                text_location.setText(addressLine);
+                            }
                             latitude = locationInfo.getLatitude();
                             longitude = locationInfo.getLongitude();
-                            text_location.setText(addressLine);
                         }
 
                         LinearLayout customView = (LinearLayout) LayoutInflater.from(this)

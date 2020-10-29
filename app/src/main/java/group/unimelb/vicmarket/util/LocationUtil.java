@@ -2,6 +2,7 @@ package group.unimelb.vicmarket.util;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -11,7 +12,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.StringUtils;
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -76,6 +83,37 @@ public class LocationUtil {
 
     public LocationInfo getLocationInfo() {
         getLocation();
+        if (locationInfo == null) {
+            try {
+                String cache = SPUtils.getInstance().getString("locationInfo");
+                if (!StringUtils.isEmpty(cache)) {
+                    locationInfo = new Gson().fromJson(cache, LocationInfo.class);
+                }
+            } catch (Exception e) {
+                locationInfo = new LocationInfo(-37.8102, 144.9628,
+                        Collections.singletonList("Melbourne Central, La Trobe St &, Swanston St, Melbourne VIC 3000"));
+            }
+        } else {
+            SPUtils.getInstance().put("locationInfo", new Gson().toJson(locationInfo));
+        }
+        return locationInfo;
+    }
+
+    public LocationInfo getLocationInfoAndAddress() {
+        getLocationAndAddress();
+        if (locationInfo == null) {
+            try {
+                String cache = SPUtils.getInstance().getString("locationInfo");
+                if (!StringUtils.isEmpty(cache)) {
+                    locationInfo = new Gson().fromJson(cache, LocationInfo.class);
+                }
+            } catch (Exception e) {
+                locationInfo = new LocationInfo(-37.8102, 144.9628,
+                        Collections.singletonList("Melbourne Central, La Trobe St &, Swanston St, Melbourne VIC 3000"));
+            }
+        } else {
+            SPUtils.getInstance().put("locationInfo", new Gson().toJson(locationInfo));
+        }
         return locationInfo;
     }
 
@@ -105,22 +143,54 @@ public class LocationUtil {
             if (location != null) {
                 double latitude = location.getLatitude();
                 double longitude = location.getLongitude();
-                Geocoder geocoder = new Geocoder(mContext, Locale.getDefault());
-                List<String> addresses = new ArrayList<>();
-                for (Address address : geocoder.getFromLocation(latitude, longitude, 20)) {
-                    addresses.add(address.getAddressLine(0));
-                }
-                locationInfo = new LocationInfo(latitude, longitude, addresses);
-
-                Log.i("location", locationInfo.toString());
-            } else {
-                Log.i("Location", "cannot find location");
+                locationInfo = new LocationInfo(latitude, longitude, new ArrayList<>());
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    @SuppressLint("MissingPermission")
+    private void getLocationAndAddress() {
+        try {
+            List<String> list = locationManager.getProviders(true);
+
+            String provider;
+
+            if (list.contains(LocationManager.GPS_PROVIDER)) {
+                provider = LocationManager.GPS_PROVIDER;
+            } else if (list.contains(LocationManager.NETWORK_PROVIDER)) {
+                provider = LocationManager.NETWORK_PROVIDER;
+            } else {
+                Toast.makeText(mContext, "Please check your GPS status", Toast.LENGTH_LONG).show();
+                return;
+            }
+            locationManager.requestLocationUpdates(provider, 10, 0, mLocationListener);
+            Location location = locationManager.getLastKnownLocation(provider);
+            if (location == null) {
+                provider = LocationManager.NETWORK_PROVIDER;
+                locationManager.requestLocationUpdates(provider, 10, 0, mLocationListener);
+                location = locationManager.getLastKnownLocation(provider);
+            }
+            locationManager.removeUpdates(mLocationListener);
+            if (location != null) {
+                double latitude = location.getLatitude();
+                double longitude = location.getLongitude();
+                Geocoder geocoder = new Geocoder(mContext, Locale.getDefault());
+                List<String> addresses = new ArrayList<>();
+                try {
+                    for (Address address : geocoder.getFromLocation(latitude, longitude, 20)) {
+                        addresses.add(address.getAddressLine(0));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                locationInfo = new LocationInfo(latitude, longitude, addresses);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public static class LocationInfo {
         private double latitude;

@@ -25,14 +25,20 @@ import group.unimelb.vicmarket.util.LocationUtil;
 
 public class MainItemListAdapter extends RecyclerView.Adapter<MainItemListAdapter.ViewHolder> {
     private final Context context;
-    private final double longitude;
-    private final double latitude;
+    private double longitude;
+    private double latitude;
     List<MainItemListBean.DataBean> data = new ArrayList<>();
 
     public MainItemListAdapter(Context context, double longitude, double latitude) {
         this.context = context;
         this.longitude = longitude;
         this.latitude = latitude;
+    }
+
+    public void setLocation(double longitude, double latitude) {
+        this.longitude = longitude;
+        this.latitude = latitude;
+        notifyDataSetChanged();
     }
 
     public void setData(List<MainItemListBean.DataBean> data) {
@@ -45,11 +51,6 @@ public class MainItemListAdapter extends RecyclerView.Adapter<MainItemListAdapte
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.item_post_main, parent, false);
-
-
-        ViewHolder myViewHolder = new ViewHolder(view);
-        //view.setOnClickListener(this);
-
 
         return new ViewHolder(view);
     }
