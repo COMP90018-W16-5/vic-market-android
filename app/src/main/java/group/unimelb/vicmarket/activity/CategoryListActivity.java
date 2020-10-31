@@ -52,6 +52,7 @@ public class CategoryListActivity extends AppCompatActivity {
     }
 
     private void loadData() {
+        
         RetrofitHelper.getInstance().getCategories(new Observer<CategoriesBean>() {
             @Override
             public void onSubscribe(Disposable d) {
