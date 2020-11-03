@@ -22,7 +22,6 @@ public class CategoryListActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private CategoryListAdapter adapter;
-
     private LoadingDialog loadingDialog;
 
     @Override
@@ -53,6 +52,7 @@ public class CategoryListActivity extends AppCompatActivity {
     }
 
     private void loadData() {
+
         RetrofitHelper.getInstance().getCategories(new Observer<CategoriesBean>() {
             @Override
             public void onSubscribe(Disposable d) {
